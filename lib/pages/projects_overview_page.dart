@@ -127,7 +127,7 @@ class ProjectsOverviewPage extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomNavigatorComponent(),
+        bottomNavigationBar: const MenuNavigation(),
       ),
     );
   }
