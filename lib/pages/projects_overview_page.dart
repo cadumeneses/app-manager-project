@@ -1,9 +1,8 @@
-import 'package:app_manager_project/components/project_item_component.dart';
-import 'package:app_manager_project/components/task_item_component.dart';
-
-import '../components/bottom_navigator_component.dart';
-import '../components/project_search_component.dart';
 import 'package:flutter/material.dart';
+
+import '../components/project_item_component.dart';
+import '../components/project_search_component.dart';
+import '../components/task_item_component.dart';
 
 class ProjectsOverviewPage extends StatelessWidget {
   const ProjectsOverviewPage({super.key});
@@ -127,7 +126,6 @@ class ProjectsOverviewPage extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: const MenuNavigation(),
       ),
     );
   }

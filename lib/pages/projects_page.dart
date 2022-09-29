@@ -5,8 +5,13 @@ class ProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Deu certo'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Projetos'),
+      ),
+      body:const Center(
+        child: Text('Estamos na pagina de projetos'),
+      ),
     );
   }
 }

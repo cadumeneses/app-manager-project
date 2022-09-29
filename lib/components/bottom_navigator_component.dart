@@ -1,7 +1,6 @@
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:provider/provider.dart';
 
 class MenuNavigation extends StatefulWidget {
   const MenuNavigation({super.key});
@@ -49,15 +48,47 @@ class _MenuNavigationState extends State<MenuNavigation> {
           onTabChange: (value) {
             setState(() {
               _selectedIndex = value;
-              if (_selectedIndex == 1) {
-                Navigator.of(context).pushNamed(AppRoutes.projects);
-              } else {
-                Navigator.of(context).pushNamed(AppRoutes.home);
-              }
             });
           },
         ),
       ),
+    );
+  }
+}
+
+List<BottomNavigationBarItem> buildBottomNavBarItems() {
+  return const [
+    BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: 'Red',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.search),
+      label: 'Blue',
+    ),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.info_outline),
+        label: 'Yellow'
+    )
+  ];
+}
+
+
+class Teste extends StatefulWidget {
+  const Teste({super.key});
+
+  @override
+  State<Teste> createState() => _TesteState();
+}
+
+class _TesteState extends State<Teste> {
+  int _selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      items: buildBottomNavBarItems(),
+
     );
   }
 }
