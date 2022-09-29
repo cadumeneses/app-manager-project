@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class ChartComponent extends StatelessWidget {
@@ -27,7 +28,7 @@ class ChartComponent extends StatelessWidget {
                     widthFactor: percentage,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: CustomColor.primaryColor,
                         borderRadius: BorderRadius.circular(5)
                       ),
                     ),   

@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
 import 'package:app_manager_project/pages/projects_page.dart';
@@ -29,16 +30,15 @@ class _HomeState extends State<Home> {
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(
-        color:Colors.blue,
+        color:CustomColor.whiteColor,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: GNav(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
               gap: 8,
-              backgroundColor: Colors.blue,
-              color: Colors.white,
-              activeColor: Colors.blue,
-              tabBackgroundColor: Colors.grey.shade200,
+              backgroundColor: CustomColor.whiteColor,
+              color: Colors.grey,
+              activeColor: CustomColor.primaryColor,
               textSize: 30,
               tabs: const [
                 GButton(

@@ -13,23 +13,31 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-          Provider<ProjectStore>(
-            create: (_) => ProjectStore(),
-          ),
+        Provider<ProjectStore>(
+          create: (_) => ProjectStore(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: ThemeData().colorScheme.copyWith(
+            primary: Colors.blue,
+            secondary: Colors.purple
+          ),
+          textTheme: ThemeData().textTheme.copyWith(
+            headline6: const TextStyle(
+              fontFamily: 'Barlow',
+            ),
+          ),
         ),
         routes: {
-          AppRoutes.home:(ctx) => const Home(),
-          AppRoutes.projects:(ctx) => const ProjectsPage(),
-          AppRoutes.projectsOverview:(ctx) => const ProjectsOverviewPage(),
+          AppRoutes.home: (ctx) => const Home(),
+          AppRoutes.projects: (ctx) => const ProjectsPage(),
+          AppRoutes.projectsOverview: (ctx) => const ProjectsOverviewPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

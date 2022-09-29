@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class ProjectSearchComponent extends StatefulWidget {
@@ -27,7 +28,9 @@ class _ProjectSearchComponentState extends State<ProjectSearchComponent> {
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
-            hintText: "Procurar projeto",
+            hintText: " Procurar projeto",
+            prefixIcon: Icon(Icons.search),
+            prefixIconColor: CustomColor.secondaryColor
           ),
         ),
       ),

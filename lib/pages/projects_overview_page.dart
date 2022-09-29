@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 import '../components/project_item_component.dart';
@@ -11,57 +12,43 @@ class ProjectsOverviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: CustomColor.backgroundColor,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                   horizontal: 25,
                   vertical: 10,
                 ),
-                child: Row(
-                  children: const [
-                    Text(
-                      "Manager",
-                      style: TextStyle(
-                          fontFamily: "Barlow",
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Projects",
-                      style: TextStyle(
-                          fontFamily: "Barlow",
-                          color: Colors.blue,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                child: Text(
+                  "Manager Projects",
+                  style: TextStyle(
+                      fontFamily: "Barlow",
+                      color: CustomColor.primaryColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               const SizedBox(height: 20),
               const ProjectSearchComponent(),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.only(left:20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Meus projetos',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     TextButton(
                       onPressed: () {},
                       child: const Text(
-                        'Mostrar todos',
-                        style: TextStyle(color: Colors.blue),
+                        'Meus Projetos',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: CustomColor.primaryColor,
+                        ),
                       ),
                     )
                   ],
@@ -87,22 +74,19 @@ class ProjectsOverviewPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.only(left:20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Tarefas do dia',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     TextButton(
                       onPressed: () {},
                       child: const Text(
-                        'Mostrar todas',
-                        style: TextStyle(color: Colors.blue),
+                        'Tarefas do dia',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: CustomColor.primaryColor,
+                        ),
                       ),
                     )
                   ],
@@ -111,7 +95,7 @@ class ProjectsOverviewPage extends StatelessWidget {
               Container(
                 height: 500,
                 width: double.infinity,
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(right: 10, left: 20),
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: const [
