@@ -57,7 +57,7 @@ class ProjectsOverviewPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(right: 10, left: 20),
                 width: double.infinity,
-                height: 250,
+                height: 260,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: const [

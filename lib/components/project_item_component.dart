@@ -11,7 +11,6 @@ class ProjectItemComponent extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
-          elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: Column(
@@ -66,7 +65,7 @@ class ProjectItemComponent extends StatelessWidget {
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
                   child: const ChartComponent(percentage: 0.8))
             ],
           ),
