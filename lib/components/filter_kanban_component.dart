@@ -9,7 +9,7 @@ class FilterKanbanComponent extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(right: 10, left: 20),
       width: double.infinity,
-      height: 35,
+      height: 40,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: const [
@@ -41,19 +41,29 @@ class ItemKanbanComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: () {},
-      style: OutlinedButton.styleFrom(
-        backgroundColor: CustomColor.whiteColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: 30,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: CustomColor.whiteColor,
+            border: Border.all(
+              color: CustomColor.primaryColor,
+              width: 2,
+            )),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              nameButtom,
+              style: const TextStyle(
+                  color: CustomColor.primaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+            ),
+          ),
         ),
-      ),
-      autofocus: true,
-      clipBehavior: Clip.hardEdge,
-      child: Text(
-        nameButtom,
-        style: const TextStyle(color: CustomColor.primaryColor, fontSize: 15, fontWeight: FontWeight.w600),
       ),
     );
   }

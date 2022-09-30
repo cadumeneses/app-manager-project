@@ -18,21 +18,32 @@ class ProjectsOverviewPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 25,
                   vertical: 10,
                 ),
-                child: Text(
-                  "Manager Projects",
-                  style: TextStyle(
-                      fontFamily: "Barlow",
-                      color: CustomColor.primaryColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/brisa_logo1.png',
+                      height: 50,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      "Manager Projects",
+                      style: TextStyle(
+                          fontFamily: "Barlow",
+                          color: CustomColor.primaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               const ProjectSearchComponent(),
               const SizedBox(height: 20),
               Padding(
