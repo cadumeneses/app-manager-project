@@ -11,16 +11,18 @@ class ProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final List<Project> projectsList = data;
+    final List<Project> projectsList = data;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: CustomColor.backgroundColor,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -64,7 +66,9 @@ class ProjectsPage extends StatelessWidget {
                     return const SizedBox(height: 10);
                   },
                   itemBuilder: (context, index) {
-                    return ProjectItemComponent(projectItem: projectsList[index],);
+                    return ProjectItemComponent(
+                      projectItem: projectsList[index],
+                    );
                   },
                 ),
               ),
