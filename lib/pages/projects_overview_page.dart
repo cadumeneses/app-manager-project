@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import '../components/project_item_component.dart';
 import '../components/project_search_component.dart';
 import '../components/task_item_component.dart';
+import '../data/project_data.dart';
+import '../models/project.dart';
 
 class ProjectsOverviewPage extends StatelessWidget {
   const ProjectsOverviewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final List<Project> projectsList = data;
     return SafeArea(
       child: Scaffold(
         backgroundColor: CustomColor.backgroundColor,
@@ -69,18 +73,12 @@ class ProjectsOverviewPage extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 10, left: 20),
                 width: double.infinity,
                 height: 260,
-                child: ListView(
+                child: ListView.builder(
+                  itemCount: projectsList.length,
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                    ProjectItemComponent(),
-                  ],
+                  itemBuilder: (context, index) {
+                    return ProjectItemComponent(projectItem: projectsList[index],);
+                  },
                 ),
               ),
               const SizedBox(height: 20),

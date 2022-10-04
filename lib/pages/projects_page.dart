@@ -3,11 +3,15 @@ import 'package:app_manager_project/components/project_item_component.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
+import '../data/project_data.dart';
+import '../models/project.dart';
+
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+        final List<Project> projectsList = data;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -55,12 +59,12 @@ class ProjectsPage extends StatelessWidget {
                 child: ListView.separated(
                   padding: const EdgeInsets.all(12),
                   scrollDirection: Axis.vertical,
-                  itemCount: 10,
+                  itemCount: projectsList.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
                   },
                   itemBuilder: (context, index) {
-                    return const ProjectItemComponent();
+                    return ProjectItemComponent(projectItem: projectsList[index],);
                   },
                 ),
               ),

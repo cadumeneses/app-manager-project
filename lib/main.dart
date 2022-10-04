@@ -1,9 +1,11 @@
+import 'package:app_manager_project/pages/project_detail_page.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
 import 'package:app_manager_project/pages/projects_page.dart';
 import 'package:app_manager_project/store/project.store.dart';
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
+import 'models/project.dart';
 import 'pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<ProjectStore>(
           create: (_) => ProjectStore(),
+        ),
+        Provider<Project>(
+          create: (_) => Project(),
         ),
       ],
       child: MaterialApp(
@@ -38,6 +43,7 @@ class MyApp extends StatelessWidget {
           AppRoutes.home: (ctx) => const Home(),
           AppRoutes.projects: (ctx) => const ProjectsPage(),
           AppRoutes.projectsOverview: (ctx) => const ProjectsOverviewPage(),
+          AppRoutes.projectsDetails: (ctx) => const ProjectDetailPage(),
         },
         debugShowCheckedModeBanner: false,
       ),
