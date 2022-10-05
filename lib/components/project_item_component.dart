@@ -12,7 +12,6 @@ class ProjectItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-    final project = Provider.of<Project>(context, listen: false);
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -47,7 +46,7 @@ class ProjectItemComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            projectItem.name!,
+                            projectItem.name,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

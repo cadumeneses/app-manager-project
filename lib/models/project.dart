@@ -1,7 +1,7 @@
 class Project {
-  final String? id;
-  final String? name;
-  final String? description;
+  final String id;
+  final String name;
+  final String description;
   final DateTime? createDate;
   final DateTime? finalDate;
   final String? teamName;
@@ -14,9 +14,9 @@ class Project {
   final String? taskId;
 
   Project({
-     this.id,
-     this.name,
-     this.description,
+     required this.id,
+     required this.name,
+     required this.description,
      this.createDate,
      this.teamName,
      this.finalDate,

@@ -64,7 +64,7 @@ class ProjectDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5),
                 child: Text(
-                  project.name!.toUpperCase(),
+                  project.name.toUpperCase(),
                   textAlign: TextAlign.left,
                   style: const TextStyle(
                       fontSize: 22,

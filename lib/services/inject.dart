@@ -5,5 +5,5 @@ GetIt getIt = GetIt.instance;
 
 void inject() {
   getIt.registerLazySingleton<DioClient>(() => DioClient());
-//  getIt.registerLazySingleton(() => DioClient());
+ getIt.registerLazySingleton(() => DioClient());
 }
