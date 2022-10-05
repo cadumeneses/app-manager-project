@@ -10,6 +10,8 @@ class Project {
   final bool? progress;
   final bool? test;
   final bool? finish;
+  final String? teamId;
+  final String? taskId;
 
   Project({
      this.id,
@@ -23,5 +25,7 @@ class Project {
      this.progress,
      this.test,
      this.finish,
+     this.taskId,
+     this.teamId,
   });
 }
