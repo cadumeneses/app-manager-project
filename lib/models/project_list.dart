@@ -42,10 +42,10 @@ class ProjectList with ChangeNotifier {
   }
 
   Future<void> saveProject(Map<String, dynamic> data) {
-    bool hasId = data['name'] != null;
+    bool hasId = data['id'] != null;
 
     final project = Project(
-      id: hasId ? data['name'] as String : Random().nextDouble().toString(),
+      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
       description: data['description'],
     );
@@ -53,7 +53,6 @@ class ProjectList with ChangeNotifier {
     if (hasId) {
       return updateProject(project);
     } else {
-      debugPrint(project.toString());
       return addProject(project);
     }
   }
@@ -65,16 +64,18 @@ class ProjectList with ChangeNotifier {
       data: {
         "name": project.name,
         "description": project.description,
-        "imgUrl": 'assets/images/ondas.jpg',
+        "imgUrl": "assets/images/ondas.jpg",
         "createDate": date.toIso8601String(),
       },
     );
 
-    final id = response.data['id'];
+    final id = response.data['name'];
     _projects.add(Project(
       id: id,
       name: project.name,
       description: project.description,
+      createDate: project.createDate,
+      imgUrl: project.imgUrl
     ));
     notifyListeners();
   }
