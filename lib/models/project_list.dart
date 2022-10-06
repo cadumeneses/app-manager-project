@@ -42,7 +42,7 @@ class ProjectList with ChangeNotifier {
   }
 
   Future<void> saveProject(Map<String, dynamic> data) {
-    bool hasId = data['id'] != null;
+    bool hasId = data['name'] != null;
 
     final project = Project(
       id: hasId ? data['name'] as String : Random().nextDouble().toString(),
@@ -59,11 +59,14 @@ class ProjectList with ChangeNotifier {
   }
 
   Future<void> addProject(Project project) async {
+    final date = DateTime.now();
     final response = await dio.dio.post(
       ('https://manager-projects-flutter-default-rtdb.firebaseio.com/projects.json'),
       data: {
         "name": project.name,
         "description": project.description,
+        "imgUrl": 'assets/images/ondas.jpg',
+        "createDate": date.toIso8601String(),
       },
     );
 
