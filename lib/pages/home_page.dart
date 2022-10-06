@@ -16,20 +16,14 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = [
+    final List<Widget> screens = [
       const ProjectsOverviewPage(),
       const ProjectsPage(),
       const ProjectsOverviewPage(),
     ];
 
-    void changeScreen(int indice) {
-      setState(() {
-        _selectedIndex = indice;
-      });
-    }
-
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: screens[_selectedIndex],
       bottomNavigationBar: Container(
         color: CustomColor.whiteColor,
         child: Padding(
@@ -41,21 +35,26 @@ class _HomeState extends State<Home> {
             color: Colors.grey,
             activeColor: CustomColor.primaryColor,
             textSize: 30,
-            tabs: const [
-              GButton(
+            tabs: [
+              const GButton(
                 icon: Icons.home,
                 text: 'Home',
               ),
-              GButton(
+              const GButton(
                 icon: Icons.list_alt_sharp,
                 text: 'Projetos',
               ),
               GButton(
                 icon: Icons.add,
-                text: 'Adicionar',
+                iconColor: CustomColor.primaryColor ,
+                border: Border.all(color: CustomColor.primaryColor, width: 2),
               ),
-              GButton(
+              const GButton(
                 icon: Icons.people,
+                text: 'Equipes',
+              ),
+              const GButton(
+                icon: Icons.person,
                 text: 'Equipes',
               ),
             ],
@@ -70,11 +69,7 @@ class _HomeState extends State<Home> {
                   showModal(context);
                   break;
               }
-              setState(
-                () {
-                  _selectedIndex = index;
-                },
-              );
+              setState((){_selectedIndex = index;});
             },
           ),
         ),
@@ -84,13 +79,12 @@ class _HomeState extends State<Home> {
 
   void showModal(BuildContext context) {
     showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return const ProjectFormComponent();
-      },
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
-      )
-    );
+        context: context,
+        builder: (_) {
+          return const ProjectFormComponent();
+        },
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))));
   }
 }

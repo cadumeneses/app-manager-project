@@ -89,8 +89,13 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.keyboard_arrow_down,
-                  size: 40, color: Colors.grey.shade400),
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.keyboard_arrow_down,
+                    size: 40, color: Colors.grey.shade400),
+              ),
               const Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 10),
                 child: Text(
