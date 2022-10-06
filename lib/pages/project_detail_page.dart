@@ -76,7 +76,7 @@ class ProjectDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 5),
                 child: Text(
-                  project.description!,
+                  project.description,
                   textAlign: TextAlign.left,
                   style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                 ),

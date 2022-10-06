@@ -15,7 +15,7 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
   final _descriptionFocus = FocusNode();
   final _nameFocus = FocusNode();
 
-  final _formData = Map<String, Object>();
+  final _formData = <String, Object>{};
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -54,14 +54,12 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
 
     _formKey.currentState?.save();
 
-
     try {
       await Provider.of<ProjectList>(
         context,
         listen: false,
       ).saveProject(_formData);
     } catch (e) {
-        debugPrint('error:' + e.toString());
       await showDialog<void>(
         context: context,
         builder: (ctx) => AlertDialog(
@@ -85,65 +83,121 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
     return SingleChildScrollView(
       child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            const Center(
-              child: Text(
-                'Novo projeto',
-                style: TextStyle(
-                    color: CustomColor.primaryColor,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold),
+        child: Padding(
+          padding: EdgeInsets.only(
+              bottom: 20 + MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.keyboard_arrow_down,
+                  size: 40, color: Colors.grey.shade400),
+              const Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 10),
+                child: Text(
+                  'Novo projeto',
+                  style: TextStyle(
+                      color: CustomColor.primaryColor,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            TextFormField(
-              initialValue: _formData['name']?.toString(),
-              decoration:
-                  const InputDecoration(labelText: 'Nome do projeto'),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_descriptionFocus);
-              },
-              onSaved: (name) => _formData['name'] = name ?? '',
-              validator: (_name) {
-                final name = _name ?? '';
+              const Divider(),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextFormField(
+                  initialValue: _formData['name']?.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    labelStyle: TextStyle(color: Colors.grey.shade600),
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_nameFocus);
+                  },
+                  autofocus: false,
+                  onSaved: (name) => _formData['name'] = name ?? '',
+                  validator: (_name) {
+                    final name = _name ?? '';
 
-                if (name.trim().isEmpty) {
-                  return 'The name is invalid!';
-                }
+                    if (name.trim().isEmpty) {
+                      return 'The name is invalid!';
+                    }
 
-                if (name.trim().length < 5) {
-                  return 'The name need min 5 letters';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              initialValue: _formData['description']?.toString(),
-              decoration: const InputDecoration(labelText: 'Descrição'),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).requestFocus(_descriptionFocus);
-              },
-              autofocus: false,
-              onSaved: (description) =>
-                  _formData['description'] = description ?? '',
-              validator: (_description) {
-                final description = _description ?? '';
+                    if (name.trim().length < 3) {
+                      return 'The name need min 10 letters';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextFormField(
+                  initialValue: _formData['description']?.toString(),
+                  decoration: InputDecoration(
+                    labelText: 'Descrição',
+                    labelStyle: TextStyle(color: Colors.grey.shade600),
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_descriptionFocus);
+                  },
+                  autofocus: false,
+                  onSaved: (description) =>
+                      _formData['description'] = description ?? '',
+                  validator: (_description) {
+                    final description = _description ?? '';
 
-                if (description.trim().isEmpty) {
-                  return 'The description is invalid!';
-                }
+                    if (description.trim().isEmpty) {
+                      return 'The description is invalid!';
+                    }
 
-                if (description.trim().length < 3) {
-                  return 'The description need min 10 letters';
-                }
-                return null;
-              },
-            ),
-            ElevatedButton(
-                onPressed: _submitForm, child: const Text('Criar projeto'))
-          ],
+                    if (description.trim().length < 3) {
+                      return 'The description need min 10 letters';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 25),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColor.secondaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+                onPressed: _submitForm,
+                child: SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: const Center(
+                    child: Text(
+                      'Criar projeto',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

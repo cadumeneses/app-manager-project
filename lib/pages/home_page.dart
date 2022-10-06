@@ -83,19 +83,14 @@ class _HomeState extends State<Home> {
   }
 
   void showModal(BuildContext context) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        content: const ProjectFormComponent(),
-        actions: <TextButton>[
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Close'),
-          )
-        ],
-      ),
+      builder: (_) {
+        return const ProjectFormComponent();
+      },
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+      )
     );
   }
 }
