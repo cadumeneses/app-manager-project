@@ -7,6 +7,8 @@ import '../services/dio.dart';
 
 class ProjectList with ChangeNotifier {
   var dio = DioClient();
+  final String _token;
+  final String _uid;
 
   List<Project> _projects = [];
   List<Project> get projects => [..._projects];
@@ -16,6 +18,8 @@ class ProjectList with ChangeNotifier {
   }
 
   ProjectList([
+    this._token = '',
+    this._uid = '',
     this._projects = const [],
   ]);
 
@@ -71,12 +75,11 @@ class ProjectList with ChangeNotifier {
 
     final id = response.data['name'];
     _projects.add(Project(
-      id: id,
-      name: project.name,
-      description: project.description,
-      createDate: project.createDate,
-      imgUrl: project.imgUrl
-    ));
+        id: id,
+        name: project.name,
+        description: project.description,
+        createDate: project.createDate,
+        imgUrl: project.imgUrl));
     notifyListeners();
   }
 

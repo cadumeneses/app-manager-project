@@ -7,7 +7,7 @@ import 'package:app_manager_project/store/project.store.dart';
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:provider/provider.dart';
 
-import 'models/project.dart';
+import 'models/auth.dart';
 import 'pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -22,24 +22,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<ProjectStore>(
-          create: (_) => ProjectStore(),
+        ChangeNotifierProvider(
+          create: (_) => Auth(),
         ),
-        ChangeNotifierProvider<ProjectList>(
+        ChangeNotifierProxyProvider<Auth, ProjectList>(
           create: (_) => ProjectList(),
+          update: (ctx, auth, previous) {
+            return ProjectList(
+              auth.token ?? '', auth.uid ?? '', previous?.projects ?? []
+            );
+          },
         )
       ],
       child: MaterialApp(
         theme: ThemeData(
-          colorScheme: ThemeData().colorScheme.copyWith(
-            primary: Colors.blue,
-            secondary: Colors.purple
-          ),
+          colorScheme: ThemeData()
+              .colorScheme
+              .copyWith(primary: Colors.blue, secondary: Colors.purple),
           textTheme: ThemeData().textTheme.copyWith(
-            headline6: const TextStyle(
-              fontFamily: 'Barlow',
-            ),
-          ),
+                headline6: const TextStyle(
+                  fontFamily: 'Barlow',
+                ),
+              ),
         ),
         routes: {
           AppRoutes.home: (ctx) => const Home(),
