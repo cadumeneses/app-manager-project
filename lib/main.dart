@@ -1,5 +1,6 @@
 import 'package:app_manager_project/components/project_form_component.dart';
 import 'package:app_manager_project/models/project_list.dart';
+import 'package:app_manager_project/pages/auth_or_home.dart';
 import 'package:app_manager_project/pages/project_detail_page.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
 import 'package:app_manager_project/pages/projects_page.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
               ),
         ),
         routes: {
-          AppRoutes.home: (ctx) => const Home(),
+          AppRoutes.auth_or_home: (ctx) => const AuthOrHomePage(),
           AppRoutes.projects: (ctx) => const ProjectsPage(),
           AppRoutes.projectsOverview: (ctx) => const ProjectsOverviewPage(),
           AppRoutes.projectsDetails: (ctx) => const ProjectDetailPage(),

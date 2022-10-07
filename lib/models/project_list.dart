@@ -27,7 +27,7 @@ class ProjectList with ChangeNotifier {
     _projects.clear();
 
     try {
-      final response = await dio.dio.get('projects.json');
+      final response = await dio.dio.get('projects.json?auth=$_token');
       Map<String, dynamic> data = response.data;
 
       data.forEach((projectId, projectData) {
@@ -64,7 +64,7 @@ class ProjectList with ChangeNotifier {
   Future<void> addProject(Project project) async {
     final date = DateTime.now();
     final response = await dio.dio.post(
-      ('https://manager-projects-flutter-default-rtdb.firebaseio.com/projects.json'),
+      ('https://manager-projects-flutter-default-rtdb.firebaseio.com/projects.json?auth=$_token'),
       data: {
         "name": project.name,
         "description": project.description,
@@ -88,7 +88,7 @@ class ProjectList with ChangeNotifier {
 
     if (index >= 0) {
       await dio.dio.patch(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/projects/project.id.json',
+        'https://manager-projects-flutter-default-rtdb.firebaseio.com/projects/project.id.json?auth=$_token',
         data: {
           "name": project.name,
           "description": project.description,

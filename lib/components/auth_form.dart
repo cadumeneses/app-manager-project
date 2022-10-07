@@ -64,7 +64,6 @@ class _AuthFormState extends State<AuthForm>
   @override
   void dispose() {
     super.dispose();
-
     _controller?.dispose();
   }
 
@@ -123,6 +122,7 @@ class _AuthFormState extends State<AuthForm>
     } on AuthExceptions catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {
+      debugPrint('error:' + error.toString());
       _showErrorDialog('Ocorreu um erro inesperado!');
     }
 
@@ -131,48 +131,71 @@ class _AuthFormState extends State<AuthForm>
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
-    return Card(
-      elevation: 8,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return SingleChildScrollView(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeIn,
-        padding: const EdgeInsets.all(16),
         height: _isLogin() ? 310 : 400,
-        width: deviceSize.width * 0.75,
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'E-mail'),
-                keyboardType: TextInputType.emailAddress,
-                onSaved: (email) => _authData['email'] = email ?? '',
-                validator: (_email) {
-                  final email = _email ?? '';
-                  if (email.trim().isEmpty || !email.contains('@')) {
-                    return 'Enter a valid e-mail';
-                  }
-                  return null;
-                },
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'E-mail',
+                    labelStyle: TextStyle(color: Colors.grey.shade600),
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  onSaved: (email) => _authData['email'] = email ?? '',
+                  validator: (_email) {
+                    final email = _email ?? '';
+                    if (email.trim().isEmpty || !email.contains('@')) {
+                      return 'Enter a valid e-mail';
+                    }
+                    return null;
+                  },
+                ),
               ),
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Password'),
-                keyboardType: TextInputType.emailAddress,
-                obscureText: true,
-                controller: _passwordController,
-                onSaved: (password) => _authData['password'] = password ?? '',
-                validator: (_password) {
-                  final password = _password ?? '';
-                  if (password.trim().isEmpty || password.length < 5) {
-                    return 'Enter a valid password';
-                  }
-                  return null;
-                },
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(10)),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.grey.shade600),
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  obscureText: true,
+                  controller: _passwordController,
+                  onSaved: (password) => _authData['password'] = password ?? '',
+                  validator: (_password) {
+                    final password = _password ?? '';
+                    if (password.trim().isEmpty || password.length < 5) {
+                      return 'Enter a valid password';
+                    }
+                    return null;
+                  },
+                ),
               ),
+              const SizedBox(height: 20),
               AnimatedContainer(
                 constraints: BoxConstraints(
                   minHeight: _isLogin() ? 0 : 60,
@@ -184,25 +207,38 @@ class _AuthFormState extends State<AuthForm>
                   position: _slideAnimation!,
                   child: FadeTransition(
                     opacity: _opacityAnimation!,
-                    child: TextFormField(
-                      decoration:
-                          const InputDecoration(labelText: 'Confirm Password'),
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: true,
-                      validator: _isLogin()
-                          ? null
-                          : (_password) {
-                              final password = _password ?? '';
-                              if (password != _passwordController.text) {
-                                return 'Passwords don\'t match';
-                              }
-                              return null;
-                            },
+                    child: Container(
+                      padding: const EdgeInsets.only(left: 10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          labelStyle: TextStyle(color: Colors.grey.shade600),
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        obscureText: true,
+                        validator: _isLogin()
+                            ? null
+                            : (_password) {
+                                final password = _password ?? '';
+                                if (password != _passwordController.text) {
+                                  return 'Passwords don\'t match';
+                                }
+                                return null;
+                              },
+                      ),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               if (_isLoading)
                 const CircularProgressIndicator()
               else
@@ -221,7 +257,6 @@ class _AuthFormState extends State<AuthForm>
                     _authMode == AuthMode.login ? 'Login' : 'Sign Up',
                   ),
                 ),
-              const Spacer(),
               TextButton(
                 onPressed: _switchAuthMode,
                 child: Text(_isLogin()
