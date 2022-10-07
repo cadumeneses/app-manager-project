@@ -51,7 +51,6 @@ class MyApp extends StatelessWidget {
           AppRoutes.projects: (ctx) => const ProjectsPage(),
           AppRoutes.projectsOverview: (ctx) => const ProjectsOverviewPage(),
           AppRoutes.projectsDetails: (ctx) => const ProjectDetailPage(),
-          AppRoutes.projectNew: (ctx) => const ProjectFormComponent(),
         },
         debugShowCheckedModeBanner: false,
       ),
