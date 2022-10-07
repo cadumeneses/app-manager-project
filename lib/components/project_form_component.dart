@@ -20,10 +20,6 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
 
   bool _isLoading = false;
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {

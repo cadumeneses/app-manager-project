@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -28,6 +29,8 @@ class ProjectList with ChangeNotifier {
 
     try {
       final response = await dio.dio.get('projects.json?auth=$_token');
+      debugPrint(response.toString());
+
       Map<String, dynamic> data = response.data;
 
       data.forEach((projectId, projectData) {
@@ -36,10 +39,13 @@ class ProjectList with ChangeNotifier {
             id: projectId,
             name: projectData['name'],
             description: projectData['description'],
+            createDate: DateTime.parse(projectData['createDate']),
+            imgUrl: projectData['imgUrl'],
           ),
         );
         notifyListeners();
       });
+
     } catch (e) {
       rethrow;
     }
