@@ -30,8 +30,8 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
     });
   }
 
-  Future<void> _onRefresh(BuildContext context) {
-    return Provider.of<ProjectList>(
+  Future<void> _onRefresh(BuildContext context) async {
+    await Provider.of<ProjectList>(
       context,
       listen: false,
     ).loadProjects();
