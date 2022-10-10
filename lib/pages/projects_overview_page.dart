@@ -43,6 +43,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
 
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
+      color: CustomColor.secondaryColor,
       child: SafeArea(
         child: Scaffold(
           backgroundColor: CustomColor.backgroundColor,
@@ -103,7 +104,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   width: double.infinity,
                   height: 260,
                   child: ListView.builder(
-                    itemCount: projectList.projectsCount,
+                    itemCount: 5,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return ProjectItemComponent(
