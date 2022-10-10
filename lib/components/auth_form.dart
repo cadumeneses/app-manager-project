@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -131,140 +132,154 @@ class _AuthFormState extends State<AuthForm>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-        height: _isLogin() ? 310 : 400,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(left: 10),
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'E-mail',
-                    labelStyle: TextStyle(color: Colors.grey.shade600),
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  onSaved: (email) => _authData['email'] = email ?? '',
-                  validator: (_email) {
-                    final email = _email ?? '';
-                    if (email.trim().isEmpty || !email.contains('@')) {
-                      return 'Enter a valid e-mail';
-                    }
-                    return null;
-                  },
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeIn,
+      height: _isLogin() ? 310 : 400,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10)),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.email),
+                  labelText: 'E-mail',
+                  labelStyle: TextStyle(color: Colors.grey.shade600),
+                  focusedBorder: InputBorder.none,
+                  border: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
                 ),
+                keyboardType: TextInputType.emailAddress,
+                onSaved: (email) => _authData['email'] = email ?? '',
+                validator: (_email) {
+                  final email = _email ?? '';
+                  if (email.trim().isEmpty || !email.contains('@')) {
+                    return 'Insira um e-mail válido!';
+                  }
+                  return null;
+                },
               ),
-              const SizedBox(height: 20),
-              Container(
-                padding: const EdgeInsets.only(left: 10),
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(10)),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.grey.shade600),
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: true,
-                  controller: _passwordController,
-                  onSaved: (password) => _authData['password'] = password ?? '',
-                  validator: (_password) {
-                    final password = _password ?? '';
-                    if (password.trim().isEmpty || password.length < 5) {
-                      return 'Enter a valid password';
-                    }
-                    return null;
-                  },
+            ),
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(10)),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  icon: const Icon(Icons.lock),
+                  labelText: 'Senha',
+                  labelStyle: TextStyle(color: Colors.grey.shade600),
+                  focusedBorder: InputBorder.none,
+                  border: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
                 ),
+                keyboardType: TextInputType.emailAddress,
+                obscureText: true,
+                controller: _passwordController,
+                onSaved: (password) => _authData['password'] = password ?? '',
+                validator: (_password) {
+                  final password = _password ?? '';
+                  if (password.trim().isEmpty || password.length < 5) {
+                    return 'Insira uma senha válida!';
+                  }
+                  return null;
+                },
               ),
-              const SizedBox(height: 20),
-              AnimatedContainer(
-                constraints: BoxConstraints(
-                  minHeight: _isLogin() ? 0 : 60,
-                  maxHeight: _isLogin() ? 0 : 120,
-                ),
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.linear,
-                child: SlideTransition(
-                  position: _slideAnimation!,
-                  child: FadeTransition(
-                    opacity: _opacityAnimation!,
-                    child: Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Confirm Password',
-                          labelStyle: TextStyle(color: Colors.grey.shade600),
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        obscureText: true,
-                        validator: _isLogin()
-                            ? null
-                            : (_password) {
-                                final password = _password ?? '';
-                                if (password != _passwordController.text) {
-                                  return 'Passwords don\'t match';
-                                }
-                                return null;
-                              },
+            ),
+            const SizedBox(height: 20),
+            AnimatedContainer(
+              padding: _isLogin() ? const EdgeInsets.all(0) : const EdgeInsets.only(bottom: 15),
+              constraints: BoxConstraints(
+                minHeight: _isLogin() ? 0 : 60,
+                maxHeight: _isLogin() ? 0 : 120,
+              ),
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.linear,
+              child: SlideTransition(
+                position: _slideAnimation!,
+                child: FadeTransition(
+                  opacity: _opacityAnimation!,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.lock),
+                        labelText: 'Confirme sua senha',
+                        labelStyle: TextStyle(color: Colors.grey.shade600),
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
                       ),
+                      keyboardType: TextInputType.emailAddress,
+                      obscureText: true,
+                      validator: _isLogin()
+                          ? null
+                          : (_password) {
+                              final password = _password ?? '';
+                              if (password != _passwordController.text) {
+                                return 'Passwords don\'t match';
+                              }
+                              return null;
+                            },
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
-              if (_isLoading)
-                const CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 30,
-                    ),
+            ),
+            const SizedBox(height: 5),
+            if (_isLoading)
+              const CircularProgressIndicator()
+            else
+              ElevatedButton(
+                onPressed: _submit,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: CustomColor.primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Text(
-                    _authMode == AuthMode.login ? 'Login' : 'Sign Up',
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 30,
                   ),
                 ),
-              TextButton(
-                onPressed: _switchAuthMode,
-                child: Text(_isLogin()
-                    ? "Don't have an account? Sign Up!"
-                    : 'Already have an account?'),
+                child: SizedBox(
+                  height: 35,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  child: Center(
+                    child: Text(
+                      _authMode == AuthMode.login ? 'Entrar' : 'Cadastre-se',
+                    ),
+                  ),
+                ),
               ),
-            ],
-          ),
+            TextButton(
+              onPressed: _switchAuthMode,
+              child: Text(
+                _isLogin()
+                    ? "Não tem uma conta? cadastre-se!"
+                    : 'Já tem uma conta? Entrar',
+                    style: const TextStyle(
+                      color: CustomColor.secondaryColor,
+                    ),
+              ),
+            ),
+          ],
         ),
       ),
     );
