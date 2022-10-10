@@ -145,15 +145,108 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               iconColor: Colors.red,
               leading: const Icon(Icons.exit_to_app),
-              title: const Text('Logout', style: TextStyle(color: Colors.red),),
-              onTap: () {
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.red),
+              ),
+              onTap: () => showModal(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+void showModal(BuildContext context) {
+  showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return const LogoutModal();
+      },
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+}
+
+class LogoutModal extends StatelessWidget {
+  const LogoutModal({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.keyboard_arrow_down,
+                size: 40, color: Colors.grey.shade400),
+          ),
+          const Text(
+            'Logout',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const Divider(),
+          const Text(
+            'Tem certeza que quer sair?',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top:15),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: CustomColor.primaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              onPressed: () {
                 Provider.of<Auth>(context, listen: false).logout();
                 Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.auth_or_home);
               },
+              child: SizedBox(
+                height: 50,
+                width: MediaQuery.of(context).size.width * 0.8,
+                child: const Center(
+                  child: Text(
+                    'Sim, quero sair',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: CustomColor.backgroundColor,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: SizedBox(
+              height: 50,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: const Center(
+                child: Text(
+                  'Cancelar',
+                  style:
+                      TextStyle(fontSize: 18, color: CustomColor.primaryColor),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
