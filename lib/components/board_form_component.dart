@@ -65,7 +65,7 @@ class _BoardFormComponentState extends State<BoardFormComponent> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const Divider(),
+                  const Divider(thickness: 1),
                   Container(
                     padding: const EdgeInsets.only(left: 10),
                     width: MediaQuery.of(context).size.width * 0.9,

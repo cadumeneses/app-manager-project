@@ -104,7 +104,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   width: double.infinity,
                   height: 260,
                   child: ListView.builder(
-                    itemCount: 5,
+                    itemCount: projectList.projectsCount,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return ProjectItemComponent(

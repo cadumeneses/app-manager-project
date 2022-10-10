@@ -21,7 +21,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            iconTheme: const IconThemeData(color: CustomColor.primaryColor),
+            iconTheme: const IconThemeData(color: CustomColor.secondaryColor),
             actions: const [
               Icon(Icons.search),
               Padding(
