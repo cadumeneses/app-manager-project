@@ -30,16 +30,24 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
     });
   }
 
+  Future<void> _onRefresh(BuildContext context) {
+    return Provider.of<ProjectList>(
+      context,
+      listen: false,
+    ).loadProjects();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ProjectList projectList = Provider.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: CustomColor.backgroundColor,
-        body: SingleChildScrollView(
-          child: Stack(children: [
-            Column(
+    return RefreshIndicator(
+      onRefresh: () => _onRefresh(context),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: CustomColor.backgroundColor,
+          body: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -141,7 +149,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 ),
               ],
             ),
-          ]),
+          ),
         ),
       ),
     );

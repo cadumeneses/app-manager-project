@@ -1,4 +1,5 @@
 import 'package:app_manager_project/components/project_form_component.dart';
+import 'package:app_manager_project/pages/profile_page.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
@@ -20,6 +21,8 @@ class _HomeState extends State<Home> {
       const ProjectsOverviewPage(),
       const ProjectsPage(),
       const ProjectsOverviewPage(),
+      const ProjectsOverviewPage(),
+      const ProfilePage(),
     ];
 
     return Scaffold(
@@ -55,7 +58,7 @@ class _HomeState extends State<Home> {
               ),
               const GButton(
                 icon: Icons.person,
-                text: 'Equipes',
+                text: 'Perfil',
               ),
             ],
             selectedIndex: _selectedIndex,
