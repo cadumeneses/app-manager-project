@@ -1,0 +1,1 @@
+class ProjectFailures implements Exception {}

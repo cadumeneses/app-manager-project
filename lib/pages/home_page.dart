@@ -85,7 +85,7 @@ class _HomeState extends State<Home> {
         context: context,
         builder: (_) {
           return const ProjectFormComponent();
-        },
+        },                
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20), topRight: Radius.circular(20))));
