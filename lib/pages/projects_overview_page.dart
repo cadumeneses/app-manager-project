@@ -1,3 +1,4 @@
+import 'package:app_manager_project/models/project.dart';
 import 'package:app_manager_project/models/project_list.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,8 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
   @override
   Widget build(BuildContext context) {
     final ProjectList projectList = Provider.of(context);
+    final provider = Provider.of<ProjectList>(context);
+    final List<Project> loadedProjects = provider.projects;
 
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
@@ -104,13 +107,13 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   width: double.infinity,
                   height: 260,
                   child: ListView.builder(
-                    itemCount: projectList.projectsCount,
+                    itemCount: loadedProjects.length,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ProjectItemComponent(
-                        projectItem: projectList.projects[index],
-                      );
-                    },
+                    itemBuilder: ((context, index) =>
+                        ChangeNotifierProvider.value(
+                          value: loadedProjects[index],
+                          child: ProjectItemComponent(),
+                        )),
                   ),
                 ),
                 const SizedBox(height: 20),

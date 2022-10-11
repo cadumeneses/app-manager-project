@@ -29,7 +29,6 @@ class ProjectList with ChangeNotifier {
 
     try {
       final response = await dio.dio.get('projects.json?auth=$_token');
-      debugPrint(response.toString());
 
       Map<String, dynamic> data = response.data;
 
@@ -51,7 +50,7 @@ class ProjectList with ChangeNotifier {
     }
   }
 
-  Future<void> saveProject(Map<String, dynamic> data) {
+  Future<void> saveProject(Map<String, dynamic> data) async {
     bool hasId = data['id'] != null;
 
     final project = Project(
@@ -61,9 +60,9 @@ class ProjectList with ChangeNotifier {
     );
 
     if (hasId) {
-      return updateProject(project);
+      return await updateProject(project);
     } else {
-      return addProject(project);
+      return await addProject(project);
     }
   }
 

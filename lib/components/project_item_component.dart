@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProjectItemComponent extends StatelessWidget {
-  final Project projectItem;
-  const ProjectItemComponent({required this.projectItem, super.key});
+  const ProjectItemComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
+    final project = Provider.of<Project>(context, listen: false);
+
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -19,8 +19,9 @@ class ProjectItemComponent extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           child: GestureDetector(
-            onTap: (){
-              Navigator.of(context).pushNamed(AppRoutes.projectsDetails, arguments: projectItem);
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(AppRoutes.projectsDetails, arguments: project);
             },
             child: Column(
               children: [
@@ -32,7 +33,7 @@ class ProjectItemComponent extends StatelessWidget {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
                     child: Image.asset(
-                      projectItem.imgUrl!,
+                      project.imgUrl!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -46,23 +47,25 @@ class ProjectItemComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            projectItem.name,
+                            project.name,
                             style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Barlow',
-                              color: CustomColor.primaryColor
-                            ),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Barlow',
+                                color: CustomColor.primaryColor),
                           ),
                           IconButton(
-                              onPressed: () {}, icon: const Icon(Icons.create, color: CustomColor.secondaryColor))
+                              onPressed: () {},
+                              icon: const Icon(Icons.create,
+                                  color: CustomColor.secondaryColor))
                         ],
                       ),
                       Row(
                         children: [
                           Text(
-                            '${projectItem.description} - ',
-                            style: const TextStyle(fontSize: 14, color: Colors.grey),
+                            '${project.description} - ',
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                           const Text(
                             'Sep 26, 2022',
@@ -74,7 +77,8 @@ class ProjectItemComponent extends StatelessWidget {
                   ),
                 ),
                 Container(
-                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 20),
                     child: const ChartComponent(percentage: 0.8))
               ],
             ),

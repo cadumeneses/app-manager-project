@@ -66,9 +66,7 @@ class ProjectsPage extends StatelessWidget {
                     return const SizedBox(height: 10);
                   },
                   itemBuilder: (context, index) {
-                    return ProjectItemComponent(
-                      projectItem: projectsList[index],
-                    );
+                    return const ProjectItemComponent();
                   },
                 ),
               ),

@@ -1,4 +1,6 @@
-class Project {
+import 'package:flutter/cupertino.dart';
+
+class Project with ChangeNotifier {
   final String id;
   final String name;
   final String description;
