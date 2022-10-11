@@ -40,7 +40,6 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ProjectList projectList = Provider.of(context);
     final provider = Provider.of<ProjectList>(context);
     final List<Project> loadedProjects = provider.projects;
 
@@ -112,7 +111,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                     itemBuilder: ((context, index) =>
                         ChangeNotifierProvider.value(
                           value: loadedProjects[index],
-                          child: ProjectItemComponent(),
+                          child: const ProjectItemComponent(),
                         )),
                   ),
                 ),
