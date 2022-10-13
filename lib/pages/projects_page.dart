@@ -2,16 +2,22 @@ import 'package:app_manager_project/components/filter_kanban_component.dart';
 import 'package:app_manager_project/components/project_item_component.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../data/project_data.dart';
 import '../models/project.dart';
+import '../models/project_list.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Project> projectsList = data;
+    final provider = Provider.of<ProjectList>(context);
+    final List<Project> loadedProjects = provider.projects;
+
+    final availableHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: CustomColor.backgroundColor,
@@ -30,7 +36,7 @@ class ProjectsPage extends StatelessWidget {
                       children: [
                         Image.asset(
                           'assets/images/brisa_logo1.png',
-                          height: 50,
+                          height: availableHeight * 0.05,
                           fit: BoxFit.cover,
                         ),
                         const SizedBox(
@@ -53,21 +59,18 @@ class ProjectsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
               const FilterKanbanComponent(),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(12),
+              Container(
+                padding: EdgeInsets.only(top: availableHeight * 0.01),
+                height: availableHeight * 0.77,
+                child: ListView.builder(
+                  itemCount: loadedProjects.length,
                   scrollDirection: Axis.vertical,
-                  itemCount: projectsList.length,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 10);
-                  },
-                  itemBuilder: (context, index) {
-                    return const ProjectItemComponent();
-                  },
+                  itemBuilder: ((context, index) =>
+                      ChangeNotifierProvider.value(
+                        value: loadedProjects[index],
+                        child: const ProjectItemComponent(),
+                      )),
                 ),
               ),
             ],
