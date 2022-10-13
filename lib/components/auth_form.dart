@@ -123,7 +123,6 @@ class _AuthFormState extends State<AuthForm>
     } on AuthExceptions catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {
-      debugPrint('error:' + error.toString());
       _showErrorDialog('Ocorreu um erro inesperado!');
     }
 
@@ -148,7 +147,6 @@ class _AuthFormState extends State<AuthForm>
                   borderRadius: BorderRadius.circular(10)),
               child: TextFormField(
                 decoration: InputDecoration(
-                  icon: const Icon(Icons.email),
                   labelText: 'E-mail',
                   labelStyle: TextStyle(color: Colors.grey.shade600),
                   focusedBorder: InputBorder.none,
@@ -176,7 +174,6 @@ class _AuthFormState extends State<AuthForm>
                   borderRadius: BorderRadius.circular(10)),
               child: TextFormField(
                 decoration: InputDecoration(
-                  icon: const Icon(Icons.lock),
                   labelText: 'Senha',
                   labelStyle: TextStyle(color: Colors.grey.shade600),
                   focusedBorder: InputBorder.none,
@@ -218,7 +215,6 @@ class _AuthFormState extends State<AuthForm>
                         borderRadius: BorderRadius.circular(10)),
                     child: TextFormField(
                       decoration: InputDecoration(
-                        icon: const Icon(Icons.lock),
                         labelText: 'Confirme sua senha',
                         labelStyle: TextStyle(color: Colors.grey.shade600),
                         focusedBorder: InputBorder.none,
