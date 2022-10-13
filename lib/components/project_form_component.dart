@@ -4,6 +4,9 @@ import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'form/input_submit_form.dart';
+import 'form/input_text_form.dart';
+
 class ProjectFormComponent extends StatefulWidget {
   const ProjectFormComponent({super.key});
 
@@ -19,7 +22,6 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isLoading = false;
-
 
   @override
   void didChangeDependencies() {
@@ -113,100 +115,24 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextFormField(
-                        initialValue: _formData['name']?.toString(),
-                        decoration: InputDecoration(
-                          labelText: 'Nome',
-                          labelStyle: TextStyle(color: Colors.grey.shade600),
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_nameFocus);
-                        },
-                        autofocus: false,
-                        onSaved: (name) => _formData['name'] = name ?? '',
-                        validator: (_name) {
-                          final name = _name ?? '';
-
-                          if (name.trim().isEmpty) {
-                            return 'The name is invalid!';
-                          }
-
-                          if (name.trim().length < 3) {
-                            return 'The name need min 10 letters';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
+                    InputTextForm(
+                        formData: _formData,
+                        formDataTitle: "name",
+                        titleFocus: _nameFocus,
+                        label: "Nome",
+                        minLenght: 3),
                     const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(10)),
-                      child: TextFormField(
-                        initialValue: _formData['description']?.toString(),
-                        decoration: InputDecoration(
-                          labelText: 'Descrição',
-                          labelStyle: TextStyle(color: Colors.grey.shade600),
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                        ),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context)
-                              .requestFocus(_descriptionFocus);
-                        },
-                        autofocus: false,
-                        onSaved: (description) =>
-                            _formData['description'] = description ?? '',
-                        validator: (_description) {
-                          final description = _description ?? '';
-
-                          if (description.trim().isEmpty) {
-                            return 'The description is invalid!';
-                          }
-
-                          if (description.trim().length < 3) {
-                            return 'The description need min 10 letters';
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
+                    InputTextForm(
+                        formData: _formData,
+                        formDataTitle: "description",
+                        titleFocus: _descriptionFocus,
+                        label: "Descrição",
+                        minLenght: 10),
                     const SizedBox(height: 25),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: CustomColor.secondaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                      ),
-                      onPressed: _submitForm,
-                      child: SizedBox(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child: const Center(
-                          child: Text(
-                            'Criar projeto',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ),
-                    )
+                    InputSubmitForm(
+                        color: CustomColor.secondaryColor,
+                        submitForm: _submitForm,
+                        nameButton: 'Criar Projeto')
                   ],
                 ),
               ),
