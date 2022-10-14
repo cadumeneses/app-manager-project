@@ -36,10 +36,9 @@ class _AuthFormState extends State<AuthForm>
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 700),
     );
 
     _opacityAnimation = Tween(
@@ -61,6 +60,8 @@ class _AuthFormState extends State<AuthForm>
         curve: Curves.linear,
       ),
     );
+    _authMode = AuthMode.login;
+    _controller?.forward();
   }
 
   @override
@@ -76,7 +77,7 @@ class _AuthFormState extends State<AuthForm>
         _controller?.forward();
       } else {
         _authMode = AuthMode.login;
-        _controller?.reverse();
+        _controller?.forward();
       }
     });
   }
@@ -138,83 +139,93 @@ class _AuthFormState extends State<AuthForm>
         key: _formKey,
         child: Column(
           children: [
-            Container(
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
               padding: const EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(color: Colors.white),
-                    )),
-                    child: TextFormField(
-                      style: const TextStyle(
-                        color: CustomColor.whiteColor,
+              child: SlideTransition(
+                position: _slideAnimation!,
+                child: FadeTransition(
+                  opacity: _opacityAnimation!,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: const BoxDecoration(
+                            border: Border(
+                          bottom: BorderSide(color: Colors.white),
+                        )),
+                        child: TextFormField(
+                          style: const TextStyle(
+                            color: CustomColor.whiteColor,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: "E-mail",
+                            hintStyle: TextStyle(color: Colors.white),
+                            labelStyle: TextStyle(color: Colors.white),
+                            focusedBorder: InputBorder.none,
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          onSaved: (email) => _authData['email'] = email ?? '',
+                          validator: (_email) {
+                            final email = _email ?? '';
+                            if (email.trim().isEmpty || !email.contains('@')) {
+                              return 'Insira um e-mail válido!';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                      decoration: const InputDecoration(
-                        hintText: "E-mail",
-                        hintStyle: TextStyle(color: Colors.white),
-                        labelStyle: TextStyle(color: Colors.white),
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: const BoxDecoration(
+                            border: Border(
+                          bottom: BorderSide(color: Colors.white),
+                        )),
+                        child: TextFormField(
+                          style: const TextStyle(
+                            color: CustomColor.whiteColor,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: "Senha",
+                            hintStyle: TextStyle(color: Colors.white),
+                            focusedBorder: InputBorder.none,
+                            border: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: true,
+                          controller: _passwordController,
+                          onSaved: (password) =>
+                              _authData['password'] = password ?? '',
+                          validator: (_password) {
+                            final password = _password ?? '';
+                            if (password.trim().isEmpty ||
+                                password.length < 5) {
+                              return 'Insira uma senha válida!';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                      keyboardType: TextInputType.emailAddress,
-                      onSaved: (email) => _authData['email'] = email ?? '',
-                      validator: (_email) {
-                        final email = _email ?? '';
-                        if (email.trim().isEmpty || !email.contains('@')) {
-                          return 'Insira um e-mail válido!';
-                        }
-                        return null;
-                      },
-                    ),
+                    ],
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: const BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(color: Colors.white),
-                    )),
-                    child: TextFormField(
-                      style: const TextStyle(
-                        color: CustomColor.whiteColor,
-                      ),
-                      decoration: const InputDecoration(
-                        hintText: "Senha",
-                        hintStyle: TextStyle(color: Colors.white),
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      obscureText: true,
-                      controller: _passwordController,
-                      onSaved: (password) =>
-                          _authData['password'] = password ?? '',
-                      validator: (_password) {
-                        final password = _password ?? '';
-                        if (password.trim().isEmpty ||
-                            password.length < 5) {
-                          return 'Insira uma senha válida!';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             if (_isLoading)
-              const CircularProgressIndicator()
+              const CircularProgressIndicator(
+                color: CustomColor.secondaryColor,
+              )
             else
               Padding(
-                padding: const EdgeInsets.only(top:10),
+                padding: const EdgeInsets.only(top: 15),
                 child: ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
@@ -233,7 +244,8 @@ class _AuthFormState extends State<AuthForm>
                     child: Center(
                       child: Text(
                         _authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
-                        style: const TextStyle(color: CustomColor.primaryColor, fontSize: 17),
+                        style: const TextStyle(
+                            color: CustomColor.primaryColor, fontSize: 17),
                       ),
                     ),
                   ),
@@ -242,18 +254,14 @@ class _AuthFormState extends State<AuthForm>
             TextButton(
               onPressed: _switchAuthMode,
               child: Text(
-                _isLogin()
-                    ? "Não tem uma conta? Cadastre-se!"
-                    : 'Já tem uma conta? Entrar',
-                style: _isLogin() ? const TextStyle(
-                  color: CustomColor.whiteColor,
-                  fontSize: 16
-                )
-                :const TextStyle(
-                  color: CustomColor.secondaryColor,
-                  fontSize: 16
-                )
-              ),
+                  _isLogin()
+                      ? "Não tem uma conta? Cadastre-se!"
+                      : 'Já tem uma conta? Entrar',
+                  style: _isLogin()
+                      ? const TextStyle(
+                          color: CustomColor.whiteColor, fontSize: 16)
+                      : const TextStyle(
+                          color: CustomColor.secondaryColor, fontSize: 16)),
             ),
           ],
         ),
