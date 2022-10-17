@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/auth.dart';
+import '../models/person.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final person = Provider.of<Person>(context, listen: false);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: CustomColor.backgroundColor,
@@ -130,7 +133,9 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Editar Perfil'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.profileEdit, arguments: person);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.remove_red_eye),
