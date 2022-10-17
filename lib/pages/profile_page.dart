@@ -11,7 +11,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final person = Provider.of<Person>(context, listen: false);
 
     return SafeArea(
       child: Scaffold(
@@ -132,7 +131,7 @@ class ProfilePage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Editar Perfil'),
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.profileEdit, arguments: person);
+                Navigator.of(context).pushNamed(AppRoutes.profileEdit);
               },
             ),
             ListTile(

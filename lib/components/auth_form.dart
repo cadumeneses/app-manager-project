@@ -1,7 +1,6 @@
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 import '../exceptions/auth_exceptions.dart';
 import '../models/auth.dart';
