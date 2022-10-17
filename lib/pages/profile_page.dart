@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
