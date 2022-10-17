@@ -51,7 +51,7 @@ class _AuthFormState extends State<AuthForm>
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1.5),
+      begin: const Offset(-1.5,0),
       end: const Offset(0, 0),
     ).animate(
       CurvedAnimation(
