@@ -2,14 +2,14 @@ class Task {
   final String? id;
   final String? name;
   final DateTime? dateInit;
-  final DateTime? dateFinish;
+  // final DateTime? dateFinish;
   final String? projectId;
 
   Task({
     this.id,
     this.name,
     this.dateInit,
-    this.dateFinish,
+    // this.dateFinish,
     this.projectId,
   });
 }

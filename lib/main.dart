@@ -1,3 +1,4 @@
+import 'package:app_manager_project/models/board_repository.dart';
 import 'package:app_manager_project/models/person_repository.dart';
 import 'package:app_manager_project/models/project_list.dart';
 import 'package:app_manager_project/pages/auth_or_home.dart';
@@ -31,13 +32,20 @@ class MyApp extends StatelessWidget {
                 auth.token ?? '', auth.uid ?? '', previous?.projects ?? []);
           },
         ),
+        ChangeNotifierProxyProvider<Auth, BoardRepository>(
+            create: (_) => BoardRepository(),
+            update: (ctx, auth, previous) =>
+                BoardRepository(auth.token ?? '', previous?.boardItems ?? [])),
         ChangeNotifierProxyProvider<Auth, PersonRepository>(
           create: (_) => PersonRepository(),
           update: (ctx, auth, previous) {
             return PersonRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
           },
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BoardRepository(),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
