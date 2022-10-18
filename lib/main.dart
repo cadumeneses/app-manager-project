@@ -33,18 +33,18 @@ class MyApp extends StatelessWidget {
           },
         ),
         ChangeNotifierProxyProvider<Auth, BoardRepository>(
-            create: (_) => BoardRepository(),
-            update: (ctx, auth, previous) =>
-                BoardRepository(auth.token ?? '', previous?.boardItems ?? [])),
+          create: (_) => BoardRepository(),
+          update: (ctx, auth, previous) {
+            return BoardRepository(
+                auth.token ?? '', auth.uid ?? '', previous?.items ?? []);
+          },
+        ),
         ChangeNotifierProxyProvider<Auth, PersonRepository>(
           create: (_) => PersonRepository(),
           update: (ctx, auth, previous) {
             return PersonRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
           },
-        ),
-        ChangeNotifierProvider(
-          create: (_) => BoardRepository(),
         ),
       ],
       child: MaterialApp(

@@ -1,6 +1,7 @@
 import 'package:app_manager_project/models/task.dart';
+import 'package:flutter/cupertino.dart';
 
-class Board {
+class Board with ChangeNotifier{
   final String id;
   final String name;
   final List<Task>? tasks;

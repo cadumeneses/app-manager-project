@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 class BoardRepository with ChangeNotifier {
   var dio = DioClient();
 
-  final String token;
+  final String _token;
+  final String _uid;
 
   List<Board> boardItems = [];
 
   BoardRepository([
-    this.token = '',
+    this._token = '',
+    this._uid = '',
     this.boardItems = const [],
   ]);
 
@@ -28,7 +30,7 @@ class BoardRepository with ChangeNotifier {
   Future<void> loadBoards() async {
     List<Board> items = [];
     final response = await dio.dio.get(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$token');
+        'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token');
     Map<String, dynamic> data = response.data;
     data.forEach((boardId, boardData) {
       items.add(Board(
@@ -63,14 +65,19 @@ class BoardRepository with ChangeNotifier {
   }
 
   Future<void> addBoard(Board board) async {
-    await dio.dio.post(
-      'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$token',
+    final response = await dio.dio.post(
+      'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       data: {
         "id": board.id,
         "name": board.name,
       },
     );
-    boardItems.add(Board(id: board.id, name: board.name));
+
+    final id = response.data["name"];
+    boardItems.add(Board(
+      id: id,
+      name: board.name,
+    ));
 
     notifyListeners();
   }
