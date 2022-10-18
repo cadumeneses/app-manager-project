@@ -1,3 +1,4 @@
+import 'package:app_manager_project/components/profile_form_component.dart';
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: CustomColor.backgroundColor,
@@ -131,7 +131,7 @@ class ProfilePage extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Editar Perfil'),
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.profileEdit);
+                showModalForm(context);
               },
             ),
             ListTile(
@@ -158,6 +158,17 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+}
+
+void showModalForm(BuildContext context) {
+  showBottomSheet(
+      context: context,
+      builder: (_) {
+        return const ProfileFormComponent();
+      },
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
 }
 
 void showModal(BuildContext context) {
@@ -201,7 +212,7 @@ class LogoutModal extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Padding(
-            padding: const EdgeInsets.only(top:15),
+            padding: const EdgeInsets.only(top: 15),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: CustomColor.primaryColor,

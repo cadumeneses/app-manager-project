@@ -1,7 +1,6 @@
 import 'package:app_manager_project/models/person_repository.dart';
 import 'package:app_manager_project/models/project_list.dart';
 import 'package:app_manager_project/pages/auth_or_home.dart';
-import 'package:app_manager_project/pages/profile_edit_page.dart';
 import 'package:app_manager_project/pages/project_detail_page.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
 import 'package:app_manager_project/pages/projects_page.dart';
@@ -29,15 +28,14 @@ class MyApp extends StatelessWidget {
           create: (_) => ProjectList(),
           update: (ctx, auth, previous) {
             return ProjectList(
-              auth.token ?? '', auth.uid ?? '', previous?.projects ?? []
-            );
+                auth.token ?? '', auth.uid ?? '', previous?.projects ?? []);
           },
-        ),ChangeNotifierProxyProvider<Auth, PersonRepository>(
+        ),
+        ChangeNotifierProxyProvider<Auth, PersonRepository>(
           create: (_) => PersonRepository(),
           update: (ctx, auth, previous) {
             return PersonRepository(
-              auth.token ?? '', auth.uid ?? '', previous?.people ?? []
-            );
+                auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
           },
         )
       ],
@@ -57,7 +55,6 @@ class MyApp extends StatelessWidget {
           AppRoutes.projects: (ctx) => const ProjectsPage(),
           AppRoutes.projectsOverview: (ctx) => const ProjectsOverviewPage(),
           AppRoutes.projectsDetails: (ctx) => const ProjectDetailPage(),
-          AppRoutes.profileEdit: (ctx) => const ProfileEditPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

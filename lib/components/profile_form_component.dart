@@ -87,15 +87,39 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
     return _isLoading
         ? const Center(
             child: CircularProgressIndicator(color: CustomColor.secondaryColor))
-        : SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    bottom: 20 + MediaQuery.of(context).viewInsets.bottom),
+        : SizedBox(
+            height: MediaQuery.of(context).size.height * 0.88,
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back,
+                                size: 30, color: Colors.grey.shade400),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 40),
+                            child: Text(
+                              'Editar perfil',
+                              style: TextStyle(
+                                  color: CustomColor.primaryColor,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     const Divider(),
                     const SizedBox(height: 10),
                     InputTextForm(
