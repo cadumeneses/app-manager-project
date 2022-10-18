@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ThemeData()
               .colorScheme
-              .copyWith(primary: Colors.blue, secondary: Colors.purple),
+              .copyWith(primary: const Color(0xFFF56E28)),
           textTheme: ThemeData().textTheme.copyWith(
                 headline6: const TextStyle(
                   fontFamily: 'Barlow',
