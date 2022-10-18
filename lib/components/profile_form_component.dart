@@ -99,7 +99,8 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 10, right: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -107,8 +108,8 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.keyboard_arrow_left,
-                                size: 30, color: Colors.grey.shade400),
+                            icon: const Icon(Icons.keyboard_arrow_left,
+                                size: 30, color: CustomColor.secondaryColor),
                           ),
                           const Padding(
                             padding: EdgeInsets.only(left: 40),
@@ -124,7 +125,26 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                       ),
                     ),
                     const Divider(),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
+                    Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        CircleAvatar(
+                          minRadius: 45,
+                          maxRadius: 60,
+                          child: Image.asset(
+                            'assets/images/sorriso 1.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.edit),
+                          color: CustomColor.secondaryColor,
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 20),
                     InputTextForm(
                         formData: _formData,
                         formDataTitle: "name",
@@ -149,7 +169,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                         minLenght: 10),
                     const SizedBox(height: 25),
                     InputSubmitForm(
-                        color: CustomColor.secondaryColor,
+                        color: CustomColor.primaryColor,
                         submitForm: _submitForm,
                         nameButton: 'Criar Projeto')
                   ],

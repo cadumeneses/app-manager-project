@@ -1,3 +1,4 @@
+import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -42,6 +43,7 @@ class InputDateForm extends StatelessWidget {
             IconButton(
               onPressed: () => _showDatePicker(context),
               icon: const Icon(Icons.calendar_month),
+              color: CustomColor.secondaryColor,
             ),
           ],
         ),
