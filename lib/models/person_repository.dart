@@ -30,7 +30,6 @@ class PersonRepository with ChangeNotifier {
       name: data['name'] as String,
       imgProfile: data['imgProfile'] as String,
       occupation: data['occupation'],
-      uid: data['uid'],
     );
 
     if (hasId) {
@@ -51,13 +50,11 @@ class PersonRepository with ChangeNotifier {
     );
 
     final id = response.data["name"];
-    final uid = response.data["uid"];
     people.add(Person(
       id: id,
       name: person.name,
       imgProfile: person.imgProfile,
       occupation: person.occupation,
-      uid: uid,
     ));
     notifyListeners();
   }

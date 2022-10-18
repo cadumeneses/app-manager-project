@@ -1,3 +1,4 @@
+import 'package:app_manager_project/components/form/input_date_form.dart';
 import 'package:app_manager_project/models/person.dart';
 import 'package:app_manager_project/models/person_repository.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
   final _formData = <String, Object>{};
   final _formKey = GlobalKey<FormState>();
 
+  DateTime? _selectedDate = DateTime(2010);
+
   bool _isLoading = false;
 
   @override
@@ -30,10 +33,10 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
       final argument = ModalRoute.of(context)?.settings.arguments;
 
       if (argument != null) {
-        final project = argument as Person;
-        _formData['id'] = project.id;
-        _formData['name'] = project.name;
-        _formData['occupation'] = project.occupation;
+        final person = argument as Person;
+        _formData['id'] = person.id;
+        _formData['name'] = person.name;
+        _formData['occupation'] = person.occupation;
       }
     }
   }
@@ -66,12 +69,12 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
       await showDialog<void>(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('An error has occurred!'),
-          content: const Text('Error to save product'),
+          title: const Text('Ocorreu um erro!'),
+          content: const Text('Erro ao editar perfil'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Back'),
+              child: const Text('Sair'),
             )
           ],
         ),
@@ -104,13 +107,13 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.arrow_back,
+                            icon: Icon(Icons.keyboard_arrow_left,
                                 size: 30, color: Colors.grey.shade400),
                           ),
                           const Padding(
                             padding: EdgeInsets.only(left: 40),
                             child: Text(
-                              'Editar perfil',
+                              'Editar Seu Perfil',
                               style: TextStyle(
                                   color: CustomColor.primaryColor,
                                   fontSize: 22,
@@ -128,6 +131,15 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                         titleFocus: _nameFocus,
                         label: "Nome",
                         minLenght: 3),
+                    const SizedBox(height: 20),
+                    InputDateForm(
+                      selectedDate: _selectedDate,
+                      onDateChange: (newDate) {
+                        setState(() {
+                          _selectedDate = newDate;
+                        });
+                      },
+                    ),
                     const SizedBox(height: 20),
                     InputTextForm(
                         formData: _formData,
