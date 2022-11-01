@@ -7,7 +7,7 @@ class Project with ChangeNotifier {
   final DateTime? createDate;
   // final DateTime? finalDate;
   // final String? teamName;
-  final String? imgUrl;
+  final String imgUrl;
   // final bool? todo;
   // final bool? progress;
   // final bool? test;
@@ -22,7 +22,7 @@ class Project with ChangeNotifier {
      this.createDate,
     //  this.teamName,
     //  this.finalDate,
-     this.imgUrl,
+     required this.imgUrl,
     //  this.todo,
     //  this.progress,
     //  this.test,

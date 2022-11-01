@@ -3,9 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_manager_project/utils/custom_color.dart';
 
+import '../models/board.dart';
+
 class BoardComponent extends StatelessWidget {
-  const BoardComponent({required this.name,super.key});
-  final String name;
+  const BoardComponent({required this.board,super.key});
+  final Board board;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class BoardComponent extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          name,
+                          board.name,
                           style: const TextStyle(
                             color: CustomColor.primaryColor,
                             fontSize: 18,

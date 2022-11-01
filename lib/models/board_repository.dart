@@ -1,38 +1,36 @@
 import 'dart:math';
 
 import 'package:app_manager_project/models/board.dart';
-import 'package:app_manager_project/services/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class BoardRepository with ChangeNotifier {
-  var dio = DioClient();
+class BoardRepository extends ChangeNotifier {
+  var dio = Dio();
 
   final String _token;
   final String _uid;
 
-  List<Board> boardItems = [];
+  List<Board> _boardItems = [];
+  List<Board> get boards => [..._boardItems];
 
   BoardRepository([
     this._token = '',
     this._uid = '',
-    this.boardItems = const [],
+    this._boardItems = const [],
   ]);
 
-  List<Board> get items {
-    return [...boardItems];
-  }
-
   int get boardCount {
-    return boardItems.length;
+    return _boardItems.length;
   }
 
   Future<void> loadBoards() async {
-    boardItems.clear();
+    _boardItems.clear();
     try {
-      final response = await dio.dio.get('boards.json?auth=$_token');
+      final response = await dio.get('https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token');
+      debugPrint(boards.length.toString());
       Map<String, dynamic> data = response.data;
       data.forEach((boardId, boardData) {
-        boardItems.add(Board(
+        _boardItems.add(Board(
           id: boardId,
           name: boardData['name'],
         ));
@@ -59,7 +57,7 @@ class BoardRepository with ChangeNotifier {
   }
 
   Future<void> addBoard(Board board) async {
-    final response = await dio.dio.post(
+    final response = await dio.post(
       'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       data: {
         "id": board.id,
@@ -68,7 +66,7 @@ class BoardRepository with ChangeNotifier {
     );
 
     final id = response.data["name"];
-    boardItems.add(Board(
+    _boardItems.add(Board(
       id: id,
       name: board.name,
     ));

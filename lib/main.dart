@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           create: (_) => BoardRepository(),
           update: (ctx, auth, previous) {
             return BoardRepository(
-                auth.token ?? '', auth.uid ?? '', previous?.items ?? []);
+                auth.token ?? '', auth.uid ?? '', previous?.boards ?? []);
           },
         ),
         ChangeNotifierProxyProvider<Auth, PersonRepository>(

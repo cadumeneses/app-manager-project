@@ -56,6 +56,7 @@ class ProjectList with ChangeNotifier {
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
       description: data['description'],
+      imgUrl: "assets/images/ondas.jpg",
     );
 
     if (hasId) {

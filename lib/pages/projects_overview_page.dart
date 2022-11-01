@@ -7,8 +7,19 @@ import '../components/project_item_component.dart';
 import '../components/project_search_component.dart';
 import '../components/task_item_component.dart';
 
-class ProjectsOverviewPage extends StatelessWidget {
+class ProjectsOverviewPage extends StatefulWidget {
   const ProjectsOverviewPage({super.key});
+
+  @override
+  State<ProjectsOverviewPage> createState() => _ProjectsOverviewPageState();
+}
+
+class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
+  @override
+  void initState() {
+    super.initState();
+    _onRefresh(context);
+  }
 
   Future<void> _onRefresh(BuildContext context) async {
     await Provider.of<ProjectList>(
@@ -19,7 +30,6 @@ class ProjectsOverviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
       color: CustomColor.secondaryColor,
@@ -83,17 +93,20 @@ class ProjectsOverviewPage extends StatelessWidget {
                   width: double.infinity,
                   height: 260,
                   child: Consumer<ProjectList>(
-                    builder: (_,projectRepository, widget) {
-                      return ListView.builder(
+                      builder: (_, projectRepository, widget) {
+                    return ListView.builder(
                         itemCount: projectRepository.projects.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: ((context, index) {
-                        var project = projectRepository.projects[index];
-                        return ProjectItemComponent(name: project.name,imgUrl: project.imgUrl!, description: project.description, project: project,);
-                      })
-                      );
-                    }
-                  ),
+                          var project = projectRepository.projects[index];
+                          return ProjectItemComponent(
+                            name: project.name,
+                            imgUrl: project.imgUrl,
+                            description: project.description,
+                            project: project,
+                          );
+                        }));
+                  }),
                 ),
                 const SizedBox(height: 20),
                 Padding(
