@@ -3,14 +3,17 @@ import 'package:app_manager_project/models/project.dart';
 import 'package:app_manager_project/utils/app_routes.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ProjectItemComponent extends StatelessWidget {
-  const ProjectItemComponent({super.key});
+  const ProjectItemComponent({required this.project, required this.name, required this.imgUrl, required this.description, super.key});
+
+  final String name;
+  final String imgUrl;
+  final String description;
+  final Project project;
 
   @override
   Widget build(BuildContext context) {
-    final project = Provider.of<Project>(context, listen: false);
 
     return Center(
       child: SizedBox(
@@ -33,7 +36,7 @@ class ProjectItemComponent extends StatelessWidget {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10)),
                     child: Image.asset(
-                      project.imgUrl!,
+                      imgUrl,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -47,7 +50,7 @@ class ProjectItemComponent extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            project.name,
+                            name,
                             style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -63,7 +66,7 @@ class ProjectItemComponent extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '${project.description} - ',
+                            '$description - ',
                             style: const TextStyle(
                                 fontSize: 14, color: Colors.grey),
                           ),

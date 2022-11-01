@@ -1,4 +1,3 @@
-import 'package:app_manager_project/models/project.dart';
 import 'package:app_manager_project/models/project_list.dart';
 import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -8,28 +7,8 @@ import '../components/project_item_component.dart';
 import '../components/project_search_component.dart';
 import '../components/task_item_component.dart';
 
-class ProjectsOverviewPage extends StatefulWidget {
+class ProjectsOverviewPage extends StatelessWidget {
   const ProjectsOverviewPage({super.key});
-
-  @override
-  State<ProjectsOverviewPage> createState() => _ProjectsOverviewPageState();
-}
-
-class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<ProjectList>(
-      context,
-      listen: false,
-    ).loadProjects().then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
-  }
 
   Future<void> _onRefresh(BuildContext context) async {
     await Provider.of<ProjectList>(
@@ -40,8 +19,6 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProjectList>(context);
-    final List<Project> loadedProjects = provider.projects;
 
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
@@ -105,14 +82,17 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   padding: const EdgeInsets.only(right: 10, left: 20),
                   width: double.infinity,
                   height: 260,
-                  child: ListView.builder(
-                    itemCount: loadedProjects.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) =>
-                        ChangeNotifierProvider.value(
-                          value: loadedProjects[index],
-                          child: const ProjectItemComponent(),
-                        )),
+                  child: Consumer<ProjectList>(
+                    builder: (_,projectRepository, widget) {
+                      return ListView.builder(
+                        itemCount: projectRepository.projects.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) {
+                        var project = projectRepository.projects[index];
+                        return ProjectItemComponent(name: project.name,imgUrl: project.imgUrl!, description: project.description, project: project,);
+                      })
+                      );
+                    }
                   ),
                 ),
                 const SizedBox(height: 20),

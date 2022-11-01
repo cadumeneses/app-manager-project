@@ -4,7 +4,6 @@ import 'package:app_manager_project/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../models/project.dart';
 import '../models/project_list.dart';
 
 class ProjectsPage extends StatelessWidget {
@@ -12,11 +11,8 @@ class ProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ProjectList>(context);
-    final List<Project> loadedProjects = provider.projects;
-
-    final availableHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
-
+    final availableHeight =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
     return SafeArea(
       child: Scaffold(
@@ -63,15 +59,19 @@ class ProjectsPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: availableHeight * 0.01),
                 height: availableHeight * 0.77,
-                child: ListView.builder(
-                  itemCount: loadedProjects.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: ((context, index) =>
-                      ChangeNotifierProvider.value(
-                        value: loadedProjects[index],
-                        child: const ProjectItemComponent(),
-                      )),
-                ),
+                child: Consumer<ProjectList>(
+                    builder: (_, projectRepository, widget) {
+                  return ListView.builder(
+                      itemCount: projectRepository.projects.length,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: ((context, index) {
+                        var project = projectRepository.projects[index];
+                        return ProjectItemComponent(
+                            name: project.name,
+                            imgUrl: project.imgUrl!,
+                            description: project.description, project: project,);
+                      }));
+                }),
               ),
             ],
           ),
