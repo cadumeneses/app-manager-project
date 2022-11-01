@@ -42,7 +42,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     final provider = Provider.of<BoardRepository>(context);
     final List<Board> loadBoards = provider.boardItems;
     return Scaffold(
-      backgroundColor: CustomColor.backgroundColor,
+      backgroundColor: CustomColor.whiteColor,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -141,7 +141,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.only(right: 10, left: 20),
+                  padding: const EdgeInsets.only(right: 10, left: 20, top: 20),
                   width: double.infinity,
                   height: 260,
                   child: ListView.builder(
