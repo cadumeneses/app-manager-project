@@ -13,7 +13,7 @@ class BoardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width * 0.8,
         child: Card(
           elevation: 0,
           color: CustomColor.backgroundColor,

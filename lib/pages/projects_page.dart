@@ -68,7 +68,7 @@ class ProjectsPage extends StatelessWidget {
                         var project = projectRepository.projects[index];
                         return ProjectItemComponent(
                             name: project.name,
-                            imgUrl: project.imgUrl!,
+                            imgUrl: project.imgUrl,
                             description: project.description, project: project,);
                       }));
                 }),

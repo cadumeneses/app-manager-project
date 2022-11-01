@@ -108,7 +108,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 Container(
                   padding: const EdgeInsets.only(right: 10, left: 20, top: 10),
                   width: double.infinity,
-                  height: 260,
+                  height: 80,
                   child: Consumer<BoardRepository>(
                       builder: (_, boardRepository, widget) {
                     return ListView.builder(
