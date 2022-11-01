@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:app_manager_project/utils/custom_color.dart';
-import '../models/board.dart';
 
 class BoardComponent extends StatelessWidget {
-  BoardComponent({required this.name,super.key});
+  const BoardComponent({required this.name,super.key});
   final String name;
 
   @override
@@ -15,6 +13,7 @@ class BoardComponent extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: Card(
+          elevation: 0,
           color: CustomColor.backgroundColor,
           child: Column(children: [
             Container(

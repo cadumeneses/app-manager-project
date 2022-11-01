@@ -20,10 +20,10 @@ class ProjectDetailPage extends StatelessWidget {
           SliverAppBar(
             iconTheme: const IconThemeData(color: CustomColor.secondaryColor),
             actions: const [
-              Icon(Icons.search),
+              Icon(Icons.search, size: 30),
               Padding(
-                padding: EdgeInsets.only(right: 10, left: 10),
-                child: Icon(Icons.more_vert),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Icon(Icons.more_vert, size: 30),
               )
             ],
             expandedHeight: 250,
@@ -85,22 +85,20 @@ class ProjectDetailPage extends StatelessWidget {
                 ),
               ),
               Container(
-                  padding: const EdgeInsets.only(right: 10, left: 20, top: 10),
-                  width: double.infinity,
-                  height: 260,
-                  child: Consumer<BoardRepository>(
-                    builder: (_,boardRepository, widget) {
-                      return ListView.builder(
-                        itemCount: boardRepository.boardCount,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) {
-                          var board = boardRepository.boardItems[index];
-                          return BoardComponent(name: board.name);
-                        })
-                      );
-                    }
-                  ),
-                ),
+                padding: const EdgeInsets.only(right: 10, left: 20, top: 10),
+                width: double.infinity,
+                height: 260,
+                child: Consumer<BoardRepository>(
+                    builder: (_, boardRepository, widget) {
+                  return ListView.builder(
+                      itemCount: boardRepository.boardCount,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: ((context, index) {
+                        var board = boardRepository.boardItems[index];
+                        return BoardComponent(name: board.name);
+                      }));
+                }),
+              ),
             ]),
           ),
         ],
