@@ -20,7 +20,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   bool isLoading = true;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     Provider.of<BoardRepository>(
       context,
@@ -112,46 +112,49 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 5, top: 20),
-                child: InkWell(
-                  onTap: () => showModal(context),
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: CustomColor.whiteColor,
-                        border: Border.all(
-                          color: CustomColor.primaryColor,
-                          width: 2,
-                        )),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          'Definir prazo do projeto',
-                          style: TextStyle(
-                              color: CustomColor.primaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15, right: 5, top: 20),
+              //   child: InkWell(
+              //     onTap: () => showModal(context),
+              //     child: Container(
+              //       height: 50,
+              //       decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(20),
+              //           color: CustomColor.whiteColor,
+              //           border: Border.all(
+              //             color: CustomColor.primaryColor,
+              //             width: 2,
+              //           )),
+              //       child: const Center(
+              //         child: Padding(
+              //           padding: EdgeInsets.all(10),
+              //           child: Text(
+              //             'Definir prazo do projeto',
+              //             style: TextStyle(
+              //                 color: CustomColor.primaryColor,
+              //                 fontSize: 16,
+              //                 fontWeight: FontWeight.w600),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Container(
-                  padding: const EdgeInsets.only(right: 10, left: 20, top: 20),
+                  padding: const EdgeInsets.only(right: 10, left: 20, top: 10),
                   width: double.infinity,
                   height: 260,
-                  child: ListView.builder(
-                    itemCount: loadBoards.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) =>
-                        ChangeNotifierProvider.value(
-                          value: loadBoards[index],
-                          child: const BoardComponent(),
-                        )),
+                  child: Consumer<BoardRepository>(
+                    builder: (_,boardRepository, widget) {
+                      return ListView.builder(
+                        itemCount: boardRepository.boardCount,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) {
+                          var board = boardRepository.boardItems[index];
+                          return BoardComponent(name: board.name);
+                        })
+                      );
+                    }
                   ),
                 ),
             ]),

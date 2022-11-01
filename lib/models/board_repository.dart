@@ -1,8 +1,6 @@
 import 'dart:math';
 
 import 'package:app_manager_project/models/board.dart';
-import 'package:app_manager_project/models/project.dart';
-import 'package:app_manager_project/models/task.dart';
 import 'package:app_manager_project/services/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -29,25 +27,20 @@ class BoardRepository with ChangeNotifier {
   }
 
   Future<void> loadBoards() async {
-    List<Board> items = [];
-    final response = await dio.dio.get(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token');
-    Map<String, dynamic> data = response.data;
-    data.forEach((boardId, boardData) {
-      items.add(Board(
-        id: boardId,
-        name: boardData['name'],
-        tasks: (boardData['tasks'] as List<dynamic>).map((e) {
-          return Task(
-              id: e['id'],
-              name: e['name'],
-              projectId: e['projectId'],
-              dateInit: DateTime.parse(e['dateInit']));
-        }).toList(),
-      ));
-      boardItems = items.reversed.toList();
-      notifyListeners();
-    });
+    boardItems.clear();
+    try {
+      final response = await dio.dio.get('boards.json?auth=$_token');
+      Map<String, dynamic> data = response.data;
+      data.forEach((boardId, boardData) {
+        boardItems.add(Board(
+          id: boardId,
+          name: boardData['name'],
+        ));
+        notifyListeners();
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<void> saveBoard(Map<String, dynamic> data) async {

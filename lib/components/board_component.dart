@@ -6,11 +6,11 @@ import 'package:app_manager_project/utils/custom_color.dart';
 import '../models/board.dart';
 
 class BoardComponent extends StatelessWidget {
-  const BoardComponent({super.key});
+  BoardComponent({required this.name,super.key});
+  final String name;
 
   @override
   Widget build(BuildContext context) {
-    final board = Provider.of<Board>(context, listen: false);
     return SingleChildScrollView(
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -25,7 +25,7 @@ class BoardComponent extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          board.name,
+                          name,
                           style: const TextStyle(
                             color: CustomColor.primaryColor,
                             fontSize: 18,
