@@ -1,3 +1,4 @@
+import 'package:app_manager_project/components/task_form_component.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -47,7 +48,9 @@ class BoardComponent extends StatelessWidget {
                       ],
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showModal(context);
+                        },
                         icon: const FaIcon(
                           FontAwesomeIcons.squarePlus,
                           color: CustomColor.primaryColor,
@@ -60,3 +63,14 @@ class BoardComponent extends StatelessWidget {
     );
   }
 }
+
+void showModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return const TaskFormComponent();
+        },                
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+  }

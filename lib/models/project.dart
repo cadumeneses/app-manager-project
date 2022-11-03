@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Project with ChangeNotifier {
-  final String id;
+  late final String id;
   final String name;
   final String description;
   final DateTime? createDate;
@@ -30,4 +30,5 @@ class Project with ChangeNotifier {
     //  this.taskId,
     //  this.teamId,
   });
+
 }

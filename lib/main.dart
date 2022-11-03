@@ -1,6 +1,7 @@
 import 'package:app_manager_project/models/board_repository.dart';
 import 'package:app_manager_project/models/person_repository.dart';
 import 'package:app_manager_project/models/project_list.dart';
+import 'package:app_manager_project/models/tasks_list.dart';
 import 'package:app_manager_project/pages/auth_or_home.dart';
 import 'package:app_manager_project/pages/project_detail_page.dart';
 import 'package:app_manager_project/pages/projects_overview_page.dart';
@@ -44,6 +45,13 @@ class MyApp extends StatelessWidget {
           update: (ctx, auth, previous) {
             return PersonRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, TaskRepository>(
+          create: (_) => TaskRepository(),
+          update: (ctx, auth, previous) {
+            return TaskRepository(
+                auth.token ?? '', auth.uid ?? '', previous?.tasks ?? []);
           },
         ),
       ],
