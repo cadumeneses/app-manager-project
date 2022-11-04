@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
 class Project with ChangeNotifier {
-  late final String id;
-  final String name;
+  final String id;
+  String name;
   final String description;
   final DateTime? createDate;
   // final DateTime? finalDate;

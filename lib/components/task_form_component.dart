@@ -17,31 +17,10 @@ class TaskFormComponent extends StatefulWidget {
 }
 
 class _TaskFormComponentState extends State<TaskFormComponent> {
-  var project = Project(
-    id: '',
-    name: "",
-    description: "",
-    imgUrl: "",
-  );
   final _nameFocus = FocusNode();
 
   final _formData = <String, Object>{};
   final _formKey = GlobalKey<FormState>();
-
-  List<DropdownMenuItem<Project>> projects() {
-    var itens = <DropdownMenuItem<Project>>[];
-    for (var i = 0;
-        i < Provider.of<ProjectList>(context).projects.length;
-        i++) {
-      itens.add(
-        DropdownMenuItem(
-            value: Provider.of<ProjectList>(context).projects.elementAt(i),
-            child: Text(
-                Provider.of<ProjectList>(context).projects.elementAt(i).name)),
-      );
-    }
-    return itens;
-  }
 
   bool _isLoading = false;
 
@@ -133,7 +112,6 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                       ),
                     ),
                     const Divider(),
-                    const SizedBox(height: 10),
                     InputTextForm(
                         formData: _formData,
                         formDataTitle: "name",
@@ -142,22 +120,37 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                         minLenght: 3),
                     const SizedBox(height: 20),
                     Consumer<ProjectList>(
-                      builder: (_,projectRepository, widget) {
-                        return DropdownButton(
-                          hint: const Text('Nenhum projeto selecionado'),
-                          items: projectRepository.projects.map<DropdownMenuItem<Project>>(
-                            (final Project value){
-                              return DropdownMenuItem<Project>(value: value,child: Text(value.name),);
-                            }
-                          ).toList(),
-                          onChanged: (value){
-                             setState(() {
-                                projectRepository.projects.where((element) => element == value);
-                             });
+                        builder: (_, projectRepository, widget) {
+                      return Container(
+                        padding: const EdgeInsets.all(5),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: DropdownButton(
+                          value: projectRepository.projects.first,
+                          isExpanded: true,
+                          style: TextStyle(color: Colors.grey.shade600, fontSize: 17),
+                          items: projectRepository.projects
+                              .map<DropdownMenuItem<Project>>(
+                                  (final Project value) {
+                            return DropdownMenuItem<Project>(
+                              value: value,
+                              child: Text(value.name),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              DropdownMenuItem<Project>(
+                                  value: value, child: Text(value!.name));
+                            });
+                            debugPrint(value!.name.toString());
                           },
-                        );
-                      }
-                    ),
+                        ),
+                      );
+                    }),
+                    const SizedBox(height: 20),
                     InputSubmitForm(
                         color: CustomColor.secondaryColor,
                         submitForm: _submitForm,

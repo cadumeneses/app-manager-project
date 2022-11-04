@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
-
 import '../models/project.dart';
 import '../services/dio.dart';
 
@@ -9,9 +7,15 @@ class ProjectList with ChangeNotifier {
   var dio = DioClient();
   final String _token;
   final String _uid;
+  Project _project = Project(id: "", name: "", description: "", imgUrl: "");
+
+  Project get project => _project;
+  set project(Project project) => _project = project;
 
   List<Project> _projects = [];
   List<Project> get projects => [..._projects];
+
+  set projects(List<Project> projects) =>  _projects = projects;
 
   int get projectsCount {
     return _projects.length;
