@@ -1,3 +1,4 @@
+import 'package:app_manager_project/components/task_card_component.dart';
 import 'package:app_manager_project/components/task_form_component.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,20 +8,21 @@ import 'package:app_manager_project/utils/custom_color.dart';
 import '../models/board.dart';
 
 class BoardComponent extends StatelessWidget {
-  const BoardComponent({required this.board,super.key});
+  const BoardComponent({required this.board, super.key});
   final Board board;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Card(
-          elevation: 0,
-          color: CustomColor.backgroundColor,
-          child: Column(children: [
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: Card(
+        elevation: 0,
+        color: CustomColor.backgroundColor,
+        child: Column(
+          children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -57,7 +59,8 @@ class BoardComponent extends StatelessWidget {
                         ))
                   ]),
             ),
-          ]),
+            const TaskCardComponent(),
+          ],
         ),
       ),
     );
@@ -65,12 +68,12 @@ class BoardComponent extends StatelessWidget {
 }
 
 void showModal(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return const TaskFormComponent();
-        },                
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))));
-  }
+  showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return const TaskFormComponent();
+      },
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+}

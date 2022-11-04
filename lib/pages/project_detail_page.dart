@@ -32,6 +32,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   Widget build(BuildContext context) {
     final Project project =
         ModalRoute.of(context)?.settings.arguments as Project;
+
     return RefreshIndicator(
       onRefresh:() => _onRefresh(context),
       child: Scaffold(
@@ -47,7 +48,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   child: Icon(Icons.more_vert, size: 30),
                 )
               ],
-              expandedHeight: 250,
+              expandedHeight: MediaQuery.of(context).size.height * 0.3,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                 title: SizedBox(
@@ -84,7 +85,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             ),
             SliverList(
               delegate: SliverChildListDelegate([
-                const SizedBox(height: 10),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 5),
                   child: Text(
@@ -96,7 +97,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 5),
                   child: Text(
@@ -106,9 +107,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(right: 10, left: 20, top: 10),
+                  padding: EdgeInsets.only(right: 10, left: 20, top: MediaQuery.of(context).size.height * 0.015),
                   width: double.infinity,
-                  height: 80,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   child: Consumer<BoardRepository>(
                       builder: (_, boardRepository, widget) {
                     return ListView.builder(
