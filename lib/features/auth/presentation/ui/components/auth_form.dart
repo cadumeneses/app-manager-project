@@ -1,5 +1,5 @@
-import 'package:app_manager_project/exceptions/auth_exceptions.dart';
-import 'package:app_manager_project/utils/custom_color.dart';
+import 'package:app_manager_project/core/utils/custom_color.dart';
+import 'package:app_manager_project/features/auth/infra/repositories/exceptions/auth_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -121,7 +121,7 @@ class _AuthFormState extends State<AuthForm>
           _authData['password']!,
         );
       }
-    } on AuthExceptions catch (error) {
+    } on AuthException catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {
       _showErrorDialog('Ocorreu um erro inesperado!');

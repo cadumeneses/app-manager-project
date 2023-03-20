@@ -1,7 +1,6 @@
-import 'package:app_manager_project/utils/custom_color.dart';
+import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../components/auth_form.dart';
+import 'components/auth_form.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});

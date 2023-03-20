@@ -1,9 +1,10 @@
 import 'dart:math';
 import 'package:app_manager_project/core/project/project_model.dart';
-import 'package:app_manager_project/services/dio.dart';
 import 'package:flutter/foundation.dart';
 
-class ProjectList with ChangeNotifier {
+import '../external/dio/dio_client.dart';
+
+class ProjectRepository with ChangeNotifier {
   var dio = DioClient();
   final String _token;
   final String _uid;
@@ -21,7 +22,7 @@ class ProjectList with ChangeNotifier {
     return _projects.length;
   }
 
-  ProjectList([
+  ProjectRepository([
     this._token = '',
     this._uid = '',
     this._projects = const [],
