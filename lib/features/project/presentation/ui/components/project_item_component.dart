@@ -1,4 +1,4 @@
-import 'package:app_manager_project/core/project/project_model.dart';
+import 'package:app_manager_project/features/project/infra/models/project_model.dart';
 import 'package:app_manager_project/core/utils/app_routes.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';

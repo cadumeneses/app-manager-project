@@ -1,11 +1,11 @@
 import 'package:app_manager_project/core/components/form/input_text_form.dart';
-import 'package:app_manager_project/core/project/project_model.dart';
+import 'package:app_manager_project/features/project/infra/models/project_model.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/form/input_submit_form.dart';
-import '../project_repository.dart';
+import '../../../../../core/components/form/input_submit_form.dart';
+import '../../../infra/repositories/project_repository.dart';
 
 class ProjectFormComponent extends StatefulWidget {
   const ProjectFormComponent({super.key});

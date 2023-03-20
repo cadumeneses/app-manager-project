@@ -1,4 +1,4 @@
-import 'package:app_manager_project/core/project/project_repository.dart';
+import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
 import 'package:app_manager_project/features/auth/infra/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +8,10 @@ import 'core/task/infra/repositories/tasks_repository.dart';
 import 'core/utils/app_routes.dart';
 import 'features/auth/presentation/ui/auth_page.dart';
 import 'features/home/presentation/ui/home_page.dart';
-import 'features/my_projects/presentation/ui/my_projects_page.dart';
+import 'features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'features/profile/infra/repositories/profile_repository.dart';
-import 'features/project_detail/presention/ui/project_detail_page.dart';
-import 'features/projects_overview/presentation/ui/projects_overview_page.dart';
+import 'features/project/presentation/ui/project_detail/project_detail_page.dart';
+import 'features/project/presentation/ui/projects_overview/projects_overview_page.dart';
 
 void main() {
   runApp(const MyApp());

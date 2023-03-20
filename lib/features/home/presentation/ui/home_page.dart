@@ -1,11 +1,11 @@
-import 'package:app_manager_project/core/project/components/porject_form_component.dart';
+import 'package:app_manager_project/features/project/presentation/ui/components/porject_form_component.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
-import 'package:app_manager_project/features/my_projects/presentation/ui/my_projects_page.dart';
+import 'package:app_manager_project/features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'package:app_manager_project/features/profile/presentation/ui/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-import '../../../projects_overview/presentation/ui/projects_overview_page.dart';
+import '../../../project/presentation/ui/projects_overview/projects_overview_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

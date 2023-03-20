@@ -1,10 +1,10 @@
-import 'package:app_manager_project/core/project/project_repository.dart';
+import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
-import 'package:app_manager_project/features/my_projects/presentation/ui/components/chips_component.dart';
+import 'package:app_manager_project/features/project/presentation/ui/my_projects/components/chips_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/project/components/project_item_component.dart';
+import '../components/project_item_component.dart';
 
 
 class MyProjectsPage extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
-import 'package:app_manager_project/core/project/components/project_item_component.dart';
-import 'package:app_manager_project/core/project/project_repository.dart';
+import 'package:app_manager_project/features/project/presentation/ui/components/project_item_component.dart';
+import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

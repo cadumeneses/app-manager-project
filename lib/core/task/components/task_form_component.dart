@@ -1,10 +1,10 @@
-import 'package:app_manager_project/core/project/project_repository.dart';
+import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
 import 'package:app_manager_project/core/task/infra/models/task_model.dart';
 import 'package:app_manager_project/core/task/infra/repositories/tasks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../project/project_model.dart';
+import '../../../features/project/infra/models/project_model.dart';
 import '../../utils/custom_color.dart';
 import '../../components/form/input_submit_form.dart';
 import '../../components/form/input_text_form.dart';

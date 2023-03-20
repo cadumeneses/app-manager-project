@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'package:app_manager_project/core/project/project_model.dart';
+import 'package:app_manager_project/features/project/infra/models/project_model.dart';
 import 'package:flutter/foundation.dart';
 
-import '../external/dio/dio_client.dart';
+import '../../../../core/external/dio/dio_client.dart';
 
 class ProjectRepository with ChangeNotifier {
   var dio = DioClient();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/custom_color.dart';
+import '../../../../../core/utils/custom_color.dart';
 
 class ChartComponent extends StatelessWidget {
   const ChartComponent({required this.percentage, super.key});
