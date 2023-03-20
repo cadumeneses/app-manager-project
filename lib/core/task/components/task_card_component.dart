@@ -1,8 +1,7 @@
+import 'package:app_manager_project/core/task/components/task_item_component.dart';
 import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../task_item_component.dart';
 
 class TaskCardComponent extends StatelessWidget {
   const TaskCardComponent({super.key});
