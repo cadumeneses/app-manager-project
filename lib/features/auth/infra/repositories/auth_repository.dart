@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../data/store.dart';
+import 'data/store.dart';
 import 'exceptions/auth_exception.dart';
 
 class AuthRepository with ChangeNotifier {
