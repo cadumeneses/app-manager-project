@@ -1,9 +1,11 @@
 import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:app_manager_project/features/auth/infra/repositories/exceptions/auth_exception.dart';
+import 'package:app_manager_project/features/auth/presentation/ui/components/password_input_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../infra/repositories/auth_repository.dart';
+import 'email_input_component.dart';
 
 enum AuthMode { singup, login }
 
@@ -14,8 +16,7 @@ class AuthForm extends StatefulWidget {
   State<AuthForm> createState() => _AuthFormState();
 }
 
-class _AuthFormState extends State<AuthForm>
-    with SingleTickerProviderStateMixin {
+class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
@@ -26,57 +27,14 @@ class _AuthFormState extends State<AuthForm>
     'password': '',
   };
 
-  AnimationController? _controller;
-  Animation<double>? _opacityAnimation;
-  Animation<Offset>? _slideAnimation;
-
   bool _isLogin() => _authMode == AuthMode.login;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 700),
-    );
-
-    _opacityAnimation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller!,
-        curve: Curves.linear,
-      ),
-    );
-
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(-1.5, 0),
-      end: const Offset(0, 0),
-    ).animate(
-      CurvedAnimation(
-        parent: _controller!,
-        curve: Curves.linear,
-      ),
-    );
-    _authMode = AuthMode.login;
-    _controller?.forward();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
-  }
-
-  void _switchAuthMode() {
+  void switchAuthMode() {
     setState(() {
       if (_isLogin()) {
         _authMode = AuthMode.singup;
-        _controller?.forward();
       } else {
         _authMode = AuthMode.login;
-        _controller?.forward();
       }
     });
   }
@@ -97,7 +55,7 @@ class _AuthFormState extends State<AuthForm>
     );
   }
 
-  Future<void> _submit() async {
+  Future<void> submit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
 
     if (!isValid) {
@@ -131,6 +89,12 @@ class _AuthFormState extends State<AuthForm>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _passwordController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).size.height * .4,
@@ -138,85 +102,11 @@ class _AuthFormState extends State<AuthForm>
         key: _formKey,
         child: Column(
           children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-              padding: const EdgeInsets.all(5),
-              child: SlideTransition(
-                position: _slideAnimation!,
-                child: FadeTransition(
-                  opacity: _opacityAnimation!,
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        decoration: const BoxDecoration(
-                            border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                        )),
-                        child: TextFormField(
-                          style: const TextStyle(
-                            color: CustomColor.whiteColor,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: "E-mail",
-                            hintStyle: TextStyle(color: Colors.white),
-                            labelStyle: TextStyle(color: Colors.white),
-                            focusedBorder: InputBorder.none,
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          onSaved: (email) => _authData['email'] = email ?? '',
-                          validator: (_email) {
-                            final email = _email ?? '';
-                            if (email.trim().isEmpty || !email.contains('@')) {
-                              return 'Insira um e-mail válido!';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        decoration: const BoxDecoration(
-                            border: Border(
-                          bottom: BorderSide(color: Colors.white),
-                        )),
-                        child: TextFormField(
-                          style: const TextStyle(
-                            color: CustomColor.whiteColor,
-                          ),
-                          decoration: const InputDecoration(
-                            hintText: "Senha",
-                            hintStyle: TextStyle(color: Colors.white),
-                            focusedBorder: InputBorder.none,
-                            border: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          obscureText: true,
-                          controller: _passwordController,
-                          onSaved: (password) =>
-                              _authData['password'] = password ?? '',
-                          validator: (_password) {
-                            final password = _password ?? '';
-                            if (password.trim().isEmpty ||
-                                password.length < 5) {
-                              return 'Insira uma senha válida!';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            Column(
+              children: [
+                EmailInputComponent(authData: _authData),
+                PasswordInputComponent(passwordController: _passwordController, authData: _authData),
+              ],
             ),
             if (_isLoading)
               const CircularProgressIndicator(
@@ -226,7 +116,7 @@ class _AuthFormState extends State<AuthForm>
               Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: ElevatedButton(
-                  onPressed: _submit,
+                  onPressed: submit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: CustomColor.whiteColor,
                     shape: RoundedRectangleBorder(
@@ -244,23 +134,30 @@ class _AuthFormState extends State<AuthForm>
                       child: Text(
                         _authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
                         style: const TextStyle(
-                            color: CustomColor.primaryColor, fontSize: 17),
+                          color: CustomColor.primaryColor,
+                          fontSize: 17,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             TextButton(
-              onPressed: _switchAuthMode,
+              onPressed: switchAuthMode,
               child: Text(
-                  _isLogin()
-                      ? "Não tem uma conta? Cadastre-se!"
-                      : 'Já tem uma conta? Entrar',
-                  style: _isLogin()
-                      ? const TextStyle(
-                          color: CustomColor.whiteColor, fontSize: 16)
-                      : const TextStyle(
-                          color: CustomColor.secondaryColor, fontSize: 16)),
+                _isLogin()
+                    ? "Não tem uma conta? Cadastre-se!"
+                    : 'Já tem uma conta? Entrar',
+                style: _isLogin()
+                    ? const TextStyle(
+                        color: CustomColor.whiteColor,
+                        fontSize: 16,
+                      )
+                    : const TextStyle(
+                        color: CustomColor.secondaryColor,
+                        fontSize: 16,
+                      ),
+              ),
             ),
           ],
         ),

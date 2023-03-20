@@ -30,40 +30,48 @@ class AuthRepository with ChangeNotifier {
     return isAuth ? _uid : null;
   }
 
+  static const String _baseUrl =
+      'https://identitytoolkit.googleapis.com/v1/accounts:';
+  static const String _apiKey = 'AIzaSyAiUegT8iIcztLPeKLX--okA01pGA_nLNM';
+  String _urlForFragment(String fragment) => '$_baseUrl$fragment?key=$_apiKey';
+
   Future<void> _authenticate(
       String email, String password, String urlFragment) async {
-    final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=AIzaSyAiUegT8iIcztLPeKLX--okA01pGA_nLNM';
+    final url = _urlForFragment(urlFragment);
     final response = await dio.post((url), data: {
       "email": email,
       "password": password,
       "returnSecureToken": true
     });
 
-    final body = response.data;
+    _handleAuthenticationResponse(response.data);
+    _updateAuthenticationInfo();
+  }
 
-    if (body['error'] != null) {
-      throw AuthException(body['error']['message']);
+  void _handleAuthenticationResponse(Map<String, dynamic> response) {
+    if (response['error'] != null) {
+      throw AuthException(response['error']['message']);
     } else {
-      _token = body['idToken'];
-      _email = body['email'];
-      _uid = body['localId'];
+      _token = response['idToken'];
+      _email = response['email'];
+      _uid = response['localId'];
       _expiryDate = DateTime.now().add(
         Duration(
-          seconds: int.parse(body['expiresIn']),
+          seconds: int.parse(response['expiresIn']),
         ),
       );
-
-      Store.saveMap('userData', {
-        'token': _token,
-        'email': _email,
-        'uid': _uid,
-        'expiryDate': _expiryDate!.toIso8601String(),
-      });
-
-      _autoLogout();
-      notifyListeners();
     }
+  }
+
+  void _updateAuthenticationInfo() {
+    Store.saveMap('userData', {
+      'token': _token,
+      'email': _email,
+      'uid': _uid,
+      'expiryDate': _expiryDate!.toIso8601String(),
+    });
+    _autoLogout();
+    notifyListeners();
   }
 
   Future<void> signup(String email, String password) async {
@@ -114,9 +122,10 @@ class AuthRepository with ChangeNotifier {
     _clearAutoTimer();
     final timeToLogout = _expiryDate?.difference(DateTime.now()).inSeconds;
     _logoutTime = Timer(
-        Duration(
-          seconds: timeToLogout ?? 0,
-        ),
-        logout);
+      Duration(
+        seconds: timeToLogout ?? 0,
+      ),
+      logout,
+    );
   }
 }
