@@ -14,7 +14,6 @@ class ProjectDetailPage extends StatefulWidget {
 }
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
-
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         ModalRoute.of(context)?.settings.arguments as Project;
 
     return RefreshIndicator(
-      onRefresh:() => _onRefresh(context),
+      onRefresh: () => _onRefresh(context),
       child: Scaffold(
         backgroundColor: CustomColor.whiteColor,
         body: CustomScrollView(
@@ -107,7 +106,10 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 10, left: 20, top: MediaQuery.of(context).size.height * 0.015),
+                  padding: EdgeInsets.only(
+                      right: 10,
+                      left: 20,
+                      top: MediaQuery.of(context).size.height * 0.015),
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.5,
                   child: Consumer<BoardRepository>(
