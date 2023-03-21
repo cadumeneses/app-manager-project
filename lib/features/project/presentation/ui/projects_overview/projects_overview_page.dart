@@ -1,7 +1,6 @@
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
 import 'package:app_manager_project/features/project/presentation/ui/components/project_item_component.dart';
 import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,12 +29,16 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
-      color: CustomColor.secondaryColor,
+      color: colorScheme.primary,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: CustomColor.backgroundColor,
+          backgroundColor: Colors.grey.shade100,
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -44,26 +47,13 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 25,
-                    vertical: 10,
+                    vertical: 30,
                   ),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/brisa_logo1.png',
-                        height: 50,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        "Manager Projects",
-                        style: TextStyle(
-                            fontFamily: "Barlow",
-                            color: CustomColor.primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  child: Text(
+                    "TaskForce",
+                    style: textTheme.titleLarge?.copyWith(
+                        color: colorScheme.onBackground,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -76,27 +66,24 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                     children: [
                       TextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Meus Projetos',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: CustomColor.primaryColor,
-                          ),
+                          style: textTheme.titleMedium,
                         ),
                       )
                     ],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(right: 10, left: 20),
+                  padding: const EdgeInsets.only(right: 5, left: 20),
                   width: double.infinity,
                   height: 260,
                   child: Consumer<ProjectRepository>(
                       builder: (_, projectRepository, widget) {
-                    return ListView.builder(
+                    return ListView.separated(
                         itemCount: projectRepository.projects.length,
                         scrollDirection: Axis.horizontal,
+                        separatorBuilder: (context, index) => const SizedBox(width: 10),
                         itemBuilder: ((context, index) {
                           var project = projectRepository.projects[index];
                           return ProjectItemComponent(
@@ -116,13 +103,9 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                     children: [
                       TextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Tarefas do dia',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: CustomColor.primaryColor,
-                          ),
+                          style: textTheme.titleMedium,
                         ),
                       )
                     ],
@@ -136,9 +119,13 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                     scrollDirection: Axis.vertical,
                     children: const [
                       TaskItemComponent(nameTask: 'Teste'),
+                      SizedBox(height: 10),
                       TaskItemComponent(nameTask: 'Front end'),
+                      SizedBox(height: 10),
                       TaskItemComponent(nameTask: 'Back ed'),
+                      SizedBox(height: 10),
                       TaskItemComponent(nameTask: 'DBA'),
+                      SizedBox(height: 10),
                       TaskItemComponent(nameTask: 'Review'),
                     ],
                   ),

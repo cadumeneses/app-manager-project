@@ -1,5 +1,4 @@
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -36,6 +35,10 @@ class TaskDetailComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme =  Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Expanded(
       child: Column(
         children: [
@@ -49,12 +52,9 @@ class TaskDetailComponent extends StatelessWidget {
                     icon: const FaIcon(
                       FontAwesomeIcons.arrowLeft,
                     )),
-                const Text(
+                Text(
                   'Nome da tarefa',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: textTheme.bodySmall,
                 ),
                 Row(
                   children: [
@@ -102,9 +102,9 @@ class TaskDetailComponent extends StatelessWidget {
                 ),
                 IconButton(
                     onPressed: () {},
-                    icon: const FaIcon(
+                    icon: FaIcon(
                       FontAwesomeIcons.squarePlus,
-                      color: CustomColor.secondaryColor,
+                      color: colorScheme.primaryContainer,
                     ))
               ],
             ),
@@ -118,7 +118,7 @@ class TaskDetailComponent extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
                     'Lider',
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                    style: textTheme.bodySmall,
                   ),
                 ),
                 Padding(
@@ -156,21 +156,20 @@ class TaskDetailComponent extends StatelessWidget {
                     width: 70,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: CustomColor.primaryColor,
+                      color: colorScheme.primaryContainer
                     ),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: CustomColor.whiteColor,
+                          color: colorScheme.onPrimaryContainer,
                           border: Border.all(
-                            color: CustomColor.primaryColor,
+                            color: colorScheme.onPrimaryContainer,
                             width: 2,
                           )),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'Status',
-                          style: TextStyle(
-                              color: CustomColor.primaryColor, fontSize: 16),
+                          style: textTheme.labelSmall,
                         ),
                       ),
                     ),

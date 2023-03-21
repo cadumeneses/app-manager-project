@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../features/project/infra/models/project_model.dart';
-import '../../utils/custom_color.dart';
 import '../../components/form/input_submit_form.dart';
 import '../../components/form/input_text_form.dart';
 
@@ -83,6 +82,10 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return _isLoading
         ? const Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
@@ -101,14 +104,11 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                       icon: Icon(Icons.keyboard_arrow_down,
                           size: 40, color: Colors.grey.shade400),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 10),
                       child: Text(
                         'Criar Tarefa',
-                        style: TextStyle(
-                            color: CustomColor.primaryColor,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold),
+                        style: textTheme.labelMedium,
                       ),
                     ),
                     const Divider(),
@@ -131,7 +131,8 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                         child: DropdownButton(
                           value: projectRepository.projects.first,
                           isExpanded: true,
-                          style: TextStyle(color: Colors.grey.shade600, fontSize: 17),
+                          style: TextStyle(
+                              color: Colors.grey.shade600, fontSize: 17),
                           items: projectRepository.projects
                               .map<DropdownMenuItem<Project>>(
                                   (final Project value) {
@@ -152,9 +153,10 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                     }),
                     const SizedBox(height: 20),
                     InputSubmitForm(
-                        color: CustomColor.secondaryColor,
-                        submitForm: _submitForm,
-                        nameButton: 'Adicionar Tarefa')
+                      color: colorScheme.secondaryContainer,
+                      submitForm: _submitForm,
+                      nameButton: 'Adicionar Tarefa',
+                    )
                   ],
                 ),
               ),

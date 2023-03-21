@@ -1,5 +1,4 @@
 import 'package:app_manager_project/core/task/components/task_checkbox_component.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class TaskItemComponent extends StatelessWidget {
@@ -9,8 +8,13 @@ class TaskItemComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
+    return Container(
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -21,15 +25,13 @@ class TaskItemComponent extends StatelessWidget {
               children: [
                 Text(
                   nameTask,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColor.primaryColor
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const Text(
+                Text(
                   'Today - 07:00 AM',
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: Colors.grey,
+                      ),
                 )
               ],
             ),

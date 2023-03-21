@@ -1,4 +1,3 @@
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class TaskCheckboxComponent extends StatefulWidget {
@@ -13,14 +12,15 @@ class _TaskCheckboxComponentState extends State<TaskCheckboxComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Checkbox(
       value: check,
       fillColor:
           MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
         if (states.contains(MaterialState.disabled)) {
-          return CustomColor.secondaryColor.withOpacity(.32);
+          return colorScheme.primary;
         }
-        return CustomColor.secondaryColor;
+        return colorScheme.primary;
       }),
       onChanged: (value) {
         setState(() {

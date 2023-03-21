@@ -1,4 +1,3 @@
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'components/auth_form.dart';
 
@@ -7,8 +6,10 @@ class AuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Scaffold(
-      backgroundColor: CustomColor.primaryColor,
+      backgroundColor:colorScheme.background,
       body: Column(
         children: [
           Expanded(
@@ -26,14 +27,11 @@ class AuthPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .6,
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.15),
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 20),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20),
                   child: Text(
                     'Entre na sua conta',
-                    style: TextStyle(
-                        color: CustomColor.primaryColor,
-                        fontSize: 45,
-                        fontWeight: FontWeight.bold),
+                    style: theme.textTheme.headlineLarge,
                   ),
                 ),
               ),

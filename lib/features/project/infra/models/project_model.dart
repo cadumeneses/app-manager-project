@@ -2,33 +2,37 @@ import 'package:flutter/cupertino.dart';
 
 class Project with ChangeNotifier {
   final String id;
-  String name;
+  final String name;
   final String description;
   final DateTime? createDate;
-  // final DateTime? finalDate;
-  // final String? teamName;
   final String imgUrl;
-  // final bool? todo;
-  // final bool? progress;
-  // final bool? test;
-  // final bool? finish;
-  // final String? teamId;
-  // final String? taskId;
 
   Project({
      required this.id,
      required this.name,
      required this.description,
      this.createDate,
-    //  this.teamName,
-    //  this.finalDate,
      required this.imgUrl,
-    //  this.todo,
-    //  this.progress,
-    //  this.test,
-    //  this.finish,
-    //  this.taskId,
-    //  this.teamId,
   });
+
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      createDate: json['createDate'] != null ? DateTime.parse(json['createDate']) : null,
+      imgUrl: json['imgUrl'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'createDate': createDate?.toIso8601String(),
+      'imgUrl': imgUrl,
+    };
+  }
 
 }

@@ -1,4 +1,3 @@
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class ProjectSearchComponent extends StatefulWidget {
@@ -12,6 +11,10 @@ class _ProjectSearchComponentState extends State<ProjectSearchComponent> {
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return Center(
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
@@ -20,18 +23,20 @@ class _ProjectSearchComponentState extends State<ProjectSearchComponent> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: TextField(
-          onChanged: (value){},
+          onChanged: (value) {},
           controller: _controller,
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            errorBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            contentPadding: EdgeInsets.all(15),
-            hintText: " Procurar projeto",
-            prefixIcon: Icon(Icons.search),
-            prefixIconColor: CustomColor.secondaryColor
-          ),
+          decoration: InputDecoration(
+              border: InputBorder.none,
+              errorBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              contentPadding: const EdgeInsets.all(15),
+              hintText: " Procurar projeto",
+              hintStyle: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onBackground.withOpacity(0.5),
+              ),
+              prefixIcon: const Icon(Icons.search),
+              prefixIconColor: colorScheme.onBackground.withOpacity(0.5)),
         ),
       ),
     );

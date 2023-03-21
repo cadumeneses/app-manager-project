@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/utils/custom_color.dart';
-
 class EmailInputComponent extends StatelessWidget {
   const EmailInputComponent({
     super.key,
@@ -12,21 +10,20 @@ class EmailInputComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Container(
       padding: const EdgeInsets.all(8),
       width: MediaQuery.of(context).size.width * 0.9,
-      decoration: const BoxDecoration(
-          border: Border(
-        bottom: BorderSide(color: Colors.white),
-      )),
-      child: TextFormField(
-        style: const TextStyle(
-          color: CustomColor.whiteColor,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: colorScheme.primary),
         ),
+      ),
+      child: TextFormField(
+        style: theme.textTheme.labelLarge,
         decoration: const InputDecoration(
           hintText: "E-mail",
-          hintStyle: TextStyle(color: Colors.white),
-          labelStyle: TextStyle(color: Colors.white),
           focusedBorder: InputBorder.none,
           border: InputBorder.none,
           errorBorder: InputBorder.none,

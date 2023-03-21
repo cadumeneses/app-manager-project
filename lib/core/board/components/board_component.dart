@@ -3,8 +3,6 @@ import 'package:app_manager_project/core/task/components/task_form_component.dar
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:app_manager_project/core/utils/custom_color.dart';
-
 import '../infra/models/board_model.dart';
 
 class BoardComponent extends StatelessWidget {
@@ -13,11 +11,15 @@ class BoardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Card(
         elevation: 0,
-        color: CustomColor.backgroundColor,
+        color: colorScheme.background,
         child: Column(
           children: [
             Container(
@@ -30,21 +32,17 @@ class BoardComponent extends StatelessWidget {
                       children: [
                         Text(
                           board.name,
-                          style: const TextStyle(
-                            color: CustomColor.primaryColor,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          style: textTheme.labelLarge,
                         ),
                         const SizedBox(width: 10),
-                        const CircleAvatar(
+                        CircleAvatar(
                           maxRadius: 22,
-                          backgroundColor: CustomColor.secondaryColor,
+                          backgroundColor: colorScheme.secondaryContainer,
                           child: CircleAvatar(
-                            backgroundColor: CustomColor.whiteColor,
-                            foregroundColor: CustomColor.secondaryColor,
+                            backgroundColor: colorScheme.tertiaryContainer,
+                            foregroundColor: colorScheme.onTertiaryContainer,
                             maxRadius: 20,
-                            child: Text('0'),
+                            child: const Text('0'),
                           ),
                         )
                       ],
@@ -53,9 +51,9 @@ class BoardComponent extends StatelessWidget {
                         onPressed: () {
                           showModal(context);
                         },
-                        icon: const FaIcon(
+                        icon: FaIcon(
                           FontAwesomeIcons.squarePlus,
-                          color: CustomColor.primaryColor,
+                          color: colorScheme.primaryContainer,
                         ))
                   ]),
             ),

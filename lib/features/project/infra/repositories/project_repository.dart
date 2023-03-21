@@ -8,10 +8,7 @@ class ProjectRepository with ChangeNotifier {
   var dio = DioClient();
   final String _token;
   final String _uid;
-  Project _project = Project(id: "", name: "", description: "", imgUrl: "");
-
-  Project get project => _project;
-  set project(Project project) => _project = project;
+  Project project = Project(id: "", name: "", description: "", imgUrl: "");
 
   List<Project> _projects = [];
   List<Project> get projects => [..._projects];
@@ -29,25 +26,31 @@ class ProjectRepository with ChangeNotifier {
   ]);
 
   Future<void> loadProjects() async {
-    _projects.clear();
-
     try {
       final response = await dio.dio.get('projects.json?auth=$_token');
 
       Map<String, dynamic> data = response.data;
 
+      List<Project> newProjects = [];
       data.forEach((projectId, projectData) {
-        _projects.add(
-          Project(
+        try {
+          Project project = Project(
             id: projectId,
             name: projectData['name'],
             description: projectData['description'],
             createDate: DateTime.parse(projectData['createDate']),
             imgUrl: projectData['imgUrl'],
-          ),
-        );
-        notifyListeners();
+          );
+          newProjects.add(project);
+        } catch (e) {
+          // Tratar erros específicos de cada projeto aqui
+        }
       });
+
+      if (!listEquals(_projects, newProjects)) {
+        _projects = newProjects;
+        notifyListeners();
+      }
     } catch (e) {
       rethrow;
     }

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'core/board/infra/repositories/board_repository.dart';
 import 'core/task/infra/repositories/tasks_repository.dart';
+import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';
 import 'features/auth/presentation/ui/auth_page.dart';
 import 'features/home/presentation/ui/home_page.dart';
@@ -57,16 +58,8 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        theme: ThemeData(
-          colorScheme: ThemeData()
-              .colorScheme
-              .copyWith(primary: const Color(0xFFF56E28)),
-          textTheme: ThemeData().textTheme.copyWith(
-                headline6: const TextStyle(
-                  fontFamily: 'Barlow',
-                ),
-              ),
-        ),
+        theme: lightTheme,
+        darkTheme: darkTheme,
         routes: {
           AppRoutes.auth_or_home: (ctx) => const AuthOrHomePage(),
           AppRoutes.projects: (ctx) => const MyProjectsPage(),
@@ -78,7 +71,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class AuthOrHomePage extends StatelessWidget {
   const AuthOrHomePage({super.key});

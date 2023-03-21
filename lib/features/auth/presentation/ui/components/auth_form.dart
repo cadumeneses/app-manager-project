@@ -1,4 +1,3 @@
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:app_manager_project/features/auth/infra/repositories/exceptions/auth_exception.dart';
 import 'package:app_manager_project/features/auth/presentation/ui/components/password_input_component.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +95,10 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * .4,
       child: Form(
@@ -109,8 +112,8 @@ class _AuthFormState extends State<AuthForm> {
               ],
             ),
             if (_isLoading)
-              const CircularProgressIndicator(
-                color: CustomColor.secondaryColor,
+              CircularProgressIndicator(
+                color: colorScheme.tertiary,
               )
             else
               Padding(
@@ -118,7 +121,7 @@ class _AuthFormState extends State<AuthForm> {
                 child: ElevatedButton(
                   onPressed: submit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: CustomColor.whiteColor,
+                    backgroundColor: colorScheme.background,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
@@ -133,10 +136,7 @@ class _AuthFormState extends State<AuthForm> {
                     child: Center(
                       child: Text(
                         _authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
-                        style: const TextStyle(
-                          color: CustomColor.primaryColor,
-                          fontSize: 17,
-                        ),
+                        style: textTheme.titleMedium,
                       ),
                     ),
                   ),
@@ -148,15 +148,7 @@ class _AuthFormState extends State<AuthForm> {
                 _isLogin()
                     ? "Não tem uma conta? Cadastre-se!"
                     : 'Já tem uma conta? Entrar',
-                style: _isLogin()
-                    ? const TextStyle(
-                        color: CustomColor.whiteColor,
-                        fontSize: 16,
-                      )
-                    : const TextStyle(
-                        color: CustomColor.secondaryColor,
-                        fontSize: 16,
-                      ),
+                style: textTheme.titleSmall
               ),
             ),
           ],
