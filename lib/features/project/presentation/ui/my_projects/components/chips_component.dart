@@ -1,4 +1,3 @@
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 
 class ChipsComponent extends StatelessWidget {
@@ -41,26 +40,28 @@ class ItemKanbanComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return InkWell(
       onTap: () {},
       child: Container(
         height: 30,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: CustomColor.whiteColor,
-            border: Border.all(
-              color: CustomColor.primaryColor,
-              width: 2,
-            )),
+          borderRadius: BorderRadius.circular(15),
+          color: colorScheme.background,
+          border: Border.all(
+            color: colorScheme.primary,
+            width: 2,
+          ),
+        ),
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
               nameButtom,
-              style: const TextStyle(
-                  color: CustomColor.primaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600),
+              style: textTheme.labelLarge?.copyWith(color: colorScheme.primary),
             ),
           ),
         ),

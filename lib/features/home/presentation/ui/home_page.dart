@@ -2,8 +2,6 @@ import 'package:app_manager_project/features/project/presentation/ui/components/
 import 'package:app_manager_project/features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'package:app_manager_project/features/profile/presentation/ui/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../../../project/presentation/ui/projects_overview/projects_overview_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -30,57 +28,44 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: Container(
-        color: colorScheme.primary,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: GNav(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-            gap: 8,
-            backgroundColor: colorScheme.primary,
-            color: colorScheme.onPrimary.withOpacity(0.6),
-            activeColor: colorScheme.onPrimary,
-            textSize: 30,
-            tabs: [
-              const GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              const GButton(
-                icon: Icons.list_alt_sharp,
-                text: 'Projetos',
-              ),
-              GButton(
-                icon: Icons.add,
-                iconColor: colorScheme.onPrimary,
-                border: Border.all(color: colorScheme.onPrimary, width: 2),
-              ),
-              const GButton(
-                icon: Icons.people,
-                text: 'Equipes',
-              ),
-              const GButton(
-                icon: Icons.person,
-                text: 'Perfil',
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onTabChange: (int index) {
-              switch (index) {
-                case 0:
-                  break;
-                case 1:
-                  break;
-                case 2:
-                  showModal(context);
-                  break;
-              }
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+      bottomNavigationBar: BottomNavigationBar(
+        fixedColor: colorScheme.primary,
+        showUnselectedLabels: true,
+        unselectedItemColor: colorScheme.outline,
+        items: const [
+          BottomNavigationBarItem(
+            label: 'Home',
+            icon: Icon(Icons.home),
           ),
-        ),
+          BottomNavigationBarItem(
+            label: 'Projetos',
+            icon: Icon(Icons.text_snippet),
+          ),
+          BottomNavigationBarItem(icon: Center(child: Icon(Icons.add)), label: ''),
+          BottomNavigationBarItem(
+            label: 'Equipe',
+            icon: Icon(Icons.diversity_3),
+          ),
+          BottomNavigationBarItem(
+            label: 'Perfil',
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              break;
+            case 1:
+              break;
+            case 2:
+              showModal(context);
+              break;
+          }
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }

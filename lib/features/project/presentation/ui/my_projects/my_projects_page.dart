@@ -1,11 +1,9 @@
 import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:app_manager_project/features/project/presentation/ui/my_projects/components/chips_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/project_item_component.dart';
-
 
 class MyProjectsPage extends StatelessWidget {
   const MyProjectsPage({super.key});
@@ -15,9 +13,13 @@ class MyProjectsPage extends StatelessWidget {
     final availableHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: CustomColor.backgroundColor,
+        backgroundColor: colorScheme.background,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -29,29 +31,19 @@ class MyProjectsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/brisa_logo1.png',
-                          height: availableHeight * 0.05,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Text(
-                          'Meus Projetos',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: CustomColor.primaryColor),
-                        ),
-                      ],
+                    Text(
+                      'Meus Projetos',
+                      style: textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.search,
-                          color: CustomColor.secondaryColor, size: 30),
+                      icon: Icon(
+                        Icons.search,
+                        color: colorScheme.onBackground,
+                        size: 30,
+                      ),
                     ),
                   ],
                 ),
@@ -68,9 +60,11 @@ class MyProjectsPage extends StatelessWidget {
                       itemBuilder: ((context, index) {
                         var project = projectRepository.projects[index];
                         return ProjectItemComponent(
-                            name: project.name,
-                            imgUrl: project.imgUrl,
-                            description: project.description, project: project,);
+                          name: project.name,
+                          imgUrl: project.imgUrl,
+                          description: project.description,
+                          project: project,
+                        );
                       }));
                 }),
               ),
