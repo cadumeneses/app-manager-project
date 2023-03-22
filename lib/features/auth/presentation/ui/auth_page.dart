@@ -11,27 +11,29 @@ class AuthPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colorScheme.background,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 180,
-            padding: EdgeInsets.fromLTRB(
-              20,
-              MediaQuery.of(context).size.height * 0.15,
-              0,
-              30,
-            ),
-            child: Text(
-              'Entre na sua conta',
-              style: theme.textTheme.headlineLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                height: 1.5,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 180,
+              padding: EdgeInsets.fromLTRB(
+                20,
+                MediaQuery.of(context).size.height * 0.15,
+                0,
+                30,
+              ),
+              child: Text(
+                'Entre na sua conta',
+                style: theme.textTheme.headlineLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  height: 1.5,
+                ),
               ),
             ),
-          ),
-          const AuthForm(),
-        ],
+            const AuthForm(),
+          ],
+        ),
       ),
     );
   }
