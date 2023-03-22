@@ -1,7 +1,7 @@
 class TaskModel {
   final String id;
   final String name;
-  final DateTime? dateInit;
+  final String? dateInit;
   final String projectId;
 
   TaskModel({

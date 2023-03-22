@@ -92,15 +92,27 @@ class ProjectItemComponent extends StatelessWidget {
                     ),
                     Row(
                       children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(
+                            description,
+                            style: textTheme.titleSmall?.copyWith(
+                              color: Colors.grey,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ),
                         Text(
-                          '$description - ',
-                          style: textTheme.titleSmall
-                              ?.copyWith(color: Colors.grey),
+                          '-',
+                          style: textTheme.titleSmall?.copyWith(
+                            color: Colors.grey,
+                          ),
                         ),
                         Text(
                           'Sep 26, 2022',
-                          style: textTheme.titleSmall
-                              ?.copyWith(color: Colors.grey),
+                          style: textTheme.titleSmall?.copyWith(
+                            color: Colors.grey,
+                          ),
                         ),
                       ],
                     )

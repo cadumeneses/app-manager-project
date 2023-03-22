@@ -1,5 +1,6 @@
 import 'package:app_manager_project/core/external/dio/dio_client.dart';
 import 'package:app_manager_project/core/task/infra/models/task_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -30,17 +31,26 @@ class TaskRepository extends ChangeNotifier {
         'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
       );
       Map<String, dynamic> data = response.data;
+      List<TaskModel> newTasks = [];
 
       data.forEach((taskId, taskData) {
-        _tasks.add(
-          TaskModel(
-            id: taskId,
-            name: taskData['name'],
-            dateInit: taskData['dateInit'],
-            projectId: taskData['projectId'],
-          ),
-        );
-        notifyListeners();
+        if (taskData['projectId'] == projectId) {
+          try {
+            TaskModel task = TaskModel(
+              id: taskId,
+              name: taskData['name'],
+              dateInit: taskData['dateInit'],
+              projectId: taskData['projectId'],
+            );
+            newTasks.add(task);
+          } catch (e) {
+            rethrow;
+          }
+          if (!listEquals(_tasks, newTasks)) {
+            _tasks = newTasks;
+            notifyListeners();
+          }
+        }
       });
     } catch (e) {
       rethrow;

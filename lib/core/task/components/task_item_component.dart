@@ -9,6 +9,8 @@ class TaskItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 65,
+      width: double.infinity,
       margin: const EdgeInsets.all(10),
       decoration: ShapeDecoration(
         color: Theme.of(context).colorScheme.background,
