@@ -105,8 +105,11 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.keyboard_arrow_down,
-                          size: 40, color: Colors.grey.shade400),
+                      icon: Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 40,
+                        color: Colors.grey.shade400,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 10),

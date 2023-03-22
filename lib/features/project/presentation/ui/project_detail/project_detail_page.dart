@@ -41,7 +41,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              iconTheme: IconThemeData(color: colorScheme.primary),
+              iconTheme: IconThemeData(color: colorScheme.primaryContainer),
               actions: const [
                 Icon(Icons.search, size: 30),
                 Padding(
@@ -86,44 +86,48 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
               ),
             ),
             SliverList(
-              delegate: SliverChildListDelegate([
-                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5),
-                  child: Text(
-                    project.name.toUpperCase(),
-                    textAlign: TextAlign.left,
-                    style: textTheme.titleLarge,
+              delegate: SliverChildListDelegate(
+                [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 5),
+                    child: Text(
+                      project.name.toUpperCase(),
+                      textAlign: TextAlign.left,
+                      style: textTheme.titleLarge,
+                    ),
                   ),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, right: 5),
-                  child: Text(
-                    project.description,
-                    textAlign: TextAlign.left,
-                    style: textTheme.titleSmall,
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 5),
+                    child: Text(
+                      project.description,
+                      textAlign: TextAlign.left,
+                      style: textTheme.titleSmall,
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
+                  Container(
+                    padding: EdgeInsets.only(
                       right: 10,
                       left: 20,
-                      top: MediaQuery.of(context).size.height * 0.015),
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Consumer<BoardRepository>(
-                      builder: (_, boardRepository, widget) {
-                    return ListView.builder(
+                      top: MediaQuery.of(context).size.height * 0.015,
+                    ),
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: Consumer<BoardRepository>(
+                        builder: (_, boardRepository, widget) {
+                      return ListView.builder(
                         itemCount: boardRepository.boards.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: ((context, index) {
                           var board = boardRepository.boards[index];
                           return BoardComponent(board: board);
-                        }));
-                  }),
-                ),
-              ]),
+                        }),
+                      );
+                    }),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

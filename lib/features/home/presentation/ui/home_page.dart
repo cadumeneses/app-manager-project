@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
   void showModal(BuildContext context) {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Theme.of(context).colorScheme.background,
       builder: (_) {
         return const ProjectFormComponent();
       },

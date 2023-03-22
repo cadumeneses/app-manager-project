@@ -9,11 +9,20 @@ class TaskItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(10),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.background,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
+        shadows: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 7,
+            offset: const Offset(0, 0),
+          ),
+        ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(10),

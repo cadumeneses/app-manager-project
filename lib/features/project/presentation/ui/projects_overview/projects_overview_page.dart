@@ -39,7 +39,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
       color: colorScheme.primary,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.grey.shade100,
+          backgroundColor: colorScheme.background,
           body: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +69,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 Container(
                   padding: const EdgeInsets.only(right: 5, left: 20),
                   width: double.infinity,
-                  height: 260,
+                  height: 300,
                   child: Consumer<ProjectRepository>(
                       builder: (_, projectRepository, widget) {
                     return ListView.separated(
@@ -95,7 +95,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   onActionPressed: () {},
                 ),
                 Container(
-                  height: 500,
+                  height: 600,
                   width: double.infinity,
                   padding: const EdgeInsets.only(right: 10, left: 20),
                   child: ListView(

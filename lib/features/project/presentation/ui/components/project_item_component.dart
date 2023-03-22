@@ -26,12 +26,22 @@ class ProjectItemComponent extends StatelessWidget {
 
     return Center(
       child: Container(
+        height: 260,
+        margin: const EdgeInsets.all(5),
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: ShapeDecoration(
-          color: colorScheme.onTertiary,
+          color: colorScheme.background,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
+          shadows: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 7,
+              offset: const Offset(0, 0),
+            ),
+          ],
         ),
         child: GestureDetector(
           onTap: () {
