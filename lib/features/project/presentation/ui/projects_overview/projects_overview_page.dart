@@ -95,7 +95,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   onActionPressed: () {},
                 ),
                 Container(
-                  height: 600,
+                  height: 500,
                   width: double.infinity,
                   padding: const EdgeInsets.only(right: 10, left: 20),
                   child: ListView(

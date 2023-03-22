@@ -21,13 +21,17 @@ class TaskCardComponent extends StatelessWidget {
 
 void showModal(BuildContext context) {
   showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return const TaskDetailComponent();
-      },
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+    context: context,
+    builder: (_) {
+      return const TaskDetailComponent();
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+  );
 }
 
 class TaskDetailComponent extends StatelessWidget {
@@ -35,7 +39,7 @@ class TaskDetailComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme =  Theme.of(context);
+    final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
@@ -101,11 +105,12 @@ class TaskDetailComponent extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: FaIcon(
-                      FontAwesomeIcons.squarePlus,
-                      color: colorScheme.primaryContainer,
-                    ))
+                  onPressed: () {},
+                  icon: FaIcon(
+                    FontAwesomeIcons.squarePlus,
+                    color: colorScheme.primaryContainer,
+                  ),
+                )
               ],
             ),
           ),
@@ -155,9 +160,8 @@ class TaskDetailComponent extends StatelessWidget {
                     height: 30,
                     width: 70,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: colorScheme.primaryContainer
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: colorScheme.primaryContainer),
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),

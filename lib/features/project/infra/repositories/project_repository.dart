@@ -76,7 +76,7 @@ class ProjectRepository with ChangeNotifier {
   Future<void> addProject(Project project) async {
     final date = DateTime.now();
     final response = await dio.dio.post(
-      ('https://manager-projects-flutter-default-rtdb.firebaseio.com/projects.json?auth=$_token'),
+      ('https://taskforce-47f99-default-rtdb.firebaseio.com/projects.json?auth=$_token'),
       data: {
         "name": project.name,
         "description": project.description,
@@ -100,7 +100,7 @@ class ProjectRepository with ChangeNotifier {
 
     if (index >= 0) {
       await dio.dio.patch(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/projects/project.id.json?auth=$_token',
+        'https://taskforce-47f99-default-rtdb.firebaseio.com/project.id.json?auth=$_token',
         data: {
           "name": project.name,
           "description": project.description,

@@ -124,15 +124,15 @@ class _AuthFormState extends State<AuthForm> {
                 textTheme: textTheme,
                 colorScheme: colorScheme,
               ),
-            // TextButton(
-            //   onPressed: switchAuthMode,
-            //   child: Text(
-            //     _isLogin()
-            //         ? "Não tem uma conta? Cadastre-se!"
-            //         : 'Já tem uma conta? Entrar',
-            //     style: textTheme.titleSmall,
-            //   ),
-            // ),
+            TextButton(
+              onPressed: switchAuthMode,
+              child: Text(
+                _isLogin()
+                    ? "Não tem uma conta? Cadastre-se!"
+                    : 'Já tem uma conta? Entrar',
+                style: textTheme.titleSmall,
+              ),
+            ),
           ],
         ),
       ),

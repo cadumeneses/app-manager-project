@@ -1,10 +1,10 @@
+import 'package:app_manager_project/core/external/dio/dio_client.dart';
 import 'package:app_manager_project/core/task/infra/models/task_model.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 class TaskRepository extends ChangeNotifier {
-  var dio = Dio();
+  var dio = DioClient();
 
   final String _token;
   final String _uid;
@@ -26,8 +26,8 @@ class TaskRepository extends ChangeNotifier {
     _tasks.clear();
 
     try {
-      final response = await dio.get(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/projects/$projectId/tasks.json?auth=$_token',
+      final response = await dio.dio.get(
+        'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
       );
       Map<String, dynamic> data = response.data;
 
@@ -48,36 +48,38 @@ class TaskRepository extends ChangeNotifier {
   }
 
   Future<void> save(Map<String, dynamic> data) async {
+    bool hasId = data['id'] != null;
     final task = TaskModel(
-      id: Random().nextDouble().toString(),
-      name: data['name'],
-      dateInit: DateTime.now(),
-      projectId: data['projectId'],
+      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
+      name: data['name'] as String,
+      projectId: data['projectId'] as String,
     );
-    addTask(task);
+    if (hasId) {
+      return;
+    } else {
+      await addTask(task);
+    }
   }
 
   Future<void> addTask(TaskModel task) async {
-
-    try {
-      final response = await dio.post(
-        'https://manager-projects-flutter-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
-        data: {
-          "name": task.name,
-          "dateInit": DateTime.now(),
-          "projectId": task.projectId
-        },
-      );
-      final id = response.data['name'];
-      _tasks.add(TaskModel(
+    final date = DateTime.now();
+    final response = await dio.dio.post(
+      'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
+      data: {
+        "name": task.name,
+        "dateInit": date.toIso8601String(),
+        "projectId": task.projectId
+      },
+    );
+    final id = response.data['name'];
+    _tasks.add(
+      TaskModel(
         id: id,
         name: task.name,
         dateInit: task.dateInit,
         projectId: task.projectId,
-      ));
-      notifyListeners();
-    } catch (e) {
-      rethrow;
-    }
+      ),
+    );
+    notifyListeners();
   }
 }

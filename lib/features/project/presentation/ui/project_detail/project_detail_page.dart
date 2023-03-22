@@ -1,5 +1,6 @@
 import 'package:app_manager_project/core/board/components/board_component.dart';
 import 'package:app_manager_project/core/board/infra/repositories/board_repository.dart';
+import 'package:app_manager_project/core/task/infra/repositories/tasks_repository.dart';
 import 'package:app_manager_project/features/project/infra/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,6 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
   Widget build(BuildContext context) {
     final Project project =
         ModalRoute.of(context)?.settings.arguments as Project;
-
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
@@ -121,7 +121,10 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: ((context, index) {
                           var board = boardRepository.boards[index];
-                          return BoardComponent(board: board);
+                          return BoardComponent(
+                            board: board,
+                            project: project,
+                          );
                         }),
                       );
                     }),

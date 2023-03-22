@@ -6,7 +6,7 @@ class DioClient {
   var dio = Dio(
     BaseOptions(
         baseUrl:
-            'https://manager-projects-flutter-default-rtdb.firebaseio.com/',
+            'https://taskforce-47f99-default-rtdb.firebaseio.com/',
         connectTimeout: 5000,
         receiveTimeout: 5000,
         validateStatus: (int? status) {

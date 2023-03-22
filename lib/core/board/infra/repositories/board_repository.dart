@@ -26,7 +26,7 @@ class BoardRepository extends ChangeNotifier {
   Future<void> loadBoards() async {
     _boardItems.clear();
     try {
-      final response = await dio.get('https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token');
+      final response = await dio.get('https://taskforce-47f99-default-rtdb.firebaseio.com//boards.json?auth=$_token');
       debugPrint(boards.length.toString());
       Map<String, dynamic> data = response.data;
       data.forEach((boardId, boardData) {
@@ -58,7 +58,7 @@ class BoardRepository extends ChangeNotifier {
 
   Future<void> addBoard(Board board) async {
     final response = await dio.post(
-      'https://manager-projects-flutter-default-rtdb.firebaseio.com/boards.json?auth=$_token',
+      'https://taskforce-47f99-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       data: {
         "id": board.id,
         "name": board.name,

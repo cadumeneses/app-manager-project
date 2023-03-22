@@ -32,7 +32,7 @@ class AuthRepository with ChangeNotifier {
 
   static const String _baseUrl =
       'https://identitytoolkit.googleapis.com/v1/accounts:';
-  static const String _apiKey = 'AIzaSyAiUegT8iIcztLPeKLX--okA01pGA_nLNM';
+  static const String _apiKey = 'AIzaSyAR5qSt2fP9U1GImlZg0r0Ute5dXPRm_Cc';
   String _urlForFragment(String fragment) => '$_baseUrl$fragment?key=$_apiKey';
 
   Future<void> _authenticate(
