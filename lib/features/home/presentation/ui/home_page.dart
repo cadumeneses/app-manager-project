@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: colorScheme.primary,
+        fixedColor: colorScheme.primaryContainer,
         showUnselectedLabels: true,
         unselectedItemColor: colorScheme.outline,
         items: const [
@@ -41,7 +41,15 @@ class _HomePageState extends State<HomePage> {
             label: 'Projetos',
             icon: Icon(Icons.text_snippet),
           ),
-          BottomNavigationBarItem(icon: Center(child: Icon(Icons.add)), label: ''),
+          BottomNavigationBarItem(
+              icon: CircleAvatar(
+                minRadius: 30,
+                child: Icon(
+                  Icons.add,
+                  size: 50,
+                ),
+              ),
+              label: ''),
           BottomNavigationBarItem(
             label: 'Equipe',
             icon: Icon(Icons.diversity_3),

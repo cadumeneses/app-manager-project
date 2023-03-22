@@ -4,6 +4,7 @@ import 'package:app_manager_project/features/project/infra/repositories/project_
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'components/heading_with_action.dart';
 import 'components/project_search_component.dart';
 
 class ProjectsOverviewPage extends StatefulWidget {
@@ -52,27 +53,18 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   child: Text(
                     "TaskForce",
                     style: textTheme.titleLarge?.copyWith(
-                        color: colorScheme.onBackground,
-                        fontWeight: FontWeight.bold),
+                      color: colorScheme.onBackground,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 const ProjectSearchComponent(),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Meus Projetos',
-                          style: textTheme.titleMedium,
-                        ),
-                      )
-                    ],
-                  ),
+                HeadingWithAction(
+                  headingText: 'Meus Projetos',
+                  actionText: 'Mostrar todos',
+                  onActionPressed: () {},
                 ),
                 Container(
                   padding: const EdgeInsets.only(right: 5, left: 20),
@@ -83,7 +75,8 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                     return ListView.separated(
                         itemCount: projectRepository.projects.length,
                         scrollDirection: Axis.horizontal,
-                        separatorBuilder: (context, index) => const SizedBox(width: 10),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 10),
                         itemBuilder: ((context, index) {
                           var project = projectRepository.projects[index];
                           return ProjectItemComponent(
@@ -96,20 +89,10 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                   }),
                 ),
                 const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Tarefas do dia',
-                          style: textTheme.titleMedium,
-                        ),
-                      )
-                    ],
-                  ),
+                HeadingWithAction(
+                  headingText: 'Tarefas do dia',
+                  actionText: 'Mostrar todas',
+                  onActionPressed: () {},
                 ),
                 Container(
                   height: 500,
