@@ -28,7 +28,7 @@ class ProjectItemComponent extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width * 0.9,
         decoration: ShapeDecoration(
-          color: colorScheme.background,
+          color: colorScheme.onTertiary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
