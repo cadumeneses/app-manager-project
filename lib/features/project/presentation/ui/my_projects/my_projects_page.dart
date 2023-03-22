@@ -54,18 +54,21 @@ class MyProjectsPage extends StatelessWidget {
                 height: availableHeight * 0.77,
                 child: Consumer<ProjectRepository>(
                     builder: (_, projectRepository, widget) {
-                  return ListView.builder(
-                      itemCount: projectRepository.projects.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: ((context, index) {
-                        var project = projectRepository.projects[index];
-                        return ProjectItemComponent(
-                          name: project.name,
-                          imgUrl: project.imgUrl,
-                          description: project.description,
-                          project: project,
-                        );
-                      }));
+                  return ListView.separated(
+                    itemCount: projectRepository.projects.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: ((context, index) {
+                      var project = projectRepository.projects[index];
+                      return ProjectItemComponent(
+                        name: project.name,
+                        imgUrl: project.imgUrl,
+                        description: project.description,
+                        project: project,
+                      );
+                    }),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 20),
+                  );
                 }),
               ),
             ],

@@ -26,12 +26,19 @@ class _HomePageState extends State<HomePage> {
       const ProfilePage(),
     ];
 
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+
     return Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         fixedColor: colorScheme.primaryContainer,
         showUnselectedLabels: true,
         unselectedItemColor: colorScheme.outline,
+        selectedLabelStyle: style,
+        unselectedLabelStyle: style,
         items: const [
           BottomNavigationBarItem(
             label: 'Home',
@@ -42,14 +49,15 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.text_snippet),
           ),
           BottomNavigationBarItem(
-              icon: CircleAvatar(
-                minRadius: 30,
-                child: Icon(
-                  Icons.add,
-                  size: 50,
-                ),
+            icon: CircleAvatar(
+              minRadius: 30,
+              child: Icon(
+                Icons.add,
+                size: 50,
               ),
-              label: ''),
+            ),
+            label: '',
+          ),
           BottomNavigationBarItem(
             label: 'Equipe',
             icon: Icon(Icons.diversity_3),
