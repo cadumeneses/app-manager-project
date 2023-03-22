@@ -18,16 +18,22 @@ class InputTextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Container(
-      padding: const EdgeInsets.only(left: 10),
-      width: MediaQuery.of(context).size.width * 0.9,
+      padding: const EdgeInsets.all(8),
+      width: MediaQuery.of(context).size.width * 0.92,
       decoration: BoxDecoration(
-          color: Colors.grey.shade200, borderRadius: BorderRadius.circular(10)),
+        color: colorScheme.outline.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: TextFormField(
         initialValue: formData[formDataTitle]?.toString(),
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(color: Colors.grey.shade600),
+          labelStyle: theme.textTheme.labelLarge?.copyWith(
+            color: colorScheme.outline.withOpacity(0.8),
+          ),
           focusedBorder: InputBorder.none,
           border: InputBorder.none,
           errorBorder: InputBorder.none,

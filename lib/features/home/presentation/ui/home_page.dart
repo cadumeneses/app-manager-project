@@ -1,4 +1,4 @@
-import 'package:app_manager_project/features/project/presentation/ui/components/porject_form_component.dart';
+import 'package:app_manager_project/features/project/presentation/ui/components/project_form_component.dart';
 import 'package:app_manager_project/features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'package:app_manager_project/features/profile/presentation/ui/profile_page.dart';
 import 'package:flutter/material.dart';

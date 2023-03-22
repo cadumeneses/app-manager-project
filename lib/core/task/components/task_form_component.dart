@@ -156,6 +156,7 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                       color: colorScheme.secondaryContainer,
                       submitForm: _submitForm,
                       nameButton: 'Adicionar Tarefa',
+                      labelColor: colorScheme.onSecondaryContainer,
                     )
                   ],
                 ),

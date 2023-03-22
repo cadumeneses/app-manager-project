@@ -175,6 +175,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                       color: colorScheme.primary,
                       submitForm: _submitForm,
                       nameButton: 'Criar Projeto',
+                      labelColor: colorScheme.onPrimaryContainer,
                     )
                   ],
                 ),

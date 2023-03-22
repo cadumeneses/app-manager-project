@@ -110,7 +110,12 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 10),
-                      child: Text('Novo projeto', style: textTheme.titleLarge),
+                      child: Text(
+                        'Novo projeto',
+                        style: textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
@@ -134,6 +139,7 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                       color: colorScheme.primary,
                       submitForm: _submitForm,
                       nameButton: 'Criar Projeto',
+                      labelColor: colorScheme.onPrimaryContainer,
                     )
                   ],
                 ),
