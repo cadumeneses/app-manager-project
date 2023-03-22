@@ -1,7 +1,6 @@
 import 'package:app_manager_project/core/board/components/board_component.dart';
 import 'package:app_manager_project/core/board/infra/repositories/board_repository.dart';
 import 'package:app_manager_project/features/project/infra/models/project_model.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,14 +30,18 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     final Project project =
         ModalRoute.of(context)?.settings.arguments as Project;
 
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return RefreshIndicator(
       onRefresh: () => _onRefresh(context),
       child: Scaffold(
-        backgroundColor: CustomColor.whiteColor,
+        backgroundColor: colorScheme.background,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
-              iconTheme: const IconThemeData(color: CustomColor.secondaryColor),
+              iconTheme: IconThemeData(color: colorScheme.primary),
               actions: const [
                 Icon(Icons.search, size: 30),
                 Padding(
@@ -69,12 +72,13 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     const DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            begin: Alignment(0, 0.8),
-                            end: Alignment(0, 0),
-                            colors: [
-                              Color.fromRGBO(0, 0, 0, 0.2),
-                              Color.fromRGBO(0, 0, 0, 0),
-                            ]),
+                          begin: Alignment(0, 0.8),
+                          end: Alignment(0, 0),
+                          colors: [
+                            Color.fromRGBO(0, 0, 0, 0.2),
+                            Color.fromRGBO(0, 0, 0, 0),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -89,10 +93,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   child: Text(
                     project.name.toUpperCase(),
                     textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        fontSize: 22,
-                        color: CustomColor.primaryColor,
-                        fontWeight: FontWeight.bold),
+                    style: textTheme.titleLarge,
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.015),
@@ -101,7 +102,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   child: Text(
                     project.description,
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+                    style: textTheme.titleSmall,
                   ),
                 ),
                 Container(

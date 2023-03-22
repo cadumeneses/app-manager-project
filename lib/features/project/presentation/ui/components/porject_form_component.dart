@@ -1,6 +1,5 @@
 import 'package:app_manager_project/core/components/form/input_text_form.dart';
 import 'package:app_manager_project/features/project/infra/models/project_model.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -84,15 +83,21 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator(color: CustomColor.secondaryColor))
+        ? Center(
+            child: CircularProgressIndicator(color: colorScheme.primary),
+          )
         : SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Padding(
                 padding: EdgeInsets.only(
-                    bottom: 20 + MediaQuery.of(context).viewInsets.bottom),
+                  bottom: 20 + MediaQuery.of(context).viewInsets.bottom,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -103,36 +108,33 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                       icon: Icon(Icons.keyboard_arrow_down,
                           size: 40, color: Colors.grey.shade400),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 10),
-                      child: Text(
-                        'Novo projeto',
-                        style: TextStyle(
-                            color: CustomColor.primaryColor,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5, bottom: 10),
+                      child: Text('Novo projeto', style: textTheme.titleLarge),
                     ),
                     const Divider(),
                     const SizedBox(height: 10),
                     InputTextForm(
-                        formData: _formData,
-                        formDataTitle: "name",
-                        titleFocus: _nameFocus,
-                        label: "Nome",
-                        minLenght: 3),
+                      formData: _formData,
+                      formDataTitle: "name",
+                      titleFocus: _nameFocus,
+                      label: "Nome",
+                      minLenght: 3,
+                    ),
                     const SizedBox(height: 20),
                     InputTextForm(
-                        formData: _formData,
-                        formDataTitle: "description",
-                        titleFocus: _descriptionFocus,
-                        label: "Descrição",
-                        minLenght: 10),
+                      formData: _formData,
+                      formDataTitle: "description",
+                      titleFocus: _descriptionFocus,
+                      label: "Descrição",
+                      minLenght: 10,
+                    ),
                     const SizedBox(height: 25),
                     InputSubmitForm(
-                        color: CustomColor.secondaryColor,
-                        submitForm: _submitForm,
-                        nameButton: 'Criar Projeto')
+                      color: colorScheme.primary,
+                      submitForm: _submitForm,
+                      nameButton: 'Criar Projeto',
+                    )
                   ],
                 ),
               ),

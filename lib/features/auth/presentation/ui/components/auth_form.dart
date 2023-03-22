@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../infra/repositories/auth_repository.dart';
 import 'email_input_component.dart';
+import 'submit_form_component.dart';
 
 enum AuthMode { singup, login }
 
@@ -99,58 +100,39 @@ class _AuthFormState extends State<AuthForm> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * .4,
-      child: Form(
-        key: _formKey,
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Column(
-              children: [
-                EmailInputComponent(authData: _authData),
-                PasswordInputComponent(passwordController: _passwordController, authData: _authData),
-              ],
+            EmailInputComponent(authData: _authData),
+            const SizedBox(height: 20),
+            PasswordInputComponent(
+              passwordController: _passwordController,
+              authData: _authData,
             ),
+            const SizedBox(height: 40),
             if (_isLoading)
               CircularProgressIndicator(
-                color: colorScheme.tertiary,
+                color: colorScheme.primary,
               )
             else
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: ElevatedButton(
-                  onPressed: submit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.background,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 30,
-                    ),
-                  ),
-                  child: SizedBox(
-                    height: 35,
-                    width: MediaQuery.of(context).size.width * 0.7,
-                    child: Center(
-                      child: Text(
-                        _authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
-                        style: textTheme.titleMedium,
-                      ),
-                    ),
-                  ),
-                ),
+              SubmitFormComponent(
+                authMode: _authMode,
+                submitCallback: submit,
+                textTheme: textTheme,
+                colorScheme: colorScheme,
               ),
-            TextButton(
-              onPressed: switchAuthMode,
-              child: Text(
-                _isLogin()
-                    ? "Não tem uma conta? Cadastre-se!"
-                    : 'Já tem uma conta? Entrar',
-                style: textTheme.titleSmall
-              ),
-            ),
+            // TextButton(
+            //   onPressed: switchAuthMode,
+            //   child: Text(
+            //     _isLogin()
+            //         ? "Não tem uma conta? Cadastre-se!"
+            //         : 'Já tem uma conta? Entrar',
+            //     style: textTheme.titleSmall,
+            //   ),
+            // ),
           ],
         ),
       ),

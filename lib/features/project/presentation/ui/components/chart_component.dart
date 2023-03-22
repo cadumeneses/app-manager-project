@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/utils/custom_color.dart';
-
 class ChartComponent extends StatelessWidget {
   const ChartComponent({required this.percentage, super.key});
 
@@ -22,17 +20,17 @@ class ChartComponent extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(5)
+                      borderRadius: BorderRadius.circular(5),
                     ),
                   ),
                   FractionallySizedBox(
                     widthFactor: percentage,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: CustomColor.primaryColor,
-                        borderRadius: BorderRadius.circular(5)
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    ),   
+                    ),
                   ),
                 ],
               ),

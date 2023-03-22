@@ -3,7 +3,6 @@ import 'package:app_manager_project/features/profile/infra/models/profile_model.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/utils/custom_color.dart';
 import '../../../../../core/components/form/input_submit_form.dart';
 import '../../../../../core/components/form/input_text_form.dart';
 import '../../../infra/repositories/profile_repository.dart';
@@ -87,9 +86,13 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return _isLoading
-        ? const Center(
-            child: CircularProgressIndicator(color: CustomColor.secondaryColor))
+        ? Center(
+            child: CircularProgressIndicator(color: colorScheme.primary),
+          )
         : SizedBox(
             height: MediaQuery.of(context).size.height * 0.88,
             child: SingleChildScrollView(
@@ -108,17 +111,17 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(Icons.keyboard_arrow_left,
-                                size: 30, color: CustomColor.secondaryColor),
+                            icon: Icon(
+                              Icons.keyboard_arrow_left,
+                              size: 30,
+                              color: colorScheme.onBackground,
+                            ),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 40),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40),
                             child: Text(
                               'Editar Seu Perfil',
-                              style: TextStyle(
-                                  color: CustomColor.primaryColor,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold),
+                              style: theme.textTheme.titleLarge,
                             ),
                           ),
                         ],
@@ -140,7 +143,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                         IconButton(
                           onPressed: () {},
                           icon: const Icon(Icons.edit),
-                          color: CustomColor.secondaryColor,
+                          color: colorScheme.primary,
                         )
                       ],
                     ),
@@ -169,9 +172,10 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                         minLenght: 10),
                     const SizedBox(height: 25),
                     InputSubmitForm(
-                        color: CustomColor.primaryColor,
-                        submitForm: _submitForm,
-                        nameButton: 'Criar Projeto')
+                      color: colorScheme.primary,
+                      submitForm: _submitForm,
+                      nameButton: 'Criar Projeto',
+                    )
                   ],
                 ),
               ),

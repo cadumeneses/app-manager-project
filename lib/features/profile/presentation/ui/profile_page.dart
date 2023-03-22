@@ -1,6 +1,5 @@
 import 'package:app_manager_project/features/auth/infra/repositories/auth_repository.dart';
 import 'package:app_manager_project/core/utils/app_routes.dart';
-import 'package:app_manager_project/core/utils/custom_color.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +10,13 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: CustomColor.backgroundColor,
+        backgroundColor: colorScheme.background,
         body: Column(
           children: [
             Padding(
@@ -30,13 +33,9 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  const Text(
+                  Text(
                     "Perfil",
-                    style: TextStyle(
-                        fontFamily: "Barlow",
-                        color: CustomColor.primaryColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                    style: textTheme.titleLarge,
                   ),
                 ],
               ),
@@ -53,14 +52,11 @@ class ProfilePage extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 25),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 25),
                   child: Text(
                     'Monkey D. Luffy',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: textTheme.titleMedium,
                   ),
                 )
               ],
@@ -71,55 +67,31 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      const Text(
-                        '27',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                       Text(
-                        'Projetos',
-                        style: TextStyle(
-                          color: Colors.grey.shade400,
-                        ),
-                      )
+                        '27',
+                        style: textTheme.labelLarge,
+                      ),
+                      Text('Projetos', style: textTheme.labelLarge)
                     ],
                   ),
                   const VerticalDivider(color: Colors.grey, thickness: 1),
                   Column(
                     children: [
-                      const Text(
+                      Text(
                         '189',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.labelLarge,
                       ),
                       Text(
                         'Tarefas',
-                        style: TextStyle(
-                          color: Colors.grey.shade400,
-                        ),
+                        style: textTheme.labelLarge,
                       )
                     ],
                   ),
                   const VerticalDivider(color: Colors.grey, thickness: 1),
                   Column(
                     children: [
-                      const Text(
-                        '4',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        'Equipes',
-                        style: TextStyle(
-                          color: Colors.grey.shade400,
-                        ),
-                      )
+                      Text('4', style: textTheme.labelLarge),
+                      Text('Equipes', style: textTheme.labelLarge)
                     ],
                   ),
                 ],
@@ -144,11 +116,11 @@ class ProfilePage extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              iconColor: Colors.red,
+              iconColor: colorScheme.error,
               leading: const Icon(Icons.exit_to_app),
-              title: const Text(
+              title: Text(
                 'Logout',
-                style: TextStyle(color: Colors.red),
+                style: textTheme.labelLarge,
               ),
               onTap: () => showModal(context),
             ),
@@ -161,24 +133,32 @@ class ProfilePage extends StatelessWidget {
 
 void showModalForm(BuildContext context) {
   showBottomSheet(
-      context: context,
-      builder: (_) {
-        return const ProfileFormComponent();
-      },
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+    context: context,
+    builder: (_) {
+      return const ProfileFormComponent();
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+  );
 }
 
 void showModal(BuildContext context) {
   showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return const LogoutModal();
-      },
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))));
+    context: context,
+    builder: (_) {
+      return const LogoutModal();
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+  );
 }
 
 class LogoutModal extends StatelessWidget {
@@ -186,6 +166,10 @@ class LogoutModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,27 +178,26 @@ class LogoutModal extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.keyboard_arrow_down,
-                size: 40, color: Colors.grey.shade400),
-          ),
-          const Text(
-            'Logout',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              size: 40,
+              color: colorScheme.onBackground,
             ),
           ),
+          Text(
+            'Logout',
+            style: textTheme.titleLarge,
+          ),
           const Divider(),
-          const Text(
+          Text(
             'Tem certeza que quer sair?',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: textTheme.titleMedium,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: CustomColor.primaryColor,
+                backgroundColor: colorScheme.primary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
               ),
@@ -226,11 +209,8 @@ class LogoutModal extends StatelessWidget {
               child: SizedBox(
                 height: 50,
                 width: MediaQuery.of(context).size.width * 0.8,
-                child: const Center(
-                  child: Text(
-                    'Sim, quero sair',
-                    style: TextStyle(fontSize: 18),
-                  ),
+                child: Center(
+                  child: Text('Sim, quero sair', style: textTheme.titleMedium),
                 ),
               ),
             ),
@@ -238,7 +218,7 @@ class LogoutModal extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: CustomColor.backgroundColor,
+              backgroundColor: colorScheme.background,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
             ),
@@ -248,11 +228,10 @@ class LogoutModal extends StatelessWidget {
             child: SizedBox(
               height: 50,
               width: MediaQuery.of(context).size.width * 0.8,
-              child: const Center(
+              child: Center(
                 child: Text(
                   'Cancelar',
-                  style:
-                      TextStyle(fontSize: 18, color: CustomColor.primaryColor),
+                  style: textTheme.titleMedium,
                 ),
               ),
             ),

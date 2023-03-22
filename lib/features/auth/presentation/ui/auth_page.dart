@@ -8,34 +8,27 @@ class AuthPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
     return Scaffold(
-      backgroundColor:colorScheme.background,
+      backgroundColor: colorScheme.background,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Stack(children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40)),
-                    color: Colors.white),
-                width: MediaQuery.of(context).size.width,
+          Container(
+            width: 180,
+            padding: EdgeInsets.fromLTRB(
+              20,
+              MediaQuery.of(context).size.height * 0.15,
+              0,
+              30,
+            ),
+            child: Text(
+              'Entre na sua conta',
+              style: theme.textTheme.headlineLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                height: 1.5,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * .6,
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.15),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    'Entre na sua conta',
-                    style: theme.textTheme.headlineLarge,
-                  ),
-                ),
-              ),
-            ]),
+            ),
           ),
           const AuthForm(),
         ],
