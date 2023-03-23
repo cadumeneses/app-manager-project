@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class EmailInputComponent extends StatelessWidget {
   const EmailInputComponent({
     super.key,
-    required Map<String, String> authData,
-  }) : _authData = authData;
+    required this.emailController,
+  });
 
-  final Map<String, String> _authData;
+  final TextEditingController emailController;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,8 @@ class EmailInputComponent extends StatelessWidget {
           enabledBorder: InputBorder.none,
           icon: Icon(Icons.email),
         ),
+        controller: emailController,
         keyboardType: TextInputType.emailAddress,
-        onSaved: (email) => _authData['email'] = email ?? '',
         validator: (_email) {
           final email = _email ?? '';
           if (email.trim().isEmpty || !email.contains('@')) {

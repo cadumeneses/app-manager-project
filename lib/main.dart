@@ -1,5 +1,5 @@
 import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
-import 'package:app_manager_project/features/auth/infra/repositories/auth_repository.dart';
+import 'package:app_manager_project/features/auth/models/auth_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +7,7 @@ import 'core/board/infra/repositories/board_repository.dart';
 import 'core/task/infra/repositories/tasks_repository.dart';
 import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';
-import 'features/auth/presentation/ui/auth_page.dart';
+import 'features/auth/views/auth_page.dart';
 import 'features/home/presentation/ui/home_page.dart';
 import 'features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'features/profile/infra/repositories/profile_repository.dart';
@@ -26,30 +26,30 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => AuthRepository(),
+          create: (_) => AuthModel(),
         ),
-        ChangeNotifierProxyProvider<AuthRepository, ProjectRepository>(
+        ChangeNotifierProxyProvider<AuthModel, ProjectRepository>(
           create: (_) => ProjectRepository(),
           update: (ctx, auth, previous) {
             return ProjectRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.projects ?? []);
           },
         ),
-        ChangeNotifierProxyProvider<AuthRepository, BoardRepository>(
+        ChangeNotifierProxyProvider<AuthModel, BoardRepository>(
           create: (_) => BoardRepository(),
           update: (ctx, auth, previous) {
             return BoardRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.boards ?? []);
           },
         ),
-        ChangeNotifierProxyProvider<AuthRepository, ProfileRepository>(
+        ChangeNotifierProxyProvider<AuthModel, ProfileRepository>(
           create: (_) => ProfileRepository(),
           update: (ctx, auth, previous) {
             return ProfileRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
           },
         ),
-        ChangeNotifierProxyProvider<AuthRepository, TaskRepository>(
+        ChangeNotifierProxyProvider<AuthModel, TaskRepository>(
           create: (_) => TaskRepository(),
           update: (ctx, auth, previous) {
             return TaskRepository(
@@ -77,7 +77,7 @@ class AuthOrHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthRepository auth = Provider.of(context);
+    AuthModel auth = Provider.of(context);
     return FutureBuilder(
       future: auth.tryAutoLogin(),
       builder: (ctx, snapshot) {
@@ -88,7 +88,7 @@ class AuthOrHomePage extends StatelessWidget {
             child: Text('Ocorreu um erro!'),
           );
         } else {
-          return auth.isAuth ? const HomePage() : const AuthPage();
+          return auth.isAuth ? const HomePage() : AuthPage();
         }
       },
     );

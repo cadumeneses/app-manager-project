@@ -1,4 +1,4 @@
-import 'package:app_manager_project/features/auth/infra/repositories/auth_repository.dart';
+import 'package:app_manager_project/features/auth/models/auth_model.dart';
 import 'package:app_manager_project/core/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -202,7 +202,7 @@ class LogoutModal extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)),
               ),
               onPressed: () {
-                Provider.of<AuthRepository>(context, listen: false).logout();
+                Provider.of<AuthModel>(context, listen: false).logout();
                 Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.auth_or_home);
               },

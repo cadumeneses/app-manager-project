@@ -1,18 +1,17 @@
+import 'package:app_manager_project/features/auth/presenters/auth_presenter.dart';
 import 'package:flutter/material.dart';
-import 'auth_form.dart';
 
 class SubmitFormComponent extends StatelessWidget {
-  final AuthMode authMode;
   final VoidCallback submitCallback;
   final TextTheme textTheme;
   final ColorScheme colorScheme;
+  final AuthPresenter presenter;
 
   const SubmitFormComponent({
     super.key,
-    required this.authMode,
     required this.submitCallback,
     required this.textTheme,
-    required this.colorScheme,
+    required this.colorScheme, required this.presenter,
   });
 
   @override
@@ -32,7 +31,7 @@ class SubmitFormComponent extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
+            presenter.authMode == AuthMode.login ? 'Entrar' : 'Cadastrar',
             style: textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onPrimaryContainer,

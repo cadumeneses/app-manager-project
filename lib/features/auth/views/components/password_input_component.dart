@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 class PasswordInputComponent extends StatelessWidget {
   const PasswordInputComponent({
     super.key,
-    required TextEditingController passwordController,
-    required Map<String, String> authData,
-  })  : _passwordController = passwordController,
-        _authData = authData;
+    required this.passwordController,
+  });
 
-  final TextEditingController _passwordController;
-  final Map<String, String> _authData;
+  final TextEditingController passwordController;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +31,7 @@ class PasswordInputComponent extends StatelessWidget {
         ),
         keyboardType: TextInputType.emailAddress,
         obscureText: true,
-        controller: _passwordController,
-        onSaved: (password) => _authData['password'] = password ?? '',
+        controller: passwordController,
         validator: (_password) {
           final password = _password ?? '';
           if (password.trim().isEmpty || password.length < 5) {

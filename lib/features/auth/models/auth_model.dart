@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'data/store.dart';
-import 'exceptions/auth_exception.dart';
+import 'storage_model.dart';
+import 'auth_exception.dart';
 
-class AuthRepository with ChangeNotifier {
+class AuthModel with ChangeNotifier {
   var dio = Dio();
   String? _token;
   String? _email;
@@ -50,7 +50,7 @@ class AuthRepository with ChangeNotifier {
 
   void _handleAuthenticationResponse(Map<String, dynamic> response) {
     if (response['error'] != null) {
-      throw AuthException(response['error']['message']);
+      throw AuthExceptionModel(response['error']['message']);
     } else {
       _token = response['idToken'];
       _email = response['email'];
@@ -64,7 +64,7 @@ class AuthRepository with ChangeNotifier {
   }
 
   void _updateAuthenticationInfo() {
-    Store.saveMap('userData', {
+    StorageModel.saveMap('userData', {
       'token': _token,
       'email': _email,
       'uid': _uid,
@@ -85,7 +85,7 @@ class AuthRepository with ChangeNotifier {
   Future<void> tryAutoLogin() async {
     if (isAuth) return;
 
-    final userData = await Store.getMap('userData');
+    final userData = await StorageModel.getMap('userData');
 
     if (userData.isEmpty) return;
 
@@ -108,7 +108,7 @@ class AuthRepository with ChangeNotifier {
     _uid = null;
     _expiryDate = null;
     _clearAutoTimer();
-    Store.remove('userData').then((_) {
+    StorageModel.remove('userData').then((_) {
       notifyListeners();
     });
   }
