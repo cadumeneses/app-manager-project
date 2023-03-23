@@ -1,5 +1,6 @@
-import 'package:app_manager_project/core/task/infra/models/task_model.dart';
-import 'package:app_manager_project/core/task/infra/repositories/tasks_repository.dart';
+import 'package:app_manager_project/core/task/models/task_model.dart';
+import 'package:app_manager_project/core/task/models/tasks_repository.dart';
+import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/form/input_submit_form.dart';
@@ -18,69 +19,15 @@ class TaskFormComponent extends StatefulWidget {
 }
 
 class _TaskFormComponentState extends State<TaskFormComponent> {
-  final _nameFocus = FocusNode();
-
-  final _formData = <String, Object>{};
+  final _taskNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool _isLoading = false;
+  late TaskPresenter presenter;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_formData.isEmpty) {
-      final argument = ModalRoute.of(context)?.settings.arguments;
-
-      if (argument != null) {
-        final task = argument as TaskModel;
-        _formData['id'] = task.id;
-        _formData['name'] = task.name;
-      }
-      _formData['projectId'] = widget.projectId;
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _nameFocus.dispose();
-  }
-
-  Future<void> _submitForm() async {
-    final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (!isValid) {
-      return;
-    }
-
-    _formKey.currentState?.save();
-
-    setState(() => _isLoading = true);
-
-    try {
-      await Provider.of<TaskRepository>(
-        context,
-        listen: false,
-      ).save(_formData);
-    } catch (e) {
-      debugPrint(e.toString());
-      await showDialog<void>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Ocorreu um erro'),
-          content: const Text('Erro ao salvar tarefa!'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Voltar'),
-            )
-          ],
-        ),
-      );
-    } finally {
-      setState(() => _isLoading = false);
-      Navigator.of(context).pop();
-    }
+  void initState() {
+    super.initState();
+    presenter = context.read();
   }
 
   @override
@@ -89,7 +36,7 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return _isLoading
+    return presenter.isLoading
         ? const Center(child: CircularProgressIndicator())
         : SingleChildScrollView(
             child: Form(
@@ -121,14 +68,21 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                       ),
                     ),
                     const Divider(),
-                    const InputTextForm(
+                    InputTextForm(
                       label: "Nome",
                       minLenght: 3,
+                      controller: _taskNameController,
                     ),
                     const SizedBox(height: 20),
                     InputSubmitForm(
                       color: colorScheme.primary,
-                      submitForm: _submitForm,
+                      submitForm: () {
+                        presenter.submitForm(
+                          _taskNameController.text,
+                          widget.projectId,
+                        );
+                        Navigator.of(context).pop();
+                      },
                       nameButton: 'Adicionar Tarefa',
                       labelColor: colorScheme.onPrimary,
                     ),

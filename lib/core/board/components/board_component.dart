@@ -1,12 +1,12 @@
 import 'package:app_manager_project/core/task/components/task_form_component.dart';
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
-import 'package:app_manager_project/core/task/infra/models/task_model.dart';
+import 'package:app_manager_project/core/task/models/task_model.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../features/project/models/project_model.dart';
-import '../../task/infra/repositories/tasks_repository.dart';
+import '../../task/models/tasks_repository.dart';
 import '../infra/models/board_model.dart';
 
 class BoardComponent extends StatefulWidget {
@@ -82,7 +82,7 @@ class _BoardComponentState extends State<BoardComponent> {
                           foregroundColor: colorScheme.onTertiaryContainer,
                           maxRadius: 20,
                           child: tasks == null
-                              ? const SizedBox()
+                              ? const Text('0')
                               : Text(
                                   tasks!.length.toString(),
                                   style: textTheme.titleMedium?.copyWith(
@@ -106,7 +106,7 @@ class _BoardComponentState extends State<BoardComponent> {
               ),
             ),
             tasks == null
-                ? const CircularProgressIndicator()
+                ? Container()
                 : Expanded(
                     child: ListView.separated(
                       itemCount: tasks!.length,

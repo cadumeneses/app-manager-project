@@ -1,7 +1,6 @@
 import 'package:app_manager_project/core/external/dio/dio_client.dart';
-import 'package:app_manager_project/core/task/infra/models/task_model.dart';
+import 'package:app_manager_project/core/task/models/task_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'dart:math';
 
 class TaskRepository extends ChangeNotifier {
@@ -33,6 +32,10 @@ class TaskRepository extends ChangeNotifier {
       Map<String, dynamic> data = response.data;
       List<TaskModel> newTasks = [];
 
+      if (data.isEmpty) {
+        _tasks = [];
+      }
+
       data.forEach((taskId, taskData) {
         if (taskData['projectId'] == projectId) {
           try {
@@ -57,12 +60,12 @@ class TaskRepository extends ChangeNotifier {
     }
   }
 
-  Future<void> save(Map<String, dynamic> data) async {
-    bool hasId = data['id'] != null;
+  Future<void> save(TaskModel data) async {
+    bool hasId = data.id.isNotEmpty;
     final task = TaskModel(
-      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
-      name: data['name'] as String,
-      projectId: data['projectId'] as String,
+      id: hasId ? data.id : Random().nextDouble().toString(),
+      name: data.name,
+      projectId: data.projectId,
     );
     if (hasId) {
       return;

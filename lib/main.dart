@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/board/infra/repositories/board_repository.dart';
-import 'core/task/infra/repositories/tasks_repository.dart';
+import 'core/task/models/tasks_repository.dart';
+import 'core/task/presenters/task_presenter.dart';
 import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';
 import 'features/auth/views/auth_page.dart';
@@ -60,6 +61,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProjectPresenter>(
           create: (context) => ProjectPresenter(
             context.read<ProjectRepository>(),
+          ),
+        ),
+        ChangeNotifierProvider<TaskPresenter>(
+          create: (context) => TaskPresenter(
+            context.read<TaskRepository>(),
           ),
         ),
       ],

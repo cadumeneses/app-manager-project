@@ -10,7 +10,6 @@ class ProjectPresenter with ChangeNotifier {
   ProjectPresenter(this._projectRepository);
 
   bool get isLoading => _isLoading;
-
   String get error => _error;
 
   setArguments(dynamic arguments){
