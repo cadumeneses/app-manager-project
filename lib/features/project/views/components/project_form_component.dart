@@ -25,8 +25,6 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
     presenter = context.read();
   }
 
-  bool _isLoading = false;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
