@@ -2,7 +2,7 @@ import 'package:app_manager_project/features/project/presentation/ui/components/
 import 'package:app_manager_project/features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'package:app_manager_project/features/profile/presentation/ui/profile_page.dart';
 import 'package:flutter/material.dart';
-import '../../../project/presentation/ui/projects_overview/projects_overview_page.dart';
+import '../../../project/project_overview/views/projects_overview_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

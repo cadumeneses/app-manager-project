@@ -12,7 +12,7 @@ import 'features/home/presentation/ui/home_page.dart';
 import 'features/project/presentation/ui/my_projects/my_projects_page.dart';
 import 'features/profile/infra/repositories/profile_repository.dart';
 import 'features/project/presentation/ui/project_detail/project_detail_page.dart';
-import 'features/project/presentation/ui/projects_overview/projects_overview_page.dart';
+import 'features/project/project_overview/views/projects_overview_page.dart';
 
 void main() {
   runApp(const MyApp());
