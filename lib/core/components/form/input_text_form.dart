@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
 class InputTextForm extends StatelessWidget {
-  const InputTextForm(
-      {required this.formData,
-      required this.formDataTitle,
-      required this.titleFocus,
-      this.controller,
-      required this.label,
-      required this.minLenght,
-      super.key});
-  final FocusNode titleFocus;
-  final Map<String, Object> formData;
-  final String formDataTitle;
+  const InputTextForm({
+    this.controller,
+    required this.label,
+    required this.minLenght,
+    super.key,
+  });
   final String label;
   final TextEditingController? controller;
   final int minLenght;
@@ -28,7 +23,6 @@ class InputTextForm extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: TextFormField(
-        initialValue: formData[formDataTitle]?.toString(),
         decoration: InputDecoration(
           labelText: label,
           labelStyle: theme.textTheme.labelLarge?.copyWith(
@@ -40,21 +34,10 @@ class InputTextForm extends StatelessWidget {
           enabledBorder: InputBorder.none,
         ),
         textInputAction: TextInputAction.next,
-        onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(titleFocus);
-        },
         autofocus: false,
-        onSaved: (name) => formData[formDataTitle] = name ?? '',
+        controller: controller,
         validator: (name) {
           final title = name ?? '';
-
-          if (title.trim().isEmpty) {
-            return 'O $formDataTitle é inválido!';
-          }
-
-          if (title.trim().length < minLenght) {
-            return 'O $formDataTitle precisa de um tamanho minímo: $minLenght.';
-          }
           return null;
         },
       ),

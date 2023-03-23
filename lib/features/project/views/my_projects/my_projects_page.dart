@@ -1,5 +1,5 @@
-import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
-import 'package:app_manager_project/features/project/presentation/ui/my_projects/components/chips_component.dart';
+import 'package:app_manager_project/features/project/models/project_repository.dart';
+import 'package:app_manager_project/features/project/views/my_projects/components/chips_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

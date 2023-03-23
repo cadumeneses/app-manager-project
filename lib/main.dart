@@ -1,5 +1,6 @@
-import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
+import 'package:app_manager_project/features/project/models/project_repository.dart';
 import 'package:app_manager_project/features/auth/models/auth_model.dart';
+import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,10 +10,10 @@ import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';
 import 'features/auth/views/auth_page.dart';
 import 'features/home/presentation/ui/home_page.dart';
-import 'features/project/presentation/ui/my_projects/my_projects_page.dart';
+import 'features/project/views/my_projects/my_projects_page.dart';
 import 'features/profile/infra/repositories/profile_repository.dart';
-import 'features/project/presentation/ui/project_detail/project_detail_page.dart';
-import 'features/project/project_overview/views/projects_overview_page.dart';
+import 'features/project/views/project_detail/project_detail_page.dart';
+import 'features/project/views/project_overview/projects_overview_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,6 +56,11 @@ class MyApp extends StatelessWidget {
             return TaskRepository(
                 auth.token ?? '', auth.uid ?? '', previous?.tasks ?? []);
           },
+        ),
+        ChangeNotifierProvider<ProjectPresenter>(
+          create: (context) => ProjectPresenter(
+            context.read<ProjectRepository>(),
+          ),
         ),
       ],
       child: MaterialApp(

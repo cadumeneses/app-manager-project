@@ -1,10 +1,9 @@
 import 'package:app_manager_project/core/components/form/input_text_form.dart';
-import 'package:app_manager_project/features/project/infra/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/components/form/input_submit_form.dart';
-import '../../../infra/repositories/project_repository.dart';
+import '../../../../core/components/form/input_submit_form.dart';
+import '../../presenters/project_presenter.dart';
 
 class ProjectFormComponent extends StatefulWidget {
   const ProjectFormComponent({super.key});
@@ -14,71 +13,25 @@ class ProjectFormComponent extends StatefulWidget {
 }
 
 class _ProjectFormComponentState extends State<ProjectFormComponent> {
-  final _descriptionFocus = FocusNode();
-  final _nameFocus = FocusNode();
+  final _descriptionController = TextEditingController();
+  final _nameControlller = TextEditingController();
 
-  final _formData = <String, Object>{};
   final _formKey = GlobalKey<FormState>();
+
+  late ProjectPresenter presenter;
+  @override
+  void initState() {
+    super.initState();
+    presenter = context.read();
+  }
 
   bool _isLoading = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (_formData.isEmpty) {
-      final argument = ModalRoute.of(context)?.settings.arguments;
-
-      if (argument != null) {
-        final project = argument as Project;
-        _formData['id'] = project.id;
-        _formData['name'] = project.name;
-        _formData['description'] = project.description;
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _nameFocus.dispose();
-    _descriptionFocus.dispose();
-  }
-
-  Future<void> _submitForm() async {
-    final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (!isValid) {
-      return;
-    }
-
-    _formKey.currentState?.save();
-
-    setState(() => _isLoading = true);
-
-    try {
-      await Provider.of<ProjectRepository>(
-        context,
-        listen: false,
-      ).saveProject(_formData);
-    } catch (e) {
-      debugPrint(e.toString());
-      await showDialog<void>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('An error has occurred!'),
-          content: const Text('Error to save product'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Back'),
-            )
-          ],
-        ),
-      );
-    } finally {
-      setState(() => _isLoading = false);
-      Navigator.of(context).pop();
-    }
+    final argument = ModalRoute.of(context)?.settings.arguments;
+    presenter.setArguments(argument);
   }
 
   @override
@@ -87,7 +40,7 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
-    return _isLoading
+    return presenter.isLoading
         ? Center(
             child: CircularProgressIndicator(color: colorScheme.primary),
           )
@@ -123,24 +76,26 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                     const Divider(),
                     const SizedBox(height: 10),
                     InputTextForm(
-                      formData: _formData,
-                      formDataTitle: "name",
-                      titleFocus: _nameFocus,
                       label: "Nome",
                       minLenght: 3,
+                      controller: _nameControlller,
                     ),
                     const SizedBox(height: 20),
                     InputTextForm(
-                      formData: _formData,
-                      formDataTitle: "description",
-                      titleFocus: _descriptionFocus,
                       label: "Descrição",
                       minLenght: 10,
+                      controller: _descriptionController,
                     ),
                     const SizedBox(height: 25),
                     InputSubmitForm(
                       color: colorScheme.primary,
-                      submitForm: _submitForm,
+                      submitForm: () {
+                        presenter.submitForm(
+                          _nameControlller.text,
+                          _descriptionController.text,
+                        );
+                        Navigator.of(context).pop();
+                      },
                       nameButton: 'Criar Projeto',
                       labelColor: colorScheme.onPrimaryContainer,
                     )

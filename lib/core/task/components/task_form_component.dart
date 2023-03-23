@@ -36,7 +36,7 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
         _formData['id'] = task.id;
         _formData['name'] = task.name;
       }
-        _formData['projectId'] = widget.projectId;
+      _formData['projectId'] = widget.projectId;
     }
   }
 
@@ -62,7 +62,6 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
         context,
         listen: false,
       ).save(_formData);
-
     } catch (e) {
       debugPrint(e.toString());
       await showDialog<void>(
@@ -122,10 +121,7 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                       ),
                     ),
                     const Divider(),
-                    InputTextForm(
-                      formData: _formData,
-                      formDataTitle: "name",
-                      titleFocus: _nameFocus,
+                    const InputTextForm(
                       label: "Nome",
                       minLenght: 3,
                     ),

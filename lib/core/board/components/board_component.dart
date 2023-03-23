@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/project/infra/models/project_model.dart';
+import '../../../features/project/models/project_model.dart';
 import '../../task/infra/repositories/tasks_repository.dart';
 import '../infra/models/board_model.dart';
 

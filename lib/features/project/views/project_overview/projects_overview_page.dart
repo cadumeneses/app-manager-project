@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
-import 'package:app_manager_project/features/project/presentation/ui/components/project_item_component.dart';
-import 'package:app_manager_project/features/project/infra/repositories/project_repository.dart';
+import 'package:app_manager_project/features/project/views/components/project_item_component.dart';
+import 'package:app_manager_project/features/project/models/project_repository.dart';
 import 'components/heading_with_action.dart';
 import 'components/project_search_component.dart';
 

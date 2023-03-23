@@ -148,12 +148,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    InputTextForm(
-                        formData: _formData,
-                        formDataTitle: "name",
-                        titleFocus: _nameFocus,
-                        label: "Nome",
-                        minLenght: 3),
+                    const InputTextForm(label: "Nome", minLenght: 3),
                     const SizedBox(height: 20),
                     InputDateForm(
                       selectedDate: _selectedDate,
@@ -164,12 +159,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
                       },
                     ),
                     const SizedBox(height: 20),
-                    InputTextForm(
-                        formData: _formData,
-                        formDataTitle: "occupation",
-                        titleFocus: _occupationFocus,
-                        label: "Profissão",
-                        minLenght: 10),
+                    InputTextForm(label: "Profissão", minLenght: 10),
                     const SizedBox(height: 25),
                     InputSubmitForm(
                       color: colorScheme.primary,
