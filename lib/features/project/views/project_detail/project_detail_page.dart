@@ -1,6 +1,5 @@
 import 'package:app_manager_project/core/board/components/board_component.dart';
 import 'package:app_manager_project/core/board/infra/repositories/board_repository.dart';
-import 'package:app_manager_project/core/task/models/tasks_repository.dart';
 import 'package:app_manager_project/features/project/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

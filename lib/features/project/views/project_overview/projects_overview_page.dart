@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
 import 'package:app_manager_project/features/project/views/components/project_item_component.dart';
 import 'package:app_manager_project/features/project/models/project_repository.dart';
+import '../../../../core/utils/app_routes.dart';
 import 'components/heading_with_action.dart';
 import 'components/project_search_component.dart';
 
@@ -15,7 +16,6 @@ class ProjectsOverviewPage extends StatefulWidget {
 }
 
 class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
-
   @override
   void initState() {
     super.initState();
@@ -55,7 +55,11 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
               HeadingWithAction(
                 headingText: 'Meus Projetos',
                 actionText: 'Mostrar todos',
-                onActionPressed: () {},
+                onActionPressed: () {
+                  Navigator.of(context).pushReplacementNamed(
+                    AppRoutes.projects,
+                  );
+                },
               ),
               Container(
                 padding: const EdgeInsets.only(right: 5, left: 20),
@@ -64,19 +68,20 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 child: Consumer<ProjectRepository>(
                     builder: (_, projectRepository, widget) {
                   return ListView.separated(
-                      itemCount: projectRepository.projects.length,
-                      scrollDirection: Axis.horizontal,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10),
-                      itemBuilder: ((context, index) {
-                        var project = projectRepository.projects[index];
-                        return ProjectItemComponent(
-                          name: project.name,
-                          imgUrl: project.imgUrl,
-                          description: project.description,
-                          project: project,
-                        );
-                      }));
+                    itemCount: projectRepository.projects.length,
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 10),
+                    itemBuilder: ((context, index) {
+                      var project = projectRepository.projects[index];
+                      return ProjectItemComponent(
+                        name: project.name,
+                        imgUrl: project.imgUrl,
+                        description: project.description,
+                        project: project,
+                      );
+                    }),
+                  );
                 }),
               ),
               const SizedBox(height: 20),
