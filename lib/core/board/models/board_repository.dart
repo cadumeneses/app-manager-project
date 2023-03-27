@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_manager_project/core/board/infra/models/board_model.dart';
+import 'package:app_manager_project/core/board/models/board_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
-import 'package:app_manager_project/core/board/components/board_component.dart';
-import 'package:app_manager_project/core/board/infra/repositories/board_repository.dart';
+import 'package:app_manager_project/core/board/views/board_view.dart';
+import 'package:app_manager_project/core/board/models/board_repository.dart';
 import 'package:app_manager_project/features/project/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +93,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     child: Text(
                       project.name.toUpperCase(),
                       textAlign: TextAlign.left,
-                      style: textTheme.titleLarge,
+                      style: textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.015),
@@ -102,7 +104,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     child: Text(
                       project.description,
                       textAlign: TextAlign.left,
-                      style: textTheme.titleSmall,
+                      style: textTheme.titleSmall?.copyWith(
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                   Container(

@@ -4,7 +4,7 @@ import 'package:app_manager_project/features/project/presenters/project_presente
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'core/board/infra/repositories/board_repository.dart';
+import 'core/board/models/board_repository.dart';
 import 'core/task/models/tasks_repository.dart';
 import 'core/task/presenters/task_presenter.dart';
 import 'core/theme/themes.dart';

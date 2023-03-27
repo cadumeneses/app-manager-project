@@ -46,7 +46,6 @@ class TaskItemComponent extends StatelessWidget {
                 )
               ],
             ),
-            const TaskCheckboxComponent(),
           ],
         ),
       ),

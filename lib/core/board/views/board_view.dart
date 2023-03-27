@@ -1,13 +1,12 @@
 import 'package:app_manager_project/core/task/components/task_form_component.dart';
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
-import 'package:app_manager_project/core/task/models/task_model.dart';
+import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../features/project/models/project_model.dart';
-import '../../task/models/tasks_repository.dart';
-import '../infra/models/board_model.dart';
+import '../models/board_model.dart';
 
 class BoardComponent extends StatefulWidget {
   const BoardComponent({
@@ -23,23 +22,15 @@ class BoardComponent extends StatefulWidget {
 }
 
 class _BoardComponentState extends State<BoardComponent> {
+  late TaskPresenter presenter;
+
   @override
   void initState() {
     super.initState();
-    _loadTasks(context);
-  }
-
-  List<TaskModel>? tasks;
-
-  Future<void> _loadTasks(BuildContext context) async {
-    final taskRepository = Provider.of<TaskRepository>(
-      context,
-      listen: false,
-    );
-    await taskRepository.loadTasks(widget.project.id);
-    setState(() {
-      tasks = taskRepository.tasks;
-    });
+    presenter = context.read();
+    if (mounted) {
+      presenter.loadTasks(widget.project.id);
+    }
   }
 
   @override
@@ -81,14 +72,15 @@ class _BoardComponentState extends State<BoardComponent> {
                           backgroundColor: colorScheme.tertiaryContainer,
                           foregroundColor: colorScheme.onTertiaryContainer,
                           maxRadius: 20,
-                          child: tasks == null
-                              ? const Text('0')
-                              : Text(
-                                  tasks!.length.toString(),
-                                  style: textTheme.titleMedium?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
+                          child: Consumer<TaskPresenter>(
+                              builder: (_, presenter, __) {
+                            return Text(
+                              presenter.tasks.length.toString(),
+                              style: textTheme.titleMedium?.copyWith(
+                                color: colorScheme.primary,
+                              ),
+                            );
+                          }),
                         ),
                       )
                     ],
@@ -105,22 +97,27 @@ class _BoardComponentState extends State<BoardComponent> {
                 ],
               ),
             ),
-            tasks == null
-                ? Container()
-                : Expanded(
-                    child: ListView.separated(
-                      itemCount: tasks!.length,
-                      scrollDirection: Axis.vertical,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10),
-                      itemBuilder: ((context, index) {
-                        var task = tasks![index];
-                        return TaskItemComponent(
-                          nameTask: task.name,
-                        );
-                      }),
-                    ),
-                  )
+            Consumer<TaskPresenter>(
+              builder: (_, presenter, __) {
+                return presenter.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : presenter.error.isNotEmpty
+                        ? Text(
+                            presenter.error,
+                            style: const TextStyle(color: Colors.red),
+                          )
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: presenter.tasks.length,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                var task = presenter.tasks[index];
+                                return TaskItemComponent(nameTask: task.name);
+                              },
+                            ),
+                          );
+              },
+            ),
           ],
         ),
       ),
