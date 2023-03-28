@@ -51,22 +51,13 @@ class MyApp extends StatelessWidget {
                 auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
           },
         ),
-        ChangeNotifierProxyProvider<AuthModel, TaskRepository>(
-          create: (_) => TaskRepository(),
-          update: (ctx, auth, previous) {
-            return TaskRepository(
-                auth.token ?? '', auth.uid ?? '', previous?.tasks ?? []);
-          },
-        ),
         ChangeNotifierProvider<ProjectPresenter>(
           create: (context) => ProjectPresenter(
             context.read<ProjectRepository>(),
           ),
         ),
         ChangeNotifierProvider<TaskPresenter>(
-          create: (context) => TaskPresenter(
-            context.read<TaskRepository>(),
-          ),
+          create: (context) => TaskPresenter(TaskRepository()),
         ),
       ],
       child: MaterialApp(

@@ -3,14 +3,14 @@ import 'package:app_manager_project/core/task/models/task_model.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 
-class TaskRepository extends ChangeNotifier {
+class TaskRepository {
   var dio = DioClient();
 
   final String _token;
   final String _uid;
 
   List<TaskModel> _tasks = [];
-  List<TaskModel> get tasks => [..._tasks];
+  List<TaskModel> _allTasks = [];
 
   int get tasksCount {
     return _tasks.length;
@@ -22,9 +22,7 @@ class TaskRepository extends ChangeNotifier {
     this._tasks = const [],
   ]);
 
-  Future<void> loadTasks(String projectId) async {
-    _tasks.clear();
-
+  Future<List<TaskModel>> loadTasks(String projectId) async {
     try {
       final response = await dio.dio.get(
         'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
@@ -51,18 +49,17 @@ class TaskRepository extends ChangeNotifier {
           }
           if (!listEquals(_tasks, newTasks)) {
             _tasks = newTasks;
-            notifyListeners();
           }
         }
       });
+
+      return _tasks;
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> loadAllTasks() async {
-    _tasks.clear();
-
+  Future<List<TaskModel>> loadAllTasks() async {
     try {
       final response = await dio.dio.get(
         'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
@@ -71,27 +68,29 @@ class TaskRepository extends ChangeNotifier {
       List<TaskModel> newTasks = [];
 
       if (data.isEmpty) {
-        _tasks = [];
+        _allTasks = [];
       }
 
       data.forEach((taskId, taskData) {
-          try {
-            TaskModel task = TaskModel(
-              id: taskId,
-              name: taskData['name'],
-              dateInit: taskData['dateInit'],
-              projectId: taskData['projectId'],
-            );
-            newTasks.add(task);
-          } catch (e) {
-            rethrow;
-          }
-          if (!listEquals(_tasks, newTasks)) {
-            _tasks = newTasks;
-            notifyListeners();
-          }
+        try {
+          TaskModel task = TaskModel(
+            id: taskId,
+            name: taskData['name'],
+            dateInit: taskData['dateInit'],
+            projectId: taskData['projectId'],
+          );
+          newTasks.add(task);
+        } catch (e) {
+          rethrow;
+        }
+        if (!listEquals(_allTasks, newTasks)) {
+          _allTasks = newTasks;
+        }
       });
+
+      return _allTasks;
     } catch (e) {
+      debugPrint(e.toString());
       rethrow;
     }
   }
@@ -132,7 +131,6 @@ class TaskRepository extends ChangeNotifier {
         status: task.status,
       ),
     );
-    notifyListeners();
   }
 
   Future<void> updateTask(TaskModel task) async {
@@ -148,7 +146,6 @@ class TaskRepository extends ChangeNotifier {
         },
       );
       _tasks[index] = task;
-      notifyListeners();
     }
   }
 }

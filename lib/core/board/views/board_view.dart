@@ -27,7 +27,7 @@ class _BoardComponentState extends State<BoardComponent> {
   @override
   void initState() {
     super.initState();
-    presenter = context.read();
+    presenter = context.read<TaskPresenter>();
     if (mounted) {
       presenter.loadTasks(widget.project.id);
     }
@@ -38,6 +38,7 @@ class _BoardComponentState extends State<BoardComponent> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+    final taskPresenterWatch = context.watch<TaskPresenter>();
 
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
@@ -72,15 +73,12 @@ class _BoardComponentState extends State<BoardComponent> {
                           backgroundColor: colorScheme.tertiaryContainer,
                           foregroundColor: colorScheme.onTertiaryContainer,
                           maxRadius: 20,
-                          child: Consumer<TaskPresenter>(
-                              builder: (_, presenter, __) {
-                            return Text(
-                              presenter.tasks.length.toString(),
-                              style: textTheme.titleMedium?.copyWith(
-                                color: colorScheme.primary,
-                              ),
-                            );
-                          }),
+                          child: Text(
+                            taskPresenterWatch.tasks.length.toString(),
+                            style: textTheme.titleMedium?.copyWith(
+                              color: colorScheme.primary,
+                            ),
+                          ),
                         ),
                       )
                     ],
@@ -97,32 +95,28 @@ class _BoardComponentState extends State<BoardComponent> {
                 ],
               ),
             ),
-            Consumer<TaskPresenter>(
-              builder: (_, presenter, __) {
-                return presenter.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : presenter.error.isNotEmpty
-                        ? Text(
-                            presenter.error,
-                            style: const TextStyle(color: Colors.red),
-                          )
-                        : Expanded(
-                            child: ListView.builder(
-                              itemCount: presenter.tasks.length,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                var task = presenter.tasks[index];
-                                return TaskItemComponent(
-                                  task: task,
-                                  onChanged: (V) {
-                                    presenter.updateTaskStatus(task);
-                                  },
-                                );
+            taskPresenterWatch.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : taskPresenterWatch.error.isNotEmpty
+                    ? Text(
+                        taskPresenterWatch.error,
+                        style: const TextStyle(color: Colors.red),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          itemCount: taskPresenterWatch.tasks.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (context, index) {
+                            var task = taskPresenterWatch.tasks[index];
+                            return TaskItemComponent(
+                              task: task,
+                              onChanged: (V) {
+                                taskPresenterWatch.updateTaskStatus(task);
                               },
-                            ),
-                          );
-              },
-            ),
+                            );
+                          },
+                        ),
+                      ),
           ],
         ),
       ),

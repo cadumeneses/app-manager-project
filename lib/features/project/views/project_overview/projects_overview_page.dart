@@ -1,7 +1,7 @@
-import 'package:app_manager_project/core/task/models/tasks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
 import 'package:app_manager_project/features/project/views/components/project_item_component.dart';
 import 'package:app_manager_project/features/project/models/project_repository.dart';
@@ -20,8 +20,8 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ProjectRepository>(context, listen: false).loadProjects();
-    Provider.of<TaskRepository>(context, listen: false).loadAllTasks();
+    context.read<ProjectRepository>().loadProjects();
+    context.read<TaskPresenter>().loadAllTasks();
   }
 
   @override
@@ -67,24 +67,21 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 padding: const EdgeInsets.only(right: 5, left: 20),
                 width: double.infinity,
                 height: 300,
-                child: Consumer<ProjectRepository>(
-                    builder: (_, projectRepository, widget) {
-                  return ListView.separated(
-                    itemCount: projectRepository.projects.length,
-                    scrollDirection: Axis.horizontal,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 10),
-                    itemBuilder: ((context, index) {
-                      var project = projectRepository.projects[index];
-                      return ProjectItemComponent(
-                        name: project.name,
-                        imgUrl: project.imgUrl,
-                        description: project.description,
-                        project: project,
-                      );
-                    }),
-                  );
-                }),
+                child: ListView.separated(
+                  itemCount: context.watch<ProjectRepository>().projects.length,
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10),
+                  itemBuilder: ((context, index) {
+                    var project = context.watch<ProjectRepository>().projects[index];
+                    return ProjectItemComponent(
+                      name: project.name,
+                      imgUrl: project.imgUrl,
+                      description: project.description,
+                      project: project,
+                    );
+                  }),
+                ),
               ),
               const SizedBox(height: 20),
               HeadingWithAction(
@@ -96,19 +93,17 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 height: 450,
                 width: double.infinity,
                 padding: const EdgeInsets.only(right: 10, left: 20),
-                child: Consumer<TaskRepository>(builder: (_, presenter, __) {
-                  return ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: presenter.tasks.length,
-                    itemBuilder: (context, index) {
-                      var task = presenter.tasks[index];
-                      return TaskItemComponent(
-                        task: task,
-                        onChanged: (V) {},
-                      );
-                    },
-                  );
-                }),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: context.watch<TaskPresenter>().allTasks.length,
+                  itemBuilder: (context, index) {
+                    var task = context.watch<TaskPresenter>().allTasks[index];
+                    return TaskItemComponent(
+                      task: task,
+                      onChanged: (V) {},
+                    );
+                  },
+                ),
               ),
             ],
           ),

@@ -7,7 +7,9 @@ class TaskPresenter with ChangeNotifier {
   bool _isLoading = false;
   String _error = '';
   List<TaskModel> _tasks = [];
+  List<TaskModel> _allTasks = [];
   List<TaskModel> get tasks => [..._tasks];
+  List<TaskModel> get allTasks => [..._allTasks];
 
   TaskPresenter(this._taskRepository);
 
@@ -39,8 +41,7 @@ class TaskPresenter with ChangeNotifier {
     _isLoading = true;
     _error = '';
     try {
-      await _taskRepository.loadTasks(projectId);
-      _tasks = _taskRepository.tasks;
+      _tasks = await _taskRepository.loadTasks(projectId);
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -53,8 +54,7 @@ class TaskPresenter with ChangeNotifier {
     _isLoading = true;
     _error = '';
     try {
-      await _taskRepository.loadAllTasks();
-      _tasks = _taskRepository.tasks;
+     _allTasks = await _taskRepository.loadAllTasks();
     } catch (e) {
       _error = e.toString();
     } finally {
