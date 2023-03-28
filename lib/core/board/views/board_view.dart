@@ -14,7 +14,7 @@ class BoardComponent extends StatefulWidget {
     required this.board,
     required this.project,
   });
-  final Board board;
+  final BoardModel board;
   final Project project;
 
   @override

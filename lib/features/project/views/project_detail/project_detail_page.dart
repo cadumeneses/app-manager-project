@@ -1,5 +1,5 @@
+import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
 import 'package:app_manager_project/core/board/views/board_view.dart';
-import 'package:app_manager_project/core/board/models/board_repository.dart';
 import 'package:app_manager_project/features/project/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +12,17 @@ class ProjectDetailPage extends StatefulWidget {
 }
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
+  late BoardPresenter presenter;
+
   @override
   void initState() {
     super.initState();
-    context.read<BoardRepository>().loadBoards();
+    presenter = context.read<BoardPresenter>();
+    if (mounted) {
+      presenter.loadBoards();
+    }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final Project project =
@@ -25,6 +30,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
+
+    final boardPresenter = context.watch<BoardPresenter>();
 
     return Scaffold(
       backgroundColor: colorScheme.background,
@@ -108,17 +115,21 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   ),
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * 0.5,
-                  child: ListView.builder(
-                    itemCount: context.watch<BoardRepository>().boards.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: ((context, index) {
-                      var board = context.watch<BoardRepository>().boards[index];
-                      return BoardComponent(
-                        board: board,
-                        project: project,
-                      );
-                    }),
-                  ),
+                  child: boardPresenter.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: boardPresenter.boards.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ((context, index) {
+                            var board = boardPresenter.boards[index];
+                            return BoardComponent(
+                              board: board,
+                              project: project,
+                            );
+                          }),
+                        ),
                 ),
               ],
             ),

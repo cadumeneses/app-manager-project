@@ -1,3 +1,4 @@
+import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
 import 'package:app_manager_project/features/project/models/project_repository.dart';
 import 'package:app_manager_project/features/auth/models/auth_model.dart';
 import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
@@ -37,13 +38,6 @@ class MyApp extends StatelessWidget {
                 auth.token ?? '', auth.uid ?? '', previous?.projects ?? []);
           },
         ),
-        ChangeNotifierProxyProvider<AuthModel, BoardRepository>(
-          create: (_) => BoardRepository(),
-          update: (ctx, auth, previous) {
-            return BoardRepository(
-                auth.token ?? '', auth.uid ?? '', previous?.boards ?? []);
-          },
-        ),
         ChangeNotifierProxyProvider<AuthModel, ProfileRepository>(
           create: (_) => ProfileRepository(),
           update: (ctx, auth, previous) {
@@ -58,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TaskPresenter>(
           create: (context) => TaskPresenter(TaskRepository()),
+        ),
+        ChangeNotifierProvider<BoardPresenter>(
+          create: (context) => BoardPresenter(BoardRepository()),
         ),
       ],
       child: MaterialApp(

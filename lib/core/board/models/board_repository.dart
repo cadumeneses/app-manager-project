@@ -1,42 +1,62 @@
 import 'dart:math';
 
 import 'package:app_manager_project/core/board/models/board_model.dart';
-import 'package:dio/dio.dart';
+import 'package:app_manager_project/core/external/dio/dio_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class BoardRepository extends ChangeNotifier {
-  var dio = Dio();
+class BoardRepository {
+  var dio = DioClient();
 
   final String _token;
   final String _uid;
 
-  List<Board> _boardItems = [];
-  List<Board> get boards => [..._boardItems];
+  List<BoardModel> _boards = [];
+  List<BoardModel> get boards => [..._boards];
 
   BoardRepository([
     this._token = '',
     this._uid = '',
-    this._boardItems = const [],
+    this._boards = const [],
   ]);
 
   int get boardCount {
-    return _boardItems.length;
+    return _boards.length;
   }
 
-  Future<void> loadBoards() async {
-    _boardItems.clear();
+  Future<List<BoardModel>> loadBoards() async {
     try {
-      final response = await dio.get('https://taskforce-47f99-default-rtdb.firebaseio.com//boards.json?auth=$_token');
-      debugPrint(boards.length.toString());
+      final response = await dio.dio.get(
+        'https://taskforce-47f99-default-rtdb.firebaseio.com/boards.json?auth=$_token',
+      );
+
       Map<String, dynamic> data = response.data;
+      List<BoardModel> newBoards = [];
+
+      if (data.isEmpty) {
+        _boards = [];
+      }
+
       data.forEach((boardId, boardData) {
-        _boardItems.add(Board(
-          id: boardId,
-          name: boardData['name'],
-        ));
-        notifyListeners();
+        try {
+          BoardModel board = BoardModel(
+            id: boardId,
+            name: boardData['name'],
+          );
+          newBoards.add(board);
+
+          if (!listEquals(_boards, newBoards)) {
+            _boards = newBoards;
+          }
+        } catch (e) {
+          debugPrint(e.toString());
+          rethrow;
+        }
       });
+
+      return _boards;
     } catch (e) {
+      debugPrint(e.toString());
       rethrow;
     }
   }
@@ -44,7 +64,7 @@ class BoardRepository extends ChangeNotifier {
   Future<void> saveBoard(Map<String, dynamic> data) async {
     bool hasId = data['id'] != null;
 
-    final board = Board(
+    final board = BoardModel(
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
     );
@@ -56,8 +76,8 @@ class BoardRepository extends ChangeNotifier {
     }
   }
 
-  Future<void> addBoard(Board board) async {
-    final response = await dio.post(
+  Future<void> addBoard(BoardModel board) async {
+    final response = await dio.dio.post(
       'https://taskforce-47f99-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       data: {
         "id": board.id,
@@ -66,11 +86,9 @@ class BoardRepository extends ChangeNotifier {
     );
 
     final id = response.data["name"];
-    _boardItems.add(Board(
+    _boards.add(BoardModel(
       id: id,
       name: board.name,
     ));
-
-    notifyListeners();
   }
 }

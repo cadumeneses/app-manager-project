@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-
-class Board with ChangeNotifier{
+class BoardModel {
   String id;
   String name;
 
-  Board({
+  BoardModel({
     required this.id,
     required this.name,
   });
