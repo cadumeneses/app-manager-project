@@ -28,7 +28,7 @@ class ProjectItemComponent extends StatelessWidget {
       child: Container(
         height: 260,
         margin: const EdgeInsets.all(5),
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width * 0.85,
         decoration: ShapeDecoration(
           color: colorScheme.background,
           shape: RoundedRectangleBorder(
@@ -91,9 +91,10 @@ class ProjectItemComponent extends StatelessWidget {
                       ],
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.6,
+                        Flexible(
+                          flex: 9,
                           child: Text(
                             description,
                             style: textTheme.titleSmall?.copyWith(
@@ -108,6 +109,7 @@ class ProjectItemComponent extends StatelessWidget {
                             color: Colors.grey,
                           ),
                         ),
+                        const Spacer(),
                         Text(
                           'Sep 26, 2022',
                           style: textTheme.titleSmall?.copyWith(
