@@ -1,21 +1,16 @@
-enum TaskStatus {
-  inProgress,
-  completed,
-}
-
 class TaskModel {
   final String id;
   final String name;
   final String? dateInit;
   final String projectId;
-  TaskStatus status;
+  final bool status;
 
   TaskModel({
     required this.id,
     required this.name,
     this.dateInit,
     required this.projectId,
-    this.status = TaskStatus.inProgress,
+    this.status = false,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +19,7 @@ class TaskModel {
       name: json['name'],
       dateInit: json['dateInit'],
       projectId: json['projectId'],
-      status: json['status'] == 'completed' ? TaskStatus.completed : TaskStatus.inProgress,
+      status: json['status'],
     );
   }
 
@@ -34,9 +29,7 @@ class TaskModel {
       'name': name,
       'dateInit': dateInit,
       'projectId': projectId,
-      'status': status == TaskStatus.completed ? 'completed' : 'inProgress',
+      'status': status,
     };
   }
-
-  bool get isCompleted => status == TaskStatus.completed;
 }

@@ -1,19 +1,25 @@
-import 'package:app_manager_project/core/task/components/task_checkbox_component.dart';
+import 'package:app_manager_project/core/task/models/task_model.dart';
 import 'package:flutter/material.dart';
 
 class TaskItemComponent extends StatelessWidget {
-  const TaskItemComponent({required this.nameTask, super.key});
+  const TaskItemComponent({
+    super.key,
+    required this.onChanged,
+    required this.task,
+  });
 
-  final String nameTask;
+  final void Function(bool?)? onChanged;
+  final TaskModel task;
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       height: 65,
       width: double.infinity,
       margin: const EdgeInsets.all(10),
       decoration: ShapeDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: colorScheme.background,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -35,16 +41,27 @@ class TaskItemComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nameTask,
+                  task.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  'Today - 07:00 AM',
+                  task.dateInit.toString(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: Colors.grey,
                       ),
                 )
               ],
+            ),
+            Checkbox(
+              value: task.status,
+              fillColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return colorScheme.primary;
+                }
+                return colorScheme.primary;
+              }),
+              onChanged: onChanged,
             ),
           ],
         ),

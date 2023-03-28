@@ -1,3 +1,4 @@
+import 'package:app_manager_project/core/task/models/tasks_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
   void initState() {
     super.initState();
     Provider.of<ProjectRepository>(context, listen: false).loadProjects();
+    Provider.of<TaskRepository>(context, listen: false).loadAllTasks();
   }
 
   @override
@@ -91,19 +93,22 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 onActionPressed: () {},
               ),
               Container(
-                height: 500,
+                height: 450,
                 width: double.infinity,
                 padding: const EdgeInsets.only(right: 10, left: 20),
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: const [
-                    TaskItemComponent(nameTask: 'Teste'),
-                    TaskItemComponent(nameTask: 'Front end'),
-                    TaskItemComponent(nameTask: 'Back ed'),
-                    TaskItemComponent(nameTask: 'DBA'),
-                    TaskItemComponent(nameTask: 'Review'),
-                  ],
-                ),
+                child: Consumer<TaskRepository>(builder: (_, presenter, __) {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: presenter.tasks.length,
+                    itemBuilder: (context, index) {
+                      var task = presenter.tasks[index];
+                      return TaskItemComponent(
+                        task: task,
+                        onChanged: (V) {},
+                      );
+                    },
+                  );
+                }),
               ),
             ],
           ),

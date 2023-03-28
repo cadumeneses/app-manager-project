@@ -112,7 +112,12 @@ class _BoardComponentState extends State<BoardComponent> {
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
                                 var task = presenter.tasks[index];
-                                return TaskItemComponent(nameTask: task.name);
+                                return TaskItemComponent(
+                                  task: task,
+                                  onChanged: (V) {
+                                    presenter.updateTaskStatus(task);
+                                  },
+                                );
                               },
                             ),
                           );

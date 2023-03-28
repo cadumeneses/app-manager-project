@@ -14,18 +14,6 @@ class TaskPresenter with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get error => _error;
 
-  List<TaskModel> get inProgressTasks => _tasks
-      .where(
-        (task) => !task.isCompleted,
-      )
-      .toList();
-
-  List<TaskModel> get completedTasks => _tasks
-      .where( 
-        (task) => task.isCompleted,
-      )
-      .toList();
-
   Future<void> submitForm(String taskName, String projectId) async {
     _isLoading = true;
     _error = '';
@@ -61,13 +49,29 @@ class TaskPresenter with ChangeNotifier {
     }
   }
 
+  Future<void> loadAllTasks() async {
+    _isLoading = true;
+    _error = '';
+    try {
+      await _taskRepository.loadAllTasks();
+      _tasks = _taskRepository.tasks;
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> updateTaskStatus(TaskModel task) async {
     _isLoading = true;
     _error = '';
     try {
-      task.status = task.status == TaskStatus.inProgress
-          ? TaskStatus.completed
-          : TaskStatus.inProgress;
+      if (task.status == true) {
+        return;
+      } else {
+        task.status == true;
+      }
       await _taskRepository.save(task);
     } catch (e) {
       _error = e.toString();
