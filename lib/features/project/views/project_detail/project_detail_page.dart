@@ -25,8 +25,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Project project =
-        ModalRoute.of(context)?.settings.arguments as Project;
+    final ProjectModel project =
+        ModalRoute.of(context)?.settings.arguments as ProjectModel;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;

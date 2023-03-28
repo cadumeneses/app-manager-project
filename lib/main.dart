@@ -31,13 +31,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AuthModel(),
         ),
-        ChangeNotifierProxyProvider<AuthModel, ProjectRepository>(
-          create: (_) => ProjectRepository(),
-          update: (ctx, auth, previous) {
-            return ProjectRepository(
-                auth.token ?? '', auth.uid ?? '', previous?.projects ?? []);
-          },
-        ),
         ChangeNotifierProxyProvider<AuthModel, ProfileRepository>(
           create: (_) => ProfileRepository(),
           update: (ctx, auth, previous) {
@@ -46,9 +39,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         ChangeNotifierProvider<ProjectPresenter>(
-          create: (context) => ProjectPresenter(
-            context.read<ProjectRepository>(),
-          ),
+          create: (context) => ProjectPresenter(ProjectRepository()),
         ),
         ChangeNotifierProvider<TaskPresenter>(
           create: (context) => TaskPresenter(TaskRepository()),

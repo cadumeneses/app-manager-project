@@ -1,26 +1,26 @@
-import 'package:flutter/cupertino.dart';
-
-class Project with ChangeNotifier {
+class ProjectModel {
   final String id;
   final String name;
   final String description;
   final DateTime? createDate;
   final String imgUrl;
 
-  Project({
-     required this.id,
-     required this.name,
-     required this.description,
-     this.createDate,
-     required this.imgUrl,
+  ProjectModel({
+    required this.id,
+    required this.name,
+    required this.description,
+    this.createDate,
+    required this.imgUrl,
   });
 
-  factory Project.fromJson(Map<String, dynamic> json) {
-    return Project(
+  factory ProjectModel.fromJson(Map<String, dynamic> json) {
+    return ProjectModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      createDate: json['createDate'] != null ? DateTime.parse(json['createDate']) : null,
+      createDate: json['createDate'] != null
+          ? DateTime.parse(json['createDate'])
+          : null,
       imgUrl: json['imgUrl'],
     );
   }
@@ -34,5 +34,4 @@ class Project with ChangeNotifier {
       'imgUrl': imgUrl,
     };
   }
-
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
 import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:app_manager_project/core/task/components/task_item_component.dart';
 import 'package:app_manager_project/features/project/views/components/project_item_component.dart';
-import 'package:app_manager_project/features/project/models/project_repository.dart';
 import '../../../../core/utils/app_routes.dart';
 import 'components/heading_with_action.dart';
 import 'components/project_search_component.dart';
@@ -20,7 +20,7 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ProjectRepository>().loadProjects();
+    context.read<ProjectPresenter>().loadProjects();
     context.read<TaskPresenter>().loadAllTasks();
   }
 
@@ -68,12 +68,13 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 width: double.infinity,
                 height: 300,
                 child: ListView.separated(
-                  itemCount: context.watch<ProjectRepository>().projects.length,
+                  itemCount: context.watch<ProjectPresenter>().projects.length,
                   scrollDirection: Axis.horizontal,
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 10),
                   itemBuilder: ((context, index) {
-                    var project = context.watch<ProjectRepository>().projects[index];
+                    var project =
+                        context.watch<ProjectPresenter>().projects[index];
                     return ProjectItemComponent(
                       name: project.name,
                       imgUrl: project.imgUrl,

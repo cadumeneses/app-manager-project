@@ -1,4 +1,4 @@
-import 'package:app_manager_project/features/project/models/project_repository.dart';
+import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
 import 'package:app_manager_project/features/project/views/my_projects/components/chips_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,24 +51,22 @@ class MyProjectsPage extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: availableHeight * 0.01),
                 height: availableHeight * 0.77,
-                child: Consumer<ProjectRepository>(
-                    builder: (_, projectRepository, widget) {
-                  return ListView.separated(
-                    itemCount: projectRepository.projects.length,
-                    scrollDirection: Axis.vertical,
-                    itemBuilder: ((context, index) {
-                      var project = projectRepository.projects[index];
-                      return ProjectItemComponent(
-                        name: project.name,
-                        imgUrl: project.imgUrl,
-                        description: project.description,
-                        project: project,
-                      );
-                    }),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 20),
-                  );
-                }),
+                child: ListView.separated(
+                  itemCount: context.watch<ProjectPresenter>().projects.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: ((context, index) {
+                    var project =
+                        context.watch<ProjectPresenter>().projects[index];
+                    return ProjectItemComponent(
+                      name: project.name,
+                      imgUrl: project.imgUrl,
+                      description: project.description,
+                      project: project,
+                    );
+                  }),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 20),
+                ),
               ),
             ],
           ),

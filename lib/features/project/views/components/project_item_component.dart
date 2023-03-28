@@ -16,7 +16,7 @@ class ProjectItemComponent extends StatelessWidget {
   final String name;
   final String imgUrl;
   final String description;
-  final Project project;
+  final ProjectModel project;
 
   @override
   Widget build(BuildContext context) {

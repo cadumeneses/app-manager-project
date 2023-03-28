@@ -22,7 +22,7 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
   @override
   void initState() {
     super.initState();
-    presenter = context.read();
+    presenter = context.read<ProjectPresenter>();
   }
 
   @override

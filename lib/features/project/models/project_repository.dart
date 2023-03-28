@@ -4,16 +4,17 @@ import 'package:flutter/foundation.dart';
 
 import '../../../core/external/dio/dio_client.dart';
 
-class ProjectRepository with ChangeNotifier {
+class ProjectRepository {
   var dio = DioClient();
   final String _token;
   final String _uid;
-  Project project = Project(id: "", name: "", description: "", imgUrl: "");
+  ProjectModel project =
+      ProjectModel(id: "", name: "", description: "", imgUrl: "");
 
-  List<Project> _projects = [];
-  List<Project> get projects => [..._projects];
+  List<ProjectModel> _projects = [];
+  List<ProjectModel> get projects => [..._projects];
 
-  set projects(List<Project> projects) => _projects = projects;
+  set projects(List<ProjectModel> projects) => _projects = projects;
 
   int get projectsCount {
     return _projects.length;
@@ -25,16 +26,16 @@ class ProjectRepository with ChangeNotifier {
     this._projects = const [],
   ]);
 
-  Future<void> loadProjects() async {
+  Future<List<ProjectModel>> loadProjects() async {
     try {
       final response = await dio.dio.get('projects.json?auth=$_token');
 
       Map<String, dynamic> data = response.data;
 
-      List<Project> newProjects = [];
+      List<ProjectModel> newProjects = [];
       data.forEach((projectId, projectData) {
         try {
-          Project project = Project(
+          ProjectModel project = ProjectModel(
             id: projectId,
             name: projectData['name'],
             description: projectData['description'],
@@ -42,15 +43,16 @@ class ProjectRepository with ChangeNotifier {
             imgUrl: projectData['imgUrl'],
           );
           newProjects.add(project);
+
+          if (!listEquals(_projects, newProjects)) {
+            _projects = newProjects;
+          }
         } catch (e) {
           // Tratar erros específicos de cada projeto aqui
         }
       });
 
-      if (!listEquals(_projects, newProjects)) {
-        _projects = newProjects;
-        notifyListeners();
-      }
+      return _projects;
     } catch (e) {
       rethrow;
     }
@@ -59,7 +61,7 @@ class ProjectRepository with ChangeNotifier {
   Future<void> saveProject(Map<String, dynamic> data) async {
     bool hasId = data['id'] != null;
 
-    final project = Project(
+    final project = ProjectModel(
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
       description: data['description'],
@@ -73,7 +75,7 @@ class ProjectRepository with ChangeNotifier {
     }
   }
 
-  Future<void> addProject(Project project) async {
+  Future<void> addProject(ProjectModel project) async {
     final date = DateTime.now();
     final response = await dio.dio.post(
       ('https://taskforce-47f99-default-rtdb.firebaseio.com/projects.json?auth=$_token'),
@@ -86,16 +88,15 @@ class ProjectRepository with ChangeNotifier {
     );
 
     final id = response.data['name'];
-    _projects.add(Project(
+    _projects.add(ProjectModel(
         id: id,
         name: project.name,
         description: project.description,
         createDate: project.createDate,
         imgUrl: project.imgUrl));
-    notifyListeners();
   }
 
-  Future<void> updateProject(Project project) async {
+  Future<void> updateProject(ProjectModel project) async {
     int index = _projects.indexWhere((element) => element.id == project.id);
 
     if (index >= 0) {
@@ -107,7 +108,6 @@ class ProjectRepository with ChangeNotifier {
         },
       );
       _projects[index] = project;
-      notifyListeners();
     }
   }
 }

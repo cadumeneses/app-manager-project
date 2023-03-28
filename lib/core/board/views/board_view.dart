@@ -15,7 +15,7 @@ class BoardComponent extends StatefulWidget {
     required this.project,
   });
   final BoardModel board;
-  final Project project;
+  final ProjectModel project;
 
   @override
   State<BoardComponent> createState() => _BoardComponentState();
@@ -124,7 +124,7 @@ class _BoardComponentState extends State<BoardComponent> {
   }
 }
 
-void showModal(BuildContext context, Project project) {
+void showModal(BuildContext context, ProjectModel project) {
   showModalBottomSheet(
     context: context,
     builder: (_) {
