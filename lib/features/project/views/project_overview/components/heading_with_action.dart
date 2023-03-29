@@ -34,7 +34,7 @@ class HeadingWithAction extends StatelessWidget {
             child: Text(
               actionText,
               style: textTheme.titleMedium?.copyWith(
-                color: colorScheme.primaryContainer,
+                color: colorScheme.secondary,
               ),
             ),
           )
