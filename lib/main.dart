@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/board/models/board_repository.dart';
-import 'core/task/models/tasks_repository.dart';
+import 'core/task/models/task_repository.dart';
 import 'core/task/presenters/task_presenter.dart';
 import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';

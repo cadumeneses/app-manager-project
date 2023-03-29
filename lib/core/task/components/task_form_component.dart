@@ -1,5 +1,5 @@
 import 'package:app_manager_project/core/task/models/task_model.dart';
-import 'package:app_manager_project/core/task/models/tasks_repository.dart';
+import 'package:app_manager_project/core/task/models/task_repository.dart';
 import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
