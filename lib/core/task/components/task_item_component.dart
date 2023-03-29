@@ -18,7 +18,7 @@ class TaskItemComponent extends StatelessWidget {
       height: 65,
       width: double.infinity,
       decoration: ShapeDecoration(
-        color: colorScheme.background,
+        color: colorScheme.tertiary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
