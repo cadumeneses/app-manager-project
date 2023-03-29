@@ -43,7 +43,7 @@ class _BoardViewState extends State<BoardView> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: ShapeDecoration(
-      color: colorScheme.secondaryContainer,
+      color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -63,7 +63,7 @@ class _BoardViewState extends State<BoardView> {
                     Text(
                       widget.board.name,
                       style: textTheme.titleMedium?.copyWith(
-                        color: colorScheme.onSecondaryContainer,
+                        color: colorScheme.onTertiaryContainer,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -71,7 +71,7 @@ class _BoardViewState extends State<BoardView> {
                       maxRadius: 22,
                       backgroundColor: colorScheme.primary,
                       child: CircleAvatar(
-                        backgroundColor: colorScheme.secondaryContainer,
+                        backgroundColor: colorScheme.tertiaryContainer,
                         foregroundColor: colorScheme.primary,
                         maxRadius: 20,
                         child: Text(
@@ -90,7 +90,7 @@ class _BoardViewState extends State<BoardView> {
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.squarePlus,
-                    color: colorScheme.onSecondaryContainer,
+                    color: colorScheme.onTertiaryContainer,
                   ),
                 )
               ],
