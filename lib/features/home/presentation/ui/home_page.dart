@@ -3,6 +3,7 @@ import 'package:app_manager_project/features/project/views/my_projects/my_projec
 import 'package:app_manager_project/features/profile/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../../../project/views/project_overview/projects_overview_page.dart';
+import '../../../team/view/team_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       const ProjectsOverviewPage(),
       const MyProjectsPage(),
       const ProjectsOverviewPage(),
-      const ProjectsOverviewPage(),
+      const TeamView(),
       const ProfilePage(),
     ];
 
