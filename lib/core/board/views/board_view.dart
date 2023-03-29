@@ -44,7 +44,7 @@ class _BoardComponentState extends State<BoardComponent> {
       width: MediaQuery.of(context).size.width * 0.8,
       child: Card(
         elevation: 0,
-        color: colorScheme.tertiaryContainer,
+        color: colorScheme.secondaryContainer,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
@@ -70,8 +70,8 @@ class _BoardComponentState extends State<BoardComponent> {
                         maxRadius: 22,
                         backgroundColor: colorScheme.primary,
                         child: CircleAvatar(
-                          backgroundColor: colorScheme.tertiaryContainer,
-                          foregroundColor: colorScheme.onTertiaryContainer,
+                          backgroundColor: colorScheme.secondaryContainer,
+                          foregroundColor: colorScheme.primary,
                           maxRadius: 20,
                           child: Text(
                             taskPresenterWatch.tasks.length.toString(),
@@ -100,7 +100,7 @@ class _BoardComponentState extends State<BoardComponent> {
                 : taskPresenterWatch.error.isNotEmpty
                     ? Text(
                         taskPresenterWatch.error,
-                        style: const TextStyle(color: Colors.red),
+                        style: TextStyle(color: colorScheme.error),
                       )
                     : Expanded(
                         child: ListView.builder(
