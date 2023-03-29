@@ -34,35 +34,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: colorScheme.primaryContainer,
+        fixedColor: colorScheme.primary,
         showUnselectedLabels: true,
         unselectedItemColor: colorScheme.outline,
         selectedLabelStyle: style,
         unselectedLabelStyle: style,
-        items: const [
-          BottomNavigationBarItem(
+        items: [
+          const BottomNavigationBarItem(
             label: 'Home',
             icon: Icon(Icons.home),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: 'Projetos',
             icon: Icon(Icons.text_snippet),
           ),
           BottomNavigationBarItem(
             icon: CircleAvatar(
+              backgroundColor: colorScheme.primary,
               minRadius: 30,
               child: Icon(
                 Icons.add,
                 size: 50,
+                color: colorScheme.onPrimary,
               ),
             ),
             label: '',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: 'Equipe',
             icon: Icon(Icons.diversity_3),
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             label: 'Perfil',
             icon: Icon(Icons.account_circle),
           ),
