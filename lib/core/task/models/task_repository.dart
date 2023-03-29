@@ -1,10 +1,11 @@
 import 'package:app_manager_project/core/external/dio/dio_client.dart';
 import 'package:app_manager_project/core/task/models/task_model.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:math';
 
 class TaskRepository {
-  var dio = DioClient();
+  final _client = DioClient();
 
   final String _token;
   final String _uid;
@@ -24,8 +25,8 @@ class TaskRepository {
 
   Future<List<TaskModel>> loadTasks(String projectId) async {
     try {
-      final response = await dio.dio.get(
-        'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
+      final response = await _client.dio.get(
+        'tasks.json?auth=$_token',
       );
       Map<String, dynamic> data = response.data;
       List<TaskModel> newTasks = [];
@@ -45,7 +46,7 @@ class TaskRepository {
             );
             newTasks.add(task);
           } catch (e) {
-            rethrow;
+            throw Exception('Erro ao analisar os dados da tarefa: $e');
           }
           if (!listEquals(_tasks, newTasks)) {
             _tasks = newTasks;
@@ -54,15 +55,22 @@ class TaskRepository {
       });
 
       return _tasks;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            'Erro ao carregar as tarefas: ${e.response!.statusCode}');
+      } else {
+        throw Exception('Erro de rede ao carregar as tarefas: $e');
+      }
     } catch (e) {
-      rethrow;
+      throw Exception('Erro ao carregar as tarefas: $e');
     }
   }
 
   Future<List<TaskModel>> loadAllTasks() async {
     try {
-      final response = await dio.dio.get(
-        'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
+      final response = await _client.dio.get(
+        'tasks.json?auth=$_token',
       );
       Map<String, dynamic> data = response.data;
       List<TaskModel> newTasks = [];
@@ -81,7 +89,7 @@ class TaskRepository {
           );
           newTasks.add(task);
         } catch (e) {
-          rethrow;
+          throw Exception('Erro ao analisar os dados da tarefa: $e');
         }
         if (!listEquals(_allTasks, newTasks)) {
           _allTasks = newTasks;
@@ -89,9 +97,15 @@ class TaskRepository {
       });
 
       return _allTasks;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        throw Exception(
+            'Erro ao carregar as tarefas: ${e.response!.statusCode}');
+      } else {
+        throw Exception('Erro de rede ao carregar as tarefas: $e');
+      }
     } catch (e) {
-      debugPrint(e.toString());
-      rethrow;
+      throw Exception('Erro ao carregar as tarefas: $e');
     }
   }
 
@@ -112,8 +126,8 @@ class TaskRepository {
 
   Future<void> addTask(TaskModel task) async {
     final date = DateTime.now();
-    final response = await dio.dio.post(
-      'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.json?auth=$_token',
+    final response = await _client.dio.post(
+      'tasks.json?auth=$_token',
       data: {
         "name": task.name,
         "dateInit": date.toIso8601String(),
@@ -137,8 +151,8 @@ class TaskRepository {
     int index = _tasks.indexWhere((element) => element.id == task.id);
 
     if (index >= 0) {
-      await dio.dio.patch(
-        'https://taskforce-47f99-default-rtdb.firebaseio.com/tasks.id.json?auth=$_token',
+      await _client.dio.patch(
+        'tasks.id.json?auth=$_token',
         data: {
           "name": task.name,
           "dateInit": task.dateInit,
