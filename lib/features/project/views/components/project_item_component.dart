@@ -30,7 +30,7 @@ class ProjectItemComponent extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: ShapeDecoration(
-          color: colorScheme.background,
+          color: colorScheme.tertiary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),

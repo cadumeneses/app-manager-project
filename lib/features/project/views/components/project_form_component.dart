@@ -95,7 +95,7 @@ class _ProjectFormComponentState extends State<ProjectFormComponent> {
                         Navigator.of(context).pop();
                       },
                       nameButton: 'Criar Projeto',
-                      labelColor: colorScheme.onPrimaryContainer,
+                      labelColor: colorScheme.onPrimary,
                     )
                   ],
                 ),
