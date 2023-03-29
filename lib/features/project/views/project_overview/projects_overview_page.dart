@@ -90,13 +90,16 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 actionText: 'Mostrar todas',
                 onActionPressed: () {},
               ),
-              Container(
-                height: 450,
+              SizedBox(
+                height: context.watch<TaskPresenter>().allTasks.length * 75,
                 width: double.infinity,
-                padding: const EdgeInsets.only(right: 10, left: 20),
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
+                child: ListView.separated(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: context.watch<TaskPresenter>().allTasks.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
                   itemBuilder: (context, index) {
                     var task = context.watch<TaskPresenter>().allTasks[index];
                     return TaskItemComponent(

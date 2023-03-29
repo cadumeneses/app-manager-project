@@ -119,12 +119,13 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
+                      : ListView.separated(
                           itemCount: boardPresenter.boards.length,
                           scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) => const SizedBox(width: 20),
                           itemBuilder: ((context, index) {
                             var board = boardPresenter.boards[index];
-                            return BoardComponent(
+                            return BoardView(
                               board: board,
                               project: project,
                             );
