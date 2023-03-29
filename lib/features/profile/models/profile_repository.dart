@@ -1,11 +1,9 @@
 import 'dart:math';
-import 'package:app_manager_project/features/profile/infra/models/profile_model.dart';
-import 'package:flutter/foundation.dart';
+import 'package:app_manager_project/features/profile/models/profile_model.dart';
+import '../../../core/external/dio/dio_client.dart';
 
-import '../../../../core/external/dio/dio_client.dart';
-
-class ProfileRepository with ChangeNotifier {
-  var dio = DioClient();
+class ProfileRepository {
+  final _client = DioClient();
   final String _token;
   final String _uid;
   List<ProfileModel> people = [];
@@ -39,7 +37,7 @@ class ProfileRepository with ChangeNotifier {
   }
 
   Future<void> addPerson(ProfileModel person) async {
-    final response = await dio.dio.post(
+    final response = await _client.dio.post(
         ('https://manager-projects-flutter-default-rtdb.firebaseio.com/person/$_uid.json.json?auth=$_token'),
         data: {
           "name": person.name,
@@ -54,6 +52,5 @@ class ProfileRepository with ChangeNotifier {
       imgProfile: person.imgProfile,
       occupation: person.occupation,
     ));
-    notifyListeners();
   }
 }

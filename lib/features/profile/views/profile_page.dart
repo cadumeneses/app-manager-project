@@ -14,52 +14,49 @@ class ProfilePage extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
+    Color dividerColor = Colors.grey.shade200;
+    Color labelColor = colorScheme.onBackground.withOpacity(0.7);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: colorScheme.background,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 25,
-                vertical: 10,
+                vertical: 30,
               ),
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/images/brisa_logo1.png',
-                    height: 50,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "Perfil",
-                    style: textTheme.titleLarge,
-                  ),
-                ],
+              child: Text(
+                "Perfil",
+                style: textTheme.titleLarge?.copyWith(
+                  color: colorScheme.onBackground,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  minRadius: 35,
-                  maxRadius: 50,
-                  child: Image.asset(
-                    'assets/images/sorriso 1.png',
-                    fit: BoxFit.cover,
+            Center(
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    minRadius: 35,
+                    maxRadius: 50,
+                    child: Image.asset(
+                      'assets/images/sorriso 1.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 25),
-                  child: Text(
-                    'Monkey D. Luffy',
-                    style: textTheme.titleMedium,
-                  ),
-                )
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 25),
+                    child: Text(
+                      'Monkey D. Luffy',
+                      style: textTheme.headlineSmall
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
             ),
             IntrinsicHeight(
               child: Row(
@@ -69,58 +66,92 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       Text(
                         '27',
-                        style: textTheme.labelLarge,
+                        style: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.onBackground,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Text('Projetos', style: textTheme.labelLarge)
+                      Text('Projetos',
+                          style: textTheme.labelLarge?.copyWith(
+                            color: labelColor,
+                          ))
                     ],
                   ),
-                  const VerticalDivider(color: Colors.grey, thickness: 1),
+                  VerticalDivider(color: dividerColor, thickness: 1),
                   Column(
                     children: [
                       Text(
                         '189',
-                        style: textTheme.labelLarge,
+                        style: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.onBackground,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         'Tarefas',
-                        style: textTheme.labelLarge,
+                        style: textTheme.labelLarge?.copyWith(
+                          color: labelColor,
+                        ),
                       )
                     ],
                   ),
-                  const VerticalDivider(color: Colors.grey, thickness: 1),
+                  VerticalDivider(color: dividerColor, thickness: 1),
                   Column(
                     children: [
-                      Text('4', style: textTheme.labelLarge),
-                      Text('Equipes', style: textTheme.labelLarge)
+                      Text(
+                        '4',
+                        style: textTheme.titleLarge?.copyWith(
+                          color: colorScheme.onBackground,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text('Equipes',
+                          style: textTheme.labelLarge?.copyWith(
+                            color: labelColor,
+                          ))
                     ],
                   ),
                 ],
               ),
             ),
-            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Divider(
+                color: dividerColor,
+              ),
+            ),
             ListTile(
-              leading: const Icon(Icons.person),
+              leading: Icon(
+                Icons.person_outline,
+                color: colorScheme.onBackground,
+              ),
               title: const Text('Editar Perfil'),
               onTap: () {
                 showModalForm(context);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.remove_red_eye),
+              leading: Icon(
+                Icons.remove_red_eye_outlined,
+                color: colorScheme.onBackground,
+              ),
               title: const Text('Mudar tema'),
               onTap: () {},
             ),
             ListTile(
-              leading: const Icon(Icons.help),
+              leading: Icon(
+                Icons.help_outline,
+                color: colorScheme.onBackground,
+              ),
               title: const Text('Ajuda'),
               onTap: () {},
             ),
             ListTile(
               iconColor: colorScheme.error,
-              leading: const Icon(Icons.exit_to_app),
+              leading: const Icon(Icons.exit_to_app_outlined),
               title: Text(
                 'Logout',
-                style: textTheme.labelLarge,
+                style: textTheme.labelLarge?.copyWith(color: colorScheme.error),
               ),
               onTap: () => showModal(context),
             ),
@@ -186,7 +217,10 @@ class LogoutModal extends StatelessWidget {
           ),
           Text(
             'Logout',
-            style: textTheme.titleLarge,
+            style: textTheme.titleLarge?.copyWith(
+              color: colorScheme.error,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const Divider(),
           Text(
@@ -195,39 +229,46 @@ class LogoutModal extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 15),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.primary,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-              ),
-              onPressed: () {
+            child: InkWell(
+              onTap: () {
                 Provider.of<AuthModel>(context, listen: false).logout();
                 Navigator.of(context)
                     .pushReplacementNamed(AppRoutes.auth_or_home);
               },
-              child: SizedBox(
+              child: Container(
                 height: 50,
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: ShapeDecoration(
+                  color: colorScheme.primary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
                 child: Center(
-                  child: Text('Sim, quero sair', style: textTheme.titleMedium),
+                  child: Text(
+                    'Sim, quero sair',
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.background,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-            ),
-            onPressed: () {
+          InkWell(
+            onTap: () {
               Navigator.pop(context);
             },
-            child: SizedBox(
+            child: Container(
               height: 50,
-              width: MediaQuery.of(context).size.width * 0.8,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: ShapeDecoration(
+                color: colorScheme.background,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
               child: Center(
                 child: Text(
                   'Cancelar',

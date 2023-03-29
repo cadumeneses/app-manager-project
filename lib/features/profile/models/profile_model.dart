@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-
-class ProfileModel with ChangeNotifier {
+class ProfileModel {
   final String id;
   final String name;
   final String imgProfile;

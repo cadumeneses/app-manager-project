@@ -1,11 +1,11 @@
 import 'package:app_manager_project/core/components/form/input_date_form.dart';
-import 'package:app_manager_project/features/profile/infra/models/profile_model.dart';
+import 'package:app_manager_project/features/profile/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/components/form/input_submit_form.dart';
-import '../../../../../core/components/form/input_text_form.dart';
-import '../../../infra/repositories/profile_repository.dart';
+import '../../../../core/components/form/input_submit_form.dart';
+import '../../../../core/components/form/input_text_form.dart';
+import '../../models/profile_repository.dart';
 
 class ProfileFormComponent extends StatefulWidget {
   const ProfileFormComponent({super.key});

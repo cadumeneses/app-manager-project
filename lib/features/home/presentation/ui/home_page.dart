@@ -1,6 +1,6 @@
 import 'package:app_manager_project/features/project/views/components/project_form_component.dart';
 import 'package:app_manager_project/features/project/views/my_projects/my_projects_page.dart';
-import 'package:app_manager_project/features/profile/presentation/ui/profile_page.dart';
+import 'package:app_manager_project/features/profile/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import '../../../project/views/project_overview/projects_overview_page.dart';
 

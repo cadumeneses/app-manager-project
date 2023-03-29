@@ -1,4 +1,5 @@
 import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
+import 'package:app_manager_project/features/profile/presenters/profile_presenter.dart';
 import 'package:app_manager_project/features/project/models/project_repository.dart';
 import 'package:app_manager_project/features/auth/models/auth_model.dart';
 import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
@@ -12,8 +13,8 @@ import 'core/theme/themes.dart';
 import 'core/utils/app_routes.dart';
 import 'features/auth/views/auth_page.dart';
 import 'features/home/presentation/ui/home_page.dart';
+import 'features/profile/models/profile_repository.dart';
 import 'features/project/views/my_projects/my_projects_page.dart';
-import 'features/profile/infra/repositories/profile_repository.dart';
 import 'features/project/views/project_detail/project_detail_page.dart';
 import 'features/project/views/project_overview/projects_overview_page.dart';
 
@@ -31,13 +32,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => AuthModel(),
         ),
-        ChangeNotifierProxyProvider<AuthModel, ProfileRepository>(
-          create: (_) => ProfileRepository(),
-          update: (ctx, auth, previous) {
-            return ProfileRepository(
-                auth.token ?? '', auth.uid ?? '', previous?.people ?? []);
-          },
-        ),
         ChangeNotifierProvider<ProjectPresenter>(
           create: (context) => ProjectPresenter(ProjectRepository()),
         ),
@@ -47,10 +41,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<BoardPresenter>(
           create: (context) => BoardPresenter(BoardRepository()),
         ),
+        ChangeNotifierProvider<ProfilePresenter>(
+          create: (context) => ProfilePresenter(ProfileRepository()),
+        ),
       ],
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
+        themeMode: ThemeMode.light,
         routes: {
           AppRoutes.auth_or_home: (ctx) => const AuthOrHomePage(),
           AppRoutes.projects: (ctx) => const MyProjectsPage(),
