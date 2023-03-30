@@ -42,6 +42,7 @@ class BoardPresenter with ChangeNotifier {
       debugPrint(e.toString());
     } finally {
       _isLoading = false;
+      loadBoards(projectId);
       notifyListeners();
     }
   }

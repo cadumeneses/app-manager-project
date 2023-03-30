@@ -43,6 +43,9 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
     return Scaffold(
       backgroundColor: colorScheme.background,
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
         onPressed: () {
           showModal(context, project);
         },
@@ -133,7 +136,26 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                           child: CircularProgressIndicator(),
                         )
                       : boardPresenter.boards.isEmpty
-                          ? const Text('Nenhum quadro encontrado')
+                          ? Container(
+                              alignment: Alignment.center,
+                              decoration: ShapeDecoration(
+                                color: colorScheme.tertiaryContainer,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  Text('Nenhum quadro encontrado', style: textTheme.titleMedium,),
+                                  InkWell(
+                                    onTap: () => showModal(context, project),
+                                    child: Text('Adicionar Placa', style: textTheme.titleMedium?.copyWith(color: colorScheme.primary),),
+                                  )
+                                ],
+                              ),
+                            )
                           : ListView.separated(
                               itemCount: boardPresenter.boards.length,
                               scrollDirection: Axis.horizontal,
