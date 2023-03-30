@@ -23,11 +23,16 @@ class TaskRepository {
     this._tasks = const [],
   ]);
 
-  Future<List<TaskModel>> loadTasks(String projectId) async {
+  Future<List<TaskModel>> loadTasks(String boardId) async {
     try {
       final response = await _client.dio.get(
         'tasks.json?auth=$_token',
       );
+
+      if (response.data == null) {
+        return [];
+      }
+
       Map<String, dynamic> data = response.data;
       List<TaskModel> newTasks = [];
 
@@ -36,13 +41,13 @@ class TaskRepository {
       }
 
       data.forEach((taskId, taskData) {
-        if (taskData['projectId'] == projectId) {
+        if (taskData['boardId'] == boardId) {
           try {
             TaskModel task = TaskModel(
               id: taskId,
               name: taskData['name'],
               dateInit: taskData['dateInit'],
-              projectId: taskData['projectId'],
+              boardId: taskData['boardId'],
             );
             newTasks.add(task);
           } catch (e) {
@@ -72,6 +77,11 @@ class TaskRepository {
       final response = await _client.dio.get(
         'tasks.json?auth=$_token',
       );
+
+      if (response.data == null) {
+        return [];
+      }
+
       Map<String, dynamic> data = response.data;
       List<TaskModel> newTasks = [];
 
@@ -85,7 +95,7 @@ class TaskRepository {
             id: taskId,
             name: taskData['name'],
             dateInit: taskData['dateInit'],
-            projectId: taskData['projectId'],
+            boardId: taskData['boardId'],
           );
           newTasks.add(task);
         } catch (e) {
@@ -114,8 +124,7 @@ class TaskRepository {
     final task = TaskModel(
       id: hasId ? data.id : Random().nextDouble().toString(),
       name: data.name,
-      projectId: data.projectId,
-      status: data.status,
+      boardId: data.boardId,
     );
     if (hasId) {
       updateTask(task);
@@ -131,8 +140,7 @@ class TaskRepository {
       data: {
         "name": task.name,
         "dateInit": date.toIso8601String(),
-        "projectId": task.projectId,
-        "status": task.status,
+        "boardId": task.boardId,
       },
     );
     final id = response.data['name'];
@@ -141,8 +149,7 @@ class TaskRepository {
         id: id,
         name: task.name,
         dateInit: task.dateInit,
-        projectId: task.projectId,
-        status: task.status,
+        boardId: task.boardId,
       ),
     );
   }
@@ -156,7 +163,7 @@ class TaskRepository {
         data: {
           "name": task.name,
           "dateInit": task.dateInit,
-          "status": task.status,
+          "board": task.boardId,
         },
       );
       _tasks[index] = task;

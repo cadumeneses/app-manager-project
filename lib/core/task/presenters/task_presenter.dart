@@ -16,7 +16,10 @@ class TaskPresenter with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get error => _error;
 
-  Future<void> submitForm(String taskName, String projectId) async {
+  Future<void> submitForm(
+    String taskName,
+    String boardId,
+  ) async {
     _isLoading = true;
     _error = '';
 
@@ -25,27 +28,28 @@ class TaskPresenter with ChangeNotifier {
         TaskModel(
           id: '',
           name: taskName,
-          projectId: projectId,
+          boardId: boardId,
         ),
       );
     } catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
-      loadTasks(projectId);
+      loadTasks(boardId);
       notifyListeners();
     }
   }
 
-  Future<void> loadTasks(String projectId) async {
+  Future<void> loadTasks(String boardId) async {
     _isLoading = true;
     _error = '';
     try {
-      _tasks = await _taskRepository.loadTasks(projectId);
+      _tasks = await _taskRepository.loadTasks(boardId);
     } catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
+      loadAllTasks();
       notifyListeners();
     }
   }
@@ -54,7 +58,7 @@ class TaskPresenter with ChangeNotifier {
     _isLoading = true;
     _error = '';
     try {
-     _allTasks = await _taskRepository.loadAllTasks();
+      _allTasks = await _taskRepository.loadAllTasks();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -67,11 +71,11 @@ class TaskPresenter with ChangeNotifier {
     _isLoading = true;
     _error = '';
     try {
-      if (task.status == true) {
-        return;
-      } else {
-        task.status == true;
-      }
+      // if (task.status == true) {
+      //   return;
+      // } else {
+      //   task.status == true;
+      // }
       await _taskRepository.save(task);
     } catch (e) {
       _error = e.toString();

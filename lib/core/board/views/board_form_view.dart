@@ -1,26 +1,26 @@
-import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
+import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/form/input_submit_form.dart';
 import '../../components/form/input_text_form.dart';
 
-class TaskFormComponent extends StatefulWidget {
-  const TaskFormComponent({
+class BoardFormView extends StatefulWidget {
+  const BoardFormView({
     super.key,
-    required this.boardId,
+    required this.projectId,
   });
 
-  final String boardId;
+  final String projectId;
 
   @override
-  State<TaskFormComponent> createState() => _TaskFormComponentState();
+  State<BoardFormView> createState() => _BoardFormViewState();
 }
 
-class _TaskFormComponentState extends State<TaskFormComponent> {
+class _BoardFormViewState extends State<BoardFormView> {
   final _taskNameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  late TaskPresenter presenter;
+  late BoardPresenter presenter;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 10),
                       child: Text(
-                        'Criar Tarefa',
+                        'Criar Quadro',
                         style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -75,13 +75,13 @@ class _TaskFormComponentState extends State<TaskFormComponent> {
                     InputSubmitForm(
                       color: colorScheme.primary,
                       submitForm: () {
-                        presenter.submitForm(
+                        presenter.saveBoard(
                           _taskNameController.text,
-                          widget.boardId,
+                          widget.projectId,
                         );
                         Navigator.of(context).pop();
                       },
-                      nameButton: 'Adicionar Tarefa',
+                      nameButton: 'Adicionar Quadro',
                       labelColor: colorScheme.onPrimary,
                     ),
                   ],

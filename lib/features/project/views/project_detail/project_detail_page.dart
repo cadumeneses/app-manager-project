@@ -1,8 +1,10 @@
 import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
-import 'package:app_manager_project/core/board/views/board_view.dart';
+import 'package:app_manager_project/core/board/views/board_form_view.dart';
 import 'package:app_manager_project/features/project/models/project_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../core/board/views/board_view.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   const ProjectDetailPage({super.key});
@@ -13,20 +15,25 @@ class ProjectDetailPage extends StatefulWidget {
 
 class _ProjectDetailPageState extends State<ProjectDetailPage> {
   late BoardPresenter presenter;
+  late ProjectModel project;
+  bool _isDataLoaded = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    project = ModalRoute.of(context)?.settings.arguments as ProjectModel;
     presenter = context.read<BoardPresenter>();
+
     if (mounted) {
-      presenter.loadBoards();
+      if (!_isDataLoaded) {
+        presenter.loadBoards(project.id);
+        _isDataLoaded = true;
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final ProjectModel project =
-        ModalRoute.of(context)?.settings.arguments as ProjectModel;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
@@ -35,6 +42,12 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
 
     return Scaffold(
       backgroundColor: colorScheme.background,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModal(context, project);
+        },
+        child: const Icon(Icons.add),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -119,18 +132,20 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.separated(
-                          itemCount: boardPresenter.boards.length,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) => const SizedBox(width: 20),
-                          itemBuilder: ((context, index) {
-                            var board = boardPresenter.boards[index];
-                            return BoardView(
-                              board: board,
-                              project: project,
-                            );
-                          }),
-                        ),
+                      : boardPresenter.boards.isEmpty
+                          ? const Text('Nenhum quadro encontrado')
+                          : ListView.separated(
+                              itemCount: boardPresenter.boards.length,
+                              scrollDirection: Axis.horizontal,
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(width: 20),
+                              itemBuilder: ((context, index) {
+                                var board = boardPresenter.boards[index];
+                                return BoardView(
+                                  board: board,
+                                );
+                              }),
+                            ),
                 ),
               ],
             ),
@@ -139,4 +154,22 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       ),
     );
   }
+}
+
+void showModal(BuildContext context, ProjectModel project) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Theme.of(context).colorScheme.background,
+    builder: (_) {
+      return BoardFormView(
+        projectId: project.id,
+      );
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+  );
 }

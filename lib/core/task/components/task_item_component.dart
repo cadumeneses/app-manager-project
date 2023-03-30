@@ -51,17 +51,17 @@ class TaskItemComponent extends StatelessWidget {
                 )
               ],
             ),
-            Checkbox(
-              value: task.status,
-              fillColor: MaterialStateProperty.resolveWith<Color>(
-                  (Set<MaterialState> states) {
-                if (states.contains(MaterialState.disabled)) {
-                  return colorScheme.primary;
-                }
-                return colorScheme.primary;
-              }),
-              onChanged: onChanged,
-            ),
+            // Checkbox(
+            //   value: task.status,
+            //   fillColor: MaterialStateProperty.resolveWith<Color>(
+            //       (Set<MaterialState> states) {
+            //     if (states.contains(MaterialState.disabled)) {
+            //       return colorScheme.primary;
+            //     }
+            //     return colorScheme.primary;
+            //   }),
+            //   onChanged: onChanged,
+            // ),
           ],
         ),
       ),

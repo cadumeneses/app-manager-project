@@ -5,17 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../../../features/project/models/project_model.dart';
 import '../models/board_model.dart';
 
 class BoardView extends StatefulWidget {
   const BoardView({
     super.key,
     required this.board,
-    required this.project,
   });
   final BoardModel board;
-  final ProjectModel project;
 
   @override
   State<BoardView> createState() => _BoardViewState();
@@ -23,13 +20,17 @@ class BoardView extends StatefulWidget {
 
 class _BoardViewState extends State<BoardView> {
   late TaskPresenter presenter;
+  bool _isDataLoaded = false;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     presenter = context.read<TaskPresenter>();
-    if (mounted) {
-      presenter.loadTasks(widget.project.id);
+    if (!_isDataLoaded) {
+      if (mounted) {
+        presenter.loadTasks(widget.board.id);
+      }
+      _isDataLoaded = true;
     }
   }
 
@@ -43,7 +44,7 @@ class _BoardViewState extends State<BoardView> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: ShapeDecoration(
-      color: colorScheme.tertiaryContainer,
+        color: colorScheme.tertiaryContainer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -86,7 +87,7 @@ class _BoardViewState extends State<BoardView> {
                 ),
                 IconButton(
                   onPressed: () {
-                    showModal(context, widget.project);
+                    showModal(context, widget.board);
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.squarePlus,
@@ -108,7 +109,8 @@ class _BoardViewState extends State<BoardView> {
                         itemCount: taskPresenterWatch.tasks.length,
                         scrollDirection: Axis.vertical,
                         padding: const EdgeInsets.all(10),
-                        separatorBuilder: (context, index) => const SizedBox(height: 10),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
                         itemBuilder: (context, index) {
                           var task = taskPresenterWatch.tasks[index];
                           return TaskItemComponent(
@@ -126,12 +128,12 @@ class _BoardViewState extends State<BoardView> {
   }
 }
 
-void showModal(BuildContext context, ProjectModel project) {
+void showModal(BuildContext context, BoardModel board) {
   showModalBottomSheet(
     context: context,
     builder: (_) {
       return TaskFormComponent(
-        projectId: project.id,
+        boardId: board.id,
       );
     },
     shape: const RoundedRectangleBorder(

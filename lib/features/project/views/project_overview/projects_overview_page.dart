@@ -90,25 +90,30 @@ class _ProjectsOverviewPageState extends State<ProjectsOverviewPage> {
                 actionText: 'Mostrar todas',
                 onActionPressed: () {},
               ),
-              SizedBox(
-                height: context.watch<TaskPresenter>().allTasks.length * 75,
-                width: double.infinity,
-                child: ListView.separated(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: context.watch<TaskPresenter>().allTasks.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10),
-                  itemBuilder: (context, index) {
-                    var task = context.watch<TaskPresenter>().allTasks[index];
-                    return TaskItemComponent(
-                      task: task,
-                      onChanged: (V) {},
-                    );
-                  },
-                ),
-              ),
+              context.watch<TaskPresenter>().allTasks.isEmpty
+                  ? const Center(child: Text('Nenhuma tarefa encontrada'))
+                  : SizedBox(
+                      height:
+                          context.watch<TaskPresenter>().allTasks.length * 75,
+                      width: double.infinity,
+                      child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 5),
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            context.watch<TaskPresenter>().allTasks.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          var task =
+                              context.watch<TaskPresenter>().allTasks[index];
+                          return TaskItemComponent(
+                            task: task,
+                            onChanged: (V) {},
+                          );
+                        },
+                      ),
+                    ),
             ],
           ),
         ),

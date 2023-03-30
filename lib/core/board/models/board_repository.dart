@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:app_manager_project/core/board/models/board_model.dart';
 import 'package:app_manager_project/core/external/dio/dio_client.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class BoardRepository {
   var dio = DioClient();
@@ -24,11 +23,15 @@ class BoardRepository {
     return _boards.length;
   }
 
-  Future<List<BoardModel>> loadBoards() async {
+  Future<List<BoardModel>> loadBoards(String projectId) async {
     try {
       final response = await dio.dio.get(
         'https://taskforce-47f99-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       );
+      
+      if (response.data == null) {
+        return [];
+      }
 
       Map<String, dynamic> data = response.data;
       List<BoardModel> newBoards = [];
@@ -38,19 +41,21 @@ class BoardRepository {
       }
 
       data.forEach((boardId, boardData) {
-        try {
-          BoardModel board = BoardModel(
-            id: boardId,
-            name: boardData['name'],
-          );
-          newBoards.add(board);
-
+        if (boardData['projectId'] == projectId) {
+          try {
+            BoardModel board = BoardModel(
+              id: boardId,
+              name: boardData['name'],
+              projectId: boardData['projectId'],
+            );
+            newBoards.add(board);
+          } catch (e) {
+            debugPrint(e.toString());
+            rethrow;
+          }
           if (!listEquals(_boards, newBoards)) {
             _boards = newBoards;
           }
-        } catch (e) {
-          debugPrint(e.toString());
-          rethrow;
         }
       });
 
@@ -61,12 +66,13 @@ class BoardRepository {
     }
   }
 
-  Future<void> saveBoard(Map<String, dynamic> data) async {
-    bool hasId = data['id'] != null;
+  Future<void> saveBoard(BoardModel data) async {
+    bool hasId = data.id.isNotEmpty;
 
     final board = BoardModel(
-      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
-      name: data['name'] as String,
+      id: hasId ? data.id : Random().nextDouble().toString(),
+      name: data.name,
+      projectId: data.projectId,
     );
 
     if (hasId) {
@@ -82,6 +88,7 @@ class BoardRepository {
       data: {
         "id": board.id,
         "name": board.name,
+        "projectId": board.projectId,
       },
     );
 
@@ -89,6 +96,7 @@ class BoardRepository {
     _boards.add(BoardModel(
       id: id,
       name: board.name,
+      projectId: board.projectId,
     ));
   }
 }

@@ -14,13 +14,32 @@ class BoardPresenter with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get error => _error;
 
-  Future<void> loadBoards() async {
+  Future<void> loadBoards(String projectId) async {
     _isLoading = true;
     _error = '';
     try {
-      _boards = await _boardRepository.loadBoards();
+      _boards = await _boardRepository.loadBoards(projectId);
     } catch (e) {
       _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> saveBoard(String boardName, String projectId) async {
+    _isLoading = true;
+    _error = '';
+    try {
+      await _boardRepository.saveBoard(
+        BoardModel(
+          id: '',
+          name: boardName,
+          projectId: projectId,
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
     } finally {
       _isLoading = false;
       notifyListeners();
