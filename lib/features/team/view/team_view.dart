@@ -1,3 +1,4 @@
+import 'package:app_manager_project/features/team/view/team_form_view.dart';
 import 'package:flutter/material.dart';
 
 class TeamView extends StatelessWidget {
@@ -11,6 +12,10 @@ class TeamView extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => showModal(context),
+          child: const Icon(Icons.add),
+        ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -38,4 +43,20 @@ class TeamView extends StatelessWidget {
       ),
     );
   }
+}
+
+void showModal(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Theme.of(context).colorScheme.background,
+    builder: (_) {
+      return const TeamForm();
+    },
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+    ),
+  );
 }
