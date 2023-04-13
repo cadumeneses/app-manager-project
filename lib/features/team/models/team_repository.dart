@@ -20,7 +20,7 @@ class TeamRepository {
     this._teams = const [],
   ]);
 
-  Future<List<TeamModel>> loadBoards(String projectId) async {
+  Future<List<TeamModel>> loadTeams(String projectId) async {
     try {
       final response = await dio.dio.get(
         'teams.json?auth=$_token',
@@ -82,7 +82,7 @@ class TeamRepository {
     final response = await dio.dio.post(
       'teams.json?auth=$_token',
       data: {
-        "id": team.teamId,
+        "teamId": team.teamId,
         "teamName": team.teamName,
         "projectId": team.projectId,
       },

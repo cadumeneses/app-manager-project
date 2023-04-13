@@ -18,7 +18,7 @@ class TeamPresenter with ChangeNotifier {
     _isLoading = true;
     _error = '';
     try {
-      _teams = await _teamRepository.loadBoards(projectId);
+      _teams = await _teamRepository.loadTeams(projectId);
     } catch (e) {
       _error = e.toString();
     } finally {
