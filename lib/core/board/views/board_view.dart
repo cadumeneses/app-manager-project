@@ -3,6 +3,7 @@ import 'package:app_manager_project/core/task/components/task_item_component.dar
 import 'package:app_manager_project/core/task/presenters/task_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../models/board_model.dart';
@@ -44,7 +45,7 @@ class _BoardViewState extends State<BoardView> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: ShapeDecoration(
-        color: colorScheme.tertiaryContainer,
+        color: colorScheme.primary.withOpacity(0.12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
@@ -57,33 +58,30 @@ class _BoardViewState extends State<BoardView> {
               horizontal: 16,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      widget.board.name,
-                      style: textTheme.titleMedium?.copyWith(
-                        color: colorScheme.onTertiaryContainer,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    CircleAvatar(
-                      maxRadius: 22,
-                      backgroundColor: colorScheme.primary,
-                      child: CircleAvatar(
-                        backgroundColor: colorScheme.tertiaryContainer,
-                        foregroundColor: colorScheme.primary,
-                        maxRadius: 20,
-                        child: Text(
-                          taskPresenterWatch.tasks.length.toString(),
-                          style: textTheme.titleMedium?.copyWith(
-                            color: colorScheme.primary,
-                          ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Versão: ${widget.board.name}',
+                        style: textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onBackground,
+                          fontWeight: FontWeight.bold
                         ),
                       ),
-                    )
-                  ],
+                      widget.board.dataVersion != null
+                          ? Text(
+                              DateFormat('MMM/yy').format(
+                                widget.board.dataVersion!,
+                              ),
+                              style: textTheme.titleSmall?.copyWith(
+                                color: colorScheme.onBackground.withOpacity(0.5)
+                              ),
+                            )
+                          : const SizedBox(),
+                    ],
+                  ),
                 ),
                 IconButton(
                   onPressed: () {
