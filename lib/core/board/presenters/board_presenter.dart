@@ -27,7 +27,8 @@ class BoardPresenter with ChangeNotifier {
     }
   }
 
-  Future<void> saveBoard(String boardName, String projectId) async {
+  Future<void> saveBoard(
+      String boardName, String projectId, DateTime? data) async {
     _isLoading = true;
     _error = '';
     try {
@@ -36,6 +37,7 @@ class BoardPresenter with ChangeNotifier {
           id: '',
           name: boardName,
           projectId: projectId,
+          dataVersion: data,
         ),
       );
     } catch (e) {

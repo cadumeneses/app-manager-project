@@ -23,8 +23,9 @@ class InputSubmitForm extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.82,
         decoration: ShapeDecoration(
           color: color,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
         child: Center(
           child: Text(

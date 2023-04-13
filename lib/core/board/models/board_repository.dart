@@ -28,7 +28,7 @@ class BoardRepository {
       final response = await dio.dio.get(
         'https://taskforce-47f99-default-rtdb.firebaseio.com/boards.json?auth=$_token',
       );
-      
+
       if (response.data == null) {
         return [];
       }
@@ -47,6 +47,7 @@ class BoardRepository {
               id: boardId,
               name: boardData['name'],
               projectId: boardData['projectId'],
+              dataVersion: boardData['dataVersion'],
             );
             newBoards.add(board);
           } catch (e) {
@@ -73,6 +74,7 @@ class BoardRepository {
       id: hasId ? data.id : Random().nextDouble().toString(),
       name: data.name,
       projectId: data.projectId,
+      dataVersion: data.dataVersion,
     );
 
     if (hasId) {
@@ -97,6 +99,7 @@ class BoardRepository {
       id: id,
       name: board.name,
       projectId: board.projectId,
+      dataVersion: board.dataVersion,
     ));
   }
 }

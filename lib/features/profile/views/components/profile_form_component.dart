@@ -21,7 +21,7 @@ class _ProfileFormComponentState extends State<ProfileFormComponent> {
   final _formData = <String, Object>{};
   final _formKey = GlobalKey<FormState>();
 
-  DateTime? _selectedDate = DateTime(2010);
+  DateTime _selectedDate = DateTime(2010);
 
   bool _isLoading = false;
 

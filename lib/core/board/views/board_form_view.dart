@@ -1,4 +1,5 @@
 import 'package:app_manager_project/core/board/presenters/board_presenter.dart';
+import 'package:app_manager_project/core/components/form/input_date_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../components/form/input_submit_form.dart';
@@ -21,6 +22,8 @@ class _BoardFormViewState extends State<BoardFormView> {
   final _formKey = GlobalKey<FormState>();
 
   late BoardPresenter presenter;
+
+  DateTime? _selectedDate;
 
   @override
   void initState() {
@@ -59,7 +62,7 @@ class _BoardFormViewState extends State<BoardFormView> {
                     Padding(
                       padding: const EdgeInsets.only(top: 5, bottom: 10),
                       child: Text(
-                        'Criar Quadro',
+                        'Adicionar nova versão',
                         style: textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -72,16 +75,27 @@ class _BoardFormViewState extends State<BoardFormView> {
                       controller: _taskNameController,
                     ),
                     const SizedBox(height: 20),
+                    InputDateForm(
+                      selectedDate: _selectedDate,
+                      onDateChange: (newDate) {
+                        setState(() {
+                          _selectedDate = newDate;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 20),
                     InputSubmitForm(
                       color: colorScheme.primary,
                       submitForm: () {
                         presenter.saveBoard(
                           _taskNameController.text,
                           widget.projectId,
+                          _selectedDate,
+
                         );
                         Navigator.of(context).pop();
                       },
-                      nameButton: 'Adicionar Quadro',
+                      nameButton: 'Adicionar Versão',
                       labelColor: colorScheme.onPrimary,
                     ),
                   ],
