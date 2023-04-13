@@ -3,7 +3,9 @@ import 'package:app_manager_project/features/profile/presenters/profile_presente
 import 'package:app_manager_project/features/project/models/project_repository.dart';
 import 'package:app_manager_project/features/auth/models/auth_model.dart';
 import 'package:app_manager_project/features/project/presenters/project_presenter.dart';
+import 'package:app_manager_project/features/team/models/person_repository.dart';
 import 'package:app_manager_project/features/team/models/team_repository.dart';
+import 'package:app_manager_project/features/team/presenters/person_presenter.dart';
 import 'package:app_manager_project/features/team/presenters/team_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +50,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TeamPresenter>(
           create: (context) => TeamPresenter(TeamRepository()),
+        ),
+        ChangeNotifierProvider<PersonPresenter>(
+          create: (context) => PersonPresenter(PersonRepository()),
         ),
       ],
       child: MaterialApp(
