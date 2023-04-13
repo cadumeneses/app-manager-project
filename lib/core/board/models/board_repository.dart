@@ -47,7 +47,7 @@ class BoardRepository {
               id: boardId,
               name: boardData['name'],
               projectId: boardData['projectId'],
-              dataVersion: boardData['dataVersion'],
+              dataVersion: DateTime.parse(boardData['dataVersion']),
             );
             newBoards.add(board);
           } catch (e) {
@@ -91,6 +91,7 @@ class BoardRepository {
         "id": board.id,
         "name": board.name,
         "projectId": board.projectId,
+        "dataVersion": board.dataVersion?.toIso8601String(),
       },
     );
 
