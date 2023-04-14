@@ -54,7 +54,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            iconTheme: IconThemeData(color: colorScheme.primaryContainer),
+            iconTheme: IconThemeData(color: colorScheme.primary),
             actions: const [
               Icon(Icons.search, size: 30),
               Padding(
@@ -128,9 +128,10 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     right: 10,
                     left: 20,
                     top: MediaQuery.of(context).size.height * 0.015,
+                    bottom: 20
                   ),
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  height: MediaQuery.of(context).size.height,
                   child: boardPresenter.isLoading
                       ? const Center(
                           child: CircularProgressIndicator(),

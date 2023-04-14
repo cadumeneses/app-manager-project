@@ -24,8 +24,8 @@ class _BoardViewState extends State<BoardView> {
   bool _isDataLoaded = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     presenter = context.read<TaskPresenter>();
     if (!_isDataLoaded) {
       if (mounted) {
@@ -36,6 +36,12 @@ class _BoardViewState extends State<BoardView> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    presenter = context.watch<TaskPresenter>();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -43,6 +49,7 @@ class _BoardViewState extends State<BoardView> {
     final taskPresenterWatch = context.watch<TaskPresenter>();
 
     return Container(
+      height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: ShapeDecoration(
         color: colorScheme.primary.withOpacity(0.12),
@@ -66,9 +73,8 @@ class _BoardViewState extends State<BoardView> {
                       Text(
                         'Versão: ${widget.board.name}',
                         style: textTheme.titleMedium?.copyWith(
-                          color: colorScheme.onBackground,
-                          fontWeight: FontWeight.bold
-                        ),
+                            color: colorScheme.onBackground,
+                            fontWeight: FontWeight.bold),
                       ),
                       widget.board.dataVersion != null
                           ? Text(
@@ -76,8 +82,8 @@ class _BoardViewState extends State<BoardView> {
                                 widget.board.dataVersion!,
                               ),
                               style: textTheme.titleSmall?.copyWith(
-                                color: colorScheme.onBackground.withOpacity(0.5)
-                              ),
+                                  color: colorScheme.onBackground
+                                      .withOpacity(0.5)),
                             )
                           : const SizedBox(),
                     ],
@@ -89,7 +95,7 @@ class _BoardViewState extends State<BoardView> {
                   },
                   icon: FaIcon(
                     FontAwesomeIcons.squarePlus,
-                    color: colorScheme.onTertiaryContainer,
+                    color: colorScheme.onBackground,
                   ),
                 )
               ],
@@ -106,7 +112,7 @@ class _BoardViewState extends State<BoardView> {
                       child: ListView.separated(
                         itemCount: taskPresenterWatch.tasks.length,
                         scrollDirection: Axis.vertical,
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 10),
                         itemBuilder: (context, index) {

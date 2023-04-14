@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: lightTheme,
         darkTheme: darkTheme,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
         routes: {
           AppRoutes.auth_or_home: (ctx) => const AuthOrHomePage(),
           AppRoutes.projects: (ctx) => const MyProjectsPage(),
