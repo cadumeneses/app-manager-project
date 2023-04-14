@@ -20,7 +20,7 @@ class PersonRepository {
     this._persons = const [],
   ]);
 
-  Future<List<PersonModel>> loadPersons(String teamId) async {
+  Future<List<PersonModel>> loadPersons() async {
     try {
       final response = await dio.dio.get(
         'persons.json?auth=$_token',
@@ -38,21 +38,19 @@ class PersonRepository {
       }
 
       data.forEach((personId, personData) {
-        if (personData['teamId'] == teamId) {
-          try {
-            PersonModel board = PersonModel(
-              id: personId,
-              teamId: personData['teamId'],
-              firstName: personData['firstName'],
-              lastName: personData['lastName'],
-            );
-            persons.add(board);
-          } catch (e) {
-            rethrow;
-          }
-          if (!listEquals(_persons, persons)) {
-            _persons = persons;
-          }
+        try {
+          PersonModel board = PersonModel(
+            id: personId,
+            firstName: personData['firstName'],
+            lastName: personData['lastName'],
+            occupation: personData['occupation'],
+          );
+          persons.add(board);
+        } catch (e) {
+          rethrow;
+        }
+        if (!listEquals(_persons, persons)) {
+          _persons = persons;
         }
       });
 
@@ -64,13 +62,13 @@ class PersonRepository {
   }
 
   Future<void> savePerson(PersonModel data) async {
-    bool hasId = data.teamId.isNotEmpty;
+    bool hasId = data.id.isNotEmpty;
 
     final person = PersonModel(
       id: hasId ? data.id : Random().nextDouble().toString(),
-      teamId: data.teamId,
       firstName: data.firstName,
       lastName: data.lastName,
+      occupation: data.occupation,
     );
 
     if (hasId) {
@@ -85,9 +83,9 @@ class PersonRepository {
       'persons.json?auth=$_token',
       data: {
         "id": person.id,
-        "teamId": person.teamId,
-        "firstName":person.firstName,
-        "lastName":person.lastName,
+        "firstName": person.firstName,
+        "lastName": person.lastName,
+        "occupation": person.occupation,
       },
     );
 
@@ -96,9 +94,9 @@ class PersonRepository {
     _persons.add(
       PersonModel(
         id: id,
-        teamId: person.teamId,
         firstName: person.firstName,
         lastName: person.lastName,
+        occupation: person.occupation,
       ),
     );
   }

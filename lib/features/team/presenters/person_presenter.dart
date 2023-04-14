@@ -14,11 +14,11 @@ class PersonPresenter with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get error => _error;
 
-  Future<void> loadPersons(String teamId) async {
+  Future<void> loadPersons() async {
     _isLoading = true;
     _error = '';
     try {
-      _persons = await _personRepository.loadPersons(teamId);
+      _persons = await _personRepository.loadPersons();
     } catch (e) {
       _error = e.toString();
     } finally {
@@ -27,10 +27,10 @@ class PersonPresenter with ChangeNotifier {
     }
   }
 
-  Future<void> saveBoard(
+  Future<void> savePerson(
     String firstName,
     String lastName,
-    String teamId,
+    String occupation,
   ) async {
     _isLoading = true;
     _error = '';
@@ -38,16 +38,15 @@ class PersonPresenter with ChangeNotifier {
       await _personRepository.savePerson(
         PersonModel(
           id: '',
-          teamId: teamId,
           firstName: firstName,
           lastName: lastName,
+          occupation: occupation,
         ),
       );
     } catch (e) {
       debugPrint(e.toString());
     } finally {
       _isLoading = false;
-      loadPersons(teamId);
       notifyListeners();
     }
   }

@@ -1,11 +1,8 @@
+import 'package:app_manager_project/features/team/presenters/person_presenter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/components/form/input_submit_form.dart';
 import '../../../core/components/form/input_text_form.dart';
-import '../../project/models/project_model.dart';
-import '../../project/presenters/project_presenter.dart';
-import '../presenters/team_presenter.dart';
 
 class TeamForm extends StatefulWidget {
   const TeamForm({super.key});
@@ -16,22 +13,16 @@ class TeamForm extends StatefulWidget {
 
 class _TeamFormState extends State<TeamForm> {
   final _formKey = GlobalKey<FormState>();
-  final _teamNameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _occupationController = TextEditingController();
 
-  late TeamPresenter presenter;
-  late ProjectPresenter projectPresenter;
+  late PersonPresenter presenter;
 
   @override
   void initState() {
     super.initState();
     presenter = context.read();
-    projectPresenter = context.read();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    projectPresenter.loadProjects();
   }
 
   @override
@@ -39,8 +30,6 @@ class _TeamFormState extends State<TeamForm> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    List<ProjectModel> projects = projectPresenter.projects;
-    ProjectModel projectSelected = projects.first;
 
     return SingleChildScrollView(
       child: Form(
@@ -65,7 +54,7 @@ class _TeamFormState extends State<TeamForm> {
               Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: Text(
-                  'Adicionar nova equipe',
+                  'Adicionar novo membro',
                   style: textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -75,43 +64,32 @@ class _TeamFormState extends State<TeamForm> {
               InputTextForm(
                 label: "Nome",
                 minLenght: 3,
-                controller: _teamNameController,
+                controller: _firstNameController,
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.92,
-                  child: DropdownButton<ProjectModel>(
-                    value: projectSelected,
-                    hint: Text(
-                      projectSelected.name,
-                    ),
-                    onChanged: (ProjectModel? selectedProject) {
-                      if (selectedProject != null) {
-                        setState(() {
-                          projectSelected = selectedProject;
-                          print(projectSelected);
-                        });
-                      }
-                    },
-                    items: projects.map<DropdownMenuItem<ProjectModel>>(
-                        (ProjectModel project) {
-                      return DropdownMenuItem<ProjectModel>(
-                        value: project,
-                        child: Text(project.name),
-                      );
-                    }).toList(),
-                  )),
+              InputTextForm(
+                label: "Sobrenome",
+                minLenght: 3,
+                controller: _lastNameController,
+              ),
+              const SizedBox(height: 20),
+              InputTextForm(
+                label: "Cargo",
+                minLenght: 3,
+                controller: _occupationController,
+              ),
               const SizedBox(height: 20),
               InputSubmitForm(
                 color: colorScheme.primary,
                 submitForm: () {
-                  presenter.saveBoard(
-                    _teamNameController.text,
-                    'widget.projectId',
+                  presenter.savePerson(
+                    _firstNameController.text,
+                    _lastNameController.text,
+                    _occupationController.text,
                   );
                   Navigator.of(context).pop();
                 },
-                nameButton: 'Adicionar Equipe',
+                nameButton: 'Adicionar Membro',
                 labelColor: colorScheme.onPrimary,
               ),
             ],
