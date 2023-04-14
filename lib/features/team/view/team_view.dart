@@ -40,7 +40,8 @@ class _TeamViewState extends State<TeamView> {
             '${presenter.persons[i].firstName[0]} ${presenter.persons[i].lastName[0]}',
           ),
         ),
-        title: Text('${presenter.persons[i].firstName} ${presenter.persons[i].lastName}'),
+        title: Text(
+            '${presenter.persons[i].firstName} ${presenter.persons[i].lastName}'),
         subtitle: Text(presenter.persons[i].occupation),
       );
     });
@@ -49,6 +50,9 @@ class _TeamViewState extends State<TeamView> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () => showModal(context),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
           child: const Icon(Icons.add),
         ),
         body: Column(
